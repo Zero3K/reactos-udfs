@@ -1469,7 +1469,7 @@ UDFInitializeVCB(
     //  Set the removable media flag based on the real device's
     //  characteristics
     if (PtrVPB->RealDevice->Characteristics & FILE_REMOVABLE_MEDIA) {
-        Vcb->VCBFlags |= VCB_STATE_REMOVABLE_MEDIA;
+        Vcb->VCBFlags |= UDF_VCB_FLAGS_REMOVABLE_MEDIA;
     }
 
     // Initialize the list anchor (head) for some lists in this VCB.
@@ -1534,7 +1534,7 @@ UDFInitializeVCB(
     UDFReleaseResource(&(UDFGlobalData.GlobalDataResource));
 
     // Mark the fact that this VCB structure is initialized.
-    Vcb->VCBFlags |= VCB_STATE_VCB_INITIALIZED;
+    Vcb->VCBFlags |= UDF_VCB_FLAGS_VCB_INITIALIZED;
 
     RC = STATUS_SUCCESS;
 
@@ -2400,16 +2400,16 @@ UDFToggleMediaEjectDisable (
 {
     PREVENT_MEDIA_REMOVAL Prevent;
 
-    //  If PreventRemoval is the same as VCB_STATE_MEDIA_LOCKED,
+    //  If PreventRemoval is the same as UDF_VCB_FLAGS_MEDIA_LOCKED,
     //  no-op this call, otherwise toggle the state of the flag.
 
-    if ((PreventRemoval ^ BooleanFlagOn(Vcb->VCBFlags, VCB_STATE_MEDIA_LOCKED)) == 0) {
+    if ((PreventRemoval ^ BooleanFlagOn(Vcb->VCBFlags, UDF_VCB_FLAGS_MEDIA_LOCKED)) == 0) {
 
         return STATUS_SUCCESS;
 
     } else {
 
-        Vcb->VCBFlags ^= VCB_STATE_MEDIA_LOCKED;
+        Vcb->VCBFlags ^= UDF_VCB_FLAGS_MEDIA_LOCKED;
     }
 
     Prevent.PreventMediaRemoval = PreventRemoval;
