@@ -1,0 +1,2881 @@
+
+Microsoft (R) Windows Debugger Version 6.12.0002.633 AMD64
+Copyright (c) Microsoft Corporation. All rights reserved.
+
+Opened \\.\pipe\kd_Windows_Server_2003
+Waiting to reconnect...
+Connected to Windows Server 2003 3790 x86 compatible target at (Sun May 25 23:30:46.084 2025 (UTC - 4:00)), ptr64 FALSE
+Kernel Debugger connection established.
+Symbol search path is: D:\reactos-amd64\output-VS-amd64\msvc_pdb;D:\reactos\output-VS-i386\msvc_pdb;*C:\symbols*https://msdl.microsoft.com/download/symbols
+Executable search path is: D:\reactos;D:\reactos-amd64
+*** ERROR: Symbol file could not be found.  Defaulted to export symbols for ntoskrnl.exe - 
+Windows Server 2003 Kernel Version 3790 UP Free x86 compatible
+Built by: 3790.srv03_sp2_rtm.070216-1710
+Machine Name:
+Kernel base = 0x80800000 PsLoadedModuleList = 0x808a8e48
+System Uptime: not available
+IPRT: RTMpPoke => rtMpPokeCpuUsingDpc
+vgdrvHeartbeatInit: Setting up heartbeat to trigger every 2000 milliseconds
+vgdrvNtSetupDevice: Device is ready!
+IPRT: RTMpPoke => rtMpPokeCpuUsingDpc
+IPRT: RTMpPoke => rtMpPokeCpuUsingDpc
+UDF Init: OS should be ReactOS
+UDF: Init memory manager
+UDF: Init delayed close queues
+UDF: Init zones
+UDF: Init pointers
+UDF: Create CD dev obj
+UDFCreateFsDeviceObject: create dev
+UDF: Create HDD dev obj
+UDFCreateFsDeviceObject: create dev
+UDFCreateFsDeviceObject: IoRegisterFileSystem() for CD
+UDFCreateFsDeviceObject: IoRegisterFileSystem() for HDD
+
+UDFFSControl: 
+
+
+UDFCommonFSControl
+
+  UDFFSControl: MOUNT_VOLUME request ....
+
+ !!! UDFMountVolume
+Mount on device object 89d16820
+UDFMountVolume: create device
+UDFGetDiskInfo
+UDFGetBlockSize: HDD
+UDFPhDevIOCTL: Code    700a0  
+    Alloc Irp MDL=0, ctx=89d1e220
+Enter wait state on evt 89d1e220
+Exit wait state on evt 89d1e220, status 00000000
+UDFPhDevIOCTL: Code    74004  
+    Alloc Irp MDL=0, ctx=89d1e220
+Enter wait state on evt 89d1e220
+Exit wait state on evt 89d1e220, status 00000000
+UDFGetBlockSize:
+Block size is 200, Block size bits 9, Last LBA is 2741fff
+UDFUseStandard
+UDFPhDevIOCTL: Code    24054  
+    Alloc Irp MDL=0, ctx=89d167b0
+Enter wait state on evt 89d167b0
+Exit wait state on evt 89d167b0, status c0000010
+UDFPhDevIOCTL: Code    24054  
+    Alloc Irp MDL=0, ctx=89d167b0
+Enter wait state on evt 89d167b0
+Exit wait state on evt 89d167b0, status c0000010
+UDF: ------------------------------------------
+UDF: Media characteristics
+UDF: Last session: 1
+UDF: First track in first session: 1
+UDF: First track in last session: 0
+UDF: Last track in last session: 1
+UDF: First LBA in first session: 0
+UDF: First LBA in last session: 0
+UDF: Last LBA in last session: 2741fff
+UDF: First writable LBA (NWA) in last session: 0
+UDF: Last available LBA beyond end of last session: 2741fff
+UDF: blocks per frame: 1000
+UDF: Flags: WR 
+UDF: ------------------------------------------
+UDFGetDiskInfo: 0
+UDFCheckRegValue: (1) |\REGISTRY\MACHINE\SYSTEM\ControlSet001\Services\udfs\Parameters|
+UDFCheckRegValue: (2) |\REGISTRY\MACHINE\SYSTEM\ControlSet001\Services\udfs\Parameters_Default\Unknown|
+UDFCheckRegValue: (3) |\REGISTRY\MACHINE\SYSTEM\ControlSet001\Services\udfs\Parameters_Default\Unknown|
+ Parameter = UseExtendedFE
+UDFCheckRegValue: UseExtendedFE for drive (null) is 0
+
+UDFCheckRegValue: (1) |\REGISTRY\MACHINE\SYSTEM\ControlSet001\Services\udfs\Parameters|
+UDFCheckRegValue: (2) |\REGISTRY\MACHINE\SYSTEM\ControlSet001\Services\udfs\Parameters_Default\Unknown|
+UDFCheckRegValue: (3) |\REGISTRY\MACHINE\SYSTEM\ControlSet001\Services\udfs\Parameters_Default\Unknown|
+ Parameter = DefaultAllocMode
+UDFCheckRegValue: DefaultAllocMode for drive (null) is 0
+
+UDFCheckRegValue: (1) |\REGISTRY\MACHINE\SYSTEM\ControlSet001\Services\udfs\Parameters|
+UDFCheckRegValue: (2) |\REGISTRY\MACHINE\SYSTEM\ControlSet001\Services\udfs\Parameters_Default\Unknown|
+UDFCheckRegValue: (3) |\REGISTRY\MACHINE\SYSTEM\ControlSet001\Services\udfs\Parameters_Default\Unknown|
+ Parameter = DefaultUID
+UDFCheckRegValue: DefaultUID for drive (null) is ffffffff
+
+UDFCheckRegValue: (1) |\REGISTRY\MACHINE\SYSTEM\ControlSet001\Services\udfs\Parameters|
+UDFCheckRegValue: (2) |\REGISTRY\MACHINE\SYSTEM\ControlSet001\Services\udfs\Parameters_Default\Unknown|
+UDFCheckRegValue: (3) |\REGISTRY\MACHINE\SYSTEM\ControlSet001\Services\udfs\Parameters_Default\Unknown|
+ Parameter = DefaultGID
+UDFCheckRegValue: DefaultGID for drive (null) is ffffffff
+
+UDFCheckRegValue: (1) |\REGISTRY\MACHINE\SYSTEM\ControlSet001\Services\udfs\Parameters|
+UDFCheckRegValue: (2) |\REGISTRY\MACHINE\SYSTEM\ControlSet001\Services\udfs\Parameters_Default\Unknown|
+UDFCheckRegValue: (3) |\REGISTRY\MACHINE\SYSTEM\ControlSet001\Services\udfs\Parameters_Default\Unknown|
+ Parameter = FECharge
+UDFCheckRegValue: FECharge for drive (null) is 0
+
+UDFCheckRegValue: (1) |\REGISTRY\MACHINE\SYSTEM\ControlSet001\Services\udfs\Parameters|
+UDFCheckRegValue: (2) |\REGISTRY\MACHINE\SYSTEM\ControlSet001\Services\udfs\Parameters_Default\Unknown|
+UDFCheckRegValue: (3) |\REGISTRY\MACHINE\SYSTEM\ControlSet001\Services\udfs\Parameters_Default\Unknown|
+ Parameter = FEChargeSDir
+UDFCheckRegValue: FEChargeSDir for drive (null) is 0
+
+UDFCheckRegValue: (1) |\REGISTRY\MACHINE\SYSTEM\ControlSet001\Services\udfs\Parameters|
+UDFCheckRegValue: (2) |\REGISTRY\MACHINE\SYSTEM\ControlSet001\Services\udfs\Parameters_Default\Unknown|
+UDFCheckRegValue: (3) |\REGISTRY\MACHINE\SYSTEM\ControlSet001\Services\udfs\Parameters_Default\Unknown|
+ Parameter = PackDirThreshold
+UDFCheckRegValue: PackDirThreshold for drive (null) is 0
+
+UDFCheckRegValue: (1) |\REGISTRY\MACHINE\SYSTEM\ControlSet001\Services\udfs\Parameters|
+UDFCheckRegValue: (2) |\REGISTRY\MACHINE\SYSTEM\ControlSet001\Services\udfs\Parameters_Default\Unknown|
+UDFCheckRegValue: (3) |\REGISTRY\MACHINE\SYSTEM\ControlSet001\Services\udfs\Parameters_Default\Unknown|
+ Parameter = ReadAheadGranlarity
+UDFCheckRegValue: ReadAheadGranlarity for drive (null) is 0
+
+UDFCheckRegValue: (1) |\REGISTRY\MACHINE\SYSTEM\ControlSet001\Services\udfs\Parameters|
+UDFCheckRegValue: (2) |\REGISTRY\MACHINE\SYSTEM\ControlSet001\Services\udfs\Parameters_Default\Unknown|
+UDFCheckRegValue: (3) |\REGISTRY\MACHINE\SYSTEM\ControlSet001\Services\udfs\Parameters_Default\Unknown|
+ Parameter = BitmapFlushPeriod
+UDFCheckRegValue: BitmapFlushPeriod for drive (null) is 0
+
+UDFCheckRegValue: (1) |\REGISTRY\MACHINE\SYSTEM\ControlSet001\Services\udfs\Parameters|
+UDFCheckRegValue: (2) |\REGISTRY\MACHINE\SYSTEM\ControlSet001\Services\udfs\Parameters_Default\Unknown|
+UDFCheckRegValue: (3) |\REGISTRY\MACHINE\SYSTEM\ControlSet001\Services\udfs\Parameters_Default\Unknown|
+ Parameter = DirTreeFlushPeriod
+UDFCheckRegValue: DirTreeFlushPeriod for drive (null) is 0
+
+UDFCheckRegValue: (1) |\REGISTRY\MACHINE\SYSTEM\ControlSet001\Services\udfs\Parameters|
+UDFCheckRegValue: (2) |\REGISTRY\MACHINE\SYSTEM\ControlSet001\Services\udfs\Parameters_Default\Unknown|
+UDFCheckRegValue: (3) |\REGISTRY\MACHINE\SYSTEM\ControlSet001\Services\udfs\Parameters_Default\Unknown|
+ Parameter = MaxNoUpdatePeriod
+UDFCheckRegValue: MaxNoUpdatePeriod for drive (null) is 0
+
+UDFCheckRegValue: (1) |\REGISTRY\MACHINE\SYSTEM\ControlSet001\Services\udfs\Parameters|
+UDFCheckRegValue: (2) |\REGISTRY\MACHINE\SYSTEM\ControlSet001\Services\udfs\Parameters_Default\Unknown|
+UDFCheckRegValue: (3) |\REGISTRY\MACHINE\SYSTEM\ControlSet001\Services\udfs\Parameters_Default\Unknown|
+ Parameter = MaxNoEjectPeriod
+UDFCheckRegValue: MaxNoEjectPeriod for drive (null) is 3
+
+UDFCheckRegValue: (1) |\REGISTRY\MACHINE\SYSTEM\ControlSet001\Services\udfs\Parameters|
+UDFCheckRegValue: (2) |\REGISTRY\MACHINE\SYSTEM\ControlSet001\Services\udfs\Parameters_Default\Unknown|
+UDFCheckRegValue: (3) |\REGISTRY\MACHINE\SYSTEM\ControlSet001\Services\udfs\Parameters_Default\Unknown|
+ Parameter = ThreadsPerCpu
+UDFCheckRegValue: ThreadsPerCpu for drive (null) is 2
+
+UDFCheckRegValue: (1) |\REGISTRY\MACHINE\SYSTEM\ControlSet001\Services\udfs\Parameters|
+UDFCheckRegValue: (2) |\REGISTRY\MACHINE\SYSTEM\ControlSet001\Services\udfs\Parameters_Default\Unknown|
+UDFCheckRegValue: (3) |\REGISTRY\MACHINE\SYSTEM\ControlSet001\Services\udfs\Parameters_Default\Unknown|
+ Parameter = SparseThreshold
+UDFCheckRegValue: SparseThreshold for drive (null) is 0
+
+UDFCheckRegValue: (1) |\REGISTRY\MACHINE\SYSTEM\ControlSet001\Services\udfs\Parameters|
+UDFCheckRegValue: (2) |\REGISTRY\MACHINE\SYSTEM\ControlSet001\Services\udfs\Parameters_Default\Unknown|
+UDFCheckRegValue: (3) |\REGISTRY\MACHINE\SYSTEM\ControlSet001\Services\udfs\Parameters_Default\Unknown|
+ Parameter = VerifyOnWrite
+UDFCheckRegValue: VerifyOnWrite for drive (null) is 0
+
+UDFCheckRegValue: (1) |\REGISTRY\MACHINE\SYSTEM\ControlSet001\Services\udfs\Parameters|
+UDFCheckRegValue: (2) |\REGISTRY\MACHINE\SYSTEM\ControlSet001\Services\udfs\Parameters_Default\Unknown|
+UDFCheckRegValue: (3) |\REGISTRY\MACHINE\SYSTEM\ControlSet001\Services\udfs\Parameters_Default\Unknown|
+ Parameter = UpdateFileTimesAttrChg
+UDFCheckRegValue: UpdateFileTimesAttrChg for drive (null) is 0
+
+UDFCheckRegValue: (1) |\REGISTRY\MACHINE\SYSTEM\ControlSet001\Services\udfs\Parameters|
+UDFCheckRegValue: (2) |\REGISTRY\MACHINE\SYSTEM\ControlSet001\Services\udfs\Parameters_Default\Unknown|
+UDFCheckRegValue: (3) |\REGISTRY\MACHINE\SYSTEM\ControlSet001\Services\udfs\Parameters_Default\Unknown|
+ Parameter = UpdateFileTimesLastWrite
+UDFCheckRegValue: UpdateFileTimesLastWrite for drive (null) is 0
+
+UDFCheckRegValue: (1) |\REGISTRY\MACHINE\SYSTEM\ControlSet001\Services\udfs\Parameters|
+UDFCheckRegValue: (2) |\REGISTRY\MACHINE\SYSTEM\ControlSet001\Services\udfs\Parameters_Default\Unknown|
+UDFCheckRegValue: (3) |\REGISTRY\MACHINE\SYSTEM\ControlSet001\Services\udfs\Parameters_Default\Unknown|
+ Parameter = UpdateFileTimesLastAccess
+UDFCheckRegValue: UpdateFileTimesLastAccess for drive (null) is 0
+
+UDFCheckRegValue: (1) |\REGISTRY\MACHINE\SYSTEM\ControlSet001\Services\udfs\Parameters|
+UDFCheckRegValue: (2) |\REGISTRY\MACHINE\SYSTEM\ControlSet001\Services\udfs\Parameters_Default\Unknown|
+UDFCheckRegValue: (3) |\REGISTRY\MACHINE\SYSTEM\ControlSet001\Services\udfs\Parameters_Default\Unknown|
+ Parameter = UpdateFileAttrArchive
+UDFCheckRegValue: UpdateFileAttrArchive for drive (null) is 0
+
+UDFCheckRegValue: (1) |\REGISTRY\MACHINE\SYSTEM\ControlSet001\Services\udfs\Parameters|
+UDFCheckRegValue: (2) |\REGISTRY\MACHINE\SYSTEM\ControlSet001\Services\udfs\Parameters_Default\Unknown|
+UDFCheckRegValue: (3) |\REGISTRY\MACHINE\SYSTEM\ControlSet001\Services\udfs\Parameters_Default\Unknown|
+ Parameter = UpdateDirAttrAndTimesOnModify
+UDFCheckRegValue: UpdateDirAttrAndTimesOnModify for drive (null) is 0
+
+UDFCheckRegValue: (1) |\REGISTRY\MACHINE\SYSTEM\ControlSet001\Services\udfs\Parameters|
+UDFCheckRegValue: (2) |\REGISTRY\MACHINE\SYSTEM\ControlSet001\Services\udfs\Parameters_Default\Unknown|
+UDFCheckRegValue: (3) |\REGISTRY\MACHINE\SYSTEM\ControlSet001\Services\udfs\Parameters_Default\Unknown|
+ Parameter = UpdateDirAttrAndTimesOnAccess
+UDFCheckRegValue: UpdateDirAttrAndTimesOnAccess for drive (null) is 0
+
+UDFCheckRegValue: (1) |\REGISTRY\MACHINE\SYSTEM\ControlSet001\Services\udfs\Parameters|
+UDFCheckRegValue: (2) |\REGISTRY\MACHINE\SYSTEM\ControlSet001\Services\udfs\Parameters_Default\Unknown|
+UDFCheckRegValue: (3) |\REGISTRY\MACHINE\SYSTEM\ControlSet001\Services\udfs\Parameters_Default\Unknown|
+ Parameter = AllowCreateInsideReadOnlyDirectory
+UDFCheckRegValue: AllowCreateInsideReadOnlyDirectory for drive (null) is 1
+
+UDFCheckRegValue: (1) |\REGISTRY\MACHINE\SYSTEM\ControlSet001\Services\udfs\Parameters|
+UDFCheckRegValue: (2) |\REGISTRY\MACHINE\SYSTEM\ControlSet001\Services\udfs\Parameters_Default\Unknown|
+UDFCheckRegValue: (3) |\REGISTRY\MACHINE\SYSTEM\ControlSet001\Services\udfs\Parameters_Default\Unknown|
+ Parameter = AllowUpdateAccessTimeInUnchangedDir
+UDFCheckRegValue: AllowUpdateAccessTimeInUnchangedDir for drive (null) is 0
+
+UDFCheckRegValue: (1) |\REGISTRY\MACHINE\SYSTEM\ControlSet001\Services\udfs\Parameters|
+UDFCheckRegValue: (2) |\REGISTRY\MACHINE\SYSTEM\ControlSet001\Services\udfs\Parameters_Default\Unknown|
+UDFCheckRegValue: (3) |\REGISTRY\MACHINE\SYSTEM\ControlSet001\Services\udfs\Parameters_Default\Unknown|
+ Parameter = AllocDescCompatW2K
+UDFCheckRegValue: AllocDescCompatW2K for drive (null) is 1
+
+UDFCheckRegValue: (1) |\REGISTRY\MACHINE\SYSTEM\ControlSet001\Services\udfs\Parameters|
+UDFCheckRegValue: (2) |\REGISTRY\MACHINE\SYSTEM\ControlSet001\Services\udfs\Parameters_Default\Unknown|
+UDFCheckRegValue: (3) |\REGISTRY\MACHINE\SYSTEM\ControlSet001\Services\udfs\Parameters_Default\Unknown|
+ Parameter = AllocDescCompatInstantBurner
+UDFCheckRegValue: AllocDescCompatInstantBurner for drive (null) is 1
+
+UDFCheckRegValue: (1) |\REGISTRY\MACHINE\SYSTEM\ControlSet001\Services\udfs\Parameters|
+UDFCheckRegValue: (2) |\REGISTRY\MACHINE\SYSTEM\ControlSet001\Services\udfs\Parameters_Default\Unknown|
+UDFCheckRegValue: (3) |\REGISTRY\MACHINE\SYSTEM\ControlSet001\Services\udfs\Parameters_Default\Unknown|
+ Parameter = VolumeLabelCompatW2K
+UDFCheckRegValue: VolumeLabelCompatW2K for drive (null) is 1
+
+UDFCheckRegValue: (1) |\REGISTRY\MACHINE\SYSTEM\ControlSet001\Services\udfs\Parameters|
+UDFCheckRegValue: (2) |\REGISTRY\MACHINE\SYSTEM\ControlSet001\Services\udfs\Parameters_Default\Unknown|
+UDFCheckRegValue: (3) |\REGISTRY\MACHINE\SYSTEM\ControlSet001\Services\udfs\Parameters_Default\Unknown|
+ Parameter = HandleHWReadOnly
+UDFCheckRegValue: HandleHWReadOnly for drive (null) is 0
+
+UDFCheckRegValue: (1) |\REGISTRY\MACHINE\SYSTEM\ControlSet001\Services\udfs\Parameters|
+UDFCheckRegValue: (2) |\REGISTRY\MACHINE\SYSTEM\ControlSet001\Services\udfs\Parameters_Default\Unknown|
+UDFCheckRegValue: (3) |\REGISTRY\MACHINE\SYSTEM\ControlSet001\Services\udfs\Parameters_Default\Unknown|
+ Parameter = HandleSoftReadOnly
+UDFCheckRegValue: HandleSoftReadOnly for drive (null) is 1
+
+UDFCheckRegValue: (1) |\REGISTRY\MACHINE\SYSTEM\ControlSet001\Services\udfs\Parameters|
+UDFCheckRegValue: (2) |\REGISTRY\MACHINE\SYSTEM\ControlSet001\Services\udfs\Parameters_Default\Unknown|
+UDFCheckRegValue: (3) |\REGISTRY\MACHINE\SYSTEM\ControlSet001\Services\udfs\Parameters_Default\Unknown|
+ Parameter = UseOsNativeDOSName
+UDFCheckRegValue: UseOsNativeDOSName for drive (null) is 0
+
+UDFCheckRegValue: (1) |\REGISTRY\MACHINE\SYSTEM\ControlSet001\Services\udfs\Parameters|
+UDFCheckRegValue: (2) |\REGISTRY\MACHINE\SYSTEM\ControlSet001\Services\udfs\Parameters_Default\Unknown|
+UDFCheckRegValue: (3) |\REGISTRY\MACHINE\SYSTEM\ControlSet001\Services\udfs\Parameters_Default\Unknown|
+ Parameter = ForceWriteThrough
+UDFCheckRegValue: ForceWriteThrough for drive (null) is 0
+
+UDFCheckRegValue: (1) |\REGISTRY\MACHINE\SYSTEM\ControlSet001\Services\udfs\Parameters|
+UDFCheckRegValue: (2) |\REGISTRY\MACHINE\SYSTEM\ControlSet001\Services\udfs\Parameters_Default\Unknown|
+UDFCheckRegValue: (3) |\REGISTRY\MACHINE\SYSTEM\ControlSet001\Services\udfs\Parameters_Default\Unknown|
+ Parameter = IgnoreSequantialIo
+UDFCheckRegValue: IgnoreSequantialIo for drive (null) is 0
+
+UDFCheckRegValue: (1) |\REGISTRY\MACHINE\SYSTEM\ControlSet001\Services\udfs\Parameters|
+UDFCheckRegValue: (2) |\REGISTRY\MACHINE\SYSTEM\ControlSet001\Services\udfs\Parameters_Default\Unknown|
+UDFCheckRegValue: (3) |\REGISTRY\MACHINE\SYSTEM\ControlSet001\Services\udfs\Parameters_Default\Unknown|
+ Parameter = ForceHWReadOnly
+UDFCheckRegValue: ForceHWReadOnly for drive (null) is 0
+
+UDFCheckRegValue: (1) |\REGISTRY\MACHINE\SYSTEM\ControlSet001\Services\udfs\Parameters|
+UDFCheckRegValue: (2) |\REGISTRY\MACHINE\SYSTEM\ControlSet001\Services\udfs\Parameters_Default\Unknown|
+UDFCheckRegValue: (3) |\REGISTRY\MACHINE\SYSTEM\ControlSet001\Services\udfs\Parameters_Default\Unknown|
+ Parameter = FlushMedia
+UDFCheckRegValue: FlushMedia for drive (null) is 0
+
+UDFCheckRegValue: (1) |\REGISTRY\MACHINE\SYSTEM\ControlSet001\Services\udfs\Parameters|
+UDFCheckRegValue: (2) |\REGISTRY\MACHINE\SYSTEM\ControlSet001\Services\udfs\Parameters_Default\Unknown|
+UDFCheckRegValue: (3) |\REGISTRY\MACHINE\SYSTEM\ControlSet001\Services\udfs\Parameters_Default\Unknown|
+ Parameter = CompareBeforeWrite
+UDFCheckRegValue: CompareBeforeWrite for drive (null) is 0
+
+UDFCheckRegValue: (1) |\REGISTRY\MACHINE\SYSTEM\ControlSet001\Services\udfs\Parameters|
+UDFCheckRegValue: (2) |\REGISTRY\MACHINE\SYSTEM\ControlSet001\Services\udfs\Parameters_Default\Unknown|
+UDFCheckRegValue: (3) |\REGISTRY\MACHINE\SYSTEM\ControlSet001\Services\udfs\Parameters_Default\Unknown|
+ Parameter = CacheChainedIo
+UDFCheckRegValue: CacheChainedIo for drive (null) is 1
+
+UDFCheckRegValue: (1) |\REGISTRY\MACHINE\SYSTEM\ControlSet001\Services\udfs\Parameters|
+UDFCheckRegValue: (2) |\REGISTRY\MACHINE\SYSTEM\ControlSet001\Services\udfs\Parameters_Default\Unknown|
+UDFCheckRegValue: (3) |\REGISTRY\MACHINE\SYSTEM\ControlSet001\Services\udfs\Parameters_Default\Unknown|
+ Parameter = ShowBlankCd
+UDFCheckRegValue: ShowBlankCd for drive (null) is 0
+
+UDFCheckRegValue: (1) |\REGISTRY\MACHINE\SYSTEM\ControlSet001\Services\udfs\Parameters|
+UDFCheckRegValue: (2) |\REGISTRY\MACHINE\SYSTEM\ControlSet001\Services\udfs\Parameters_Default\Unknown|
+UDFCheckRegValue: (3) |\REGISTRY\MACHINE\SYSTEM\ControlSet001\Services\udfs\Parameters_Default\Unknown|
+ Parameter = WaitCdSpinUpOnMount
+UDFCheckRegValue: WaitCdSpinUpOnMount for drive (null) is 1
+
+UDFCheckRegValue: (1) |\REGISTRY\MACHINE\SYSTEM\ControlSet001\Services\udfs\Parameters|
+UDFCheckRegValue: (2) |\REGISTRY\MACHINE\SYSTEM\ControlSet001\Services\udfs\Parameters_Default\Unknown|
+UDFCheckRegValue: (3) |\REGISTRY\MACHINE\SYSTEM\ControlSet001\Services\udfs\Parameters_Default\Unknown|
+ Parameter = CacheBadVDSLocations
+UDFCheckRegValue: CacheBadVDSLocations for drive (null) is 1
+
+UDFCheckRegValue: (1) |\REGISTRY\MACHINE\SYSTEM\ControlSet001\Services\udfs\Parameters|
+UDFCheckRegValue: (2) |\REGISTRY\MACHINE\SYSTEM\ControlSet001\Services\udfs\Parameters_Default\Unknown|
+UDFCheckRegValue: (3) |\REGISTRY\MACHINE\SYSTEM\ControlSet001\Services\udfs\Parameters_Default\Unknown|
+ Parameter = PartitialDamagedVolumeAction
+UDFCheckRegValue: PartitialDamagedVolumeAction for drive (null) is 0
+
+UDFCheckRegValue: (1) |\REGISTRY\MACHINE\SYSTEM\ControlSet001\Services\udfs\Parameters|
+UDFCheckRegValue: (2) |\REGISTRY\MACHINE\SYSTEM\ControlSet001\Services\udfs\Parameters_Default\Unknown|
+UDFCheckRegValue: (3) |\REGISTRY\MACHINE\SYSTEM\ControlSet001\Services\udfs\Parameters_Default\Unknown|
+ Parameter = NoFreeRelocationSpaceVolumeAction
+UDFCheckRegValue: NoFreeRelocationSpaceVolumeAction for drive (null) is 0
+
+UDFCheckRegValue: (1) |\REGISTRY\MACHINE\SYSTEM\ControlSet001\Services\udfs\Parameters|
+UDFCheckRegValue: (2) |\REGISTRY\MACHINE\SYSTEM\ControlSet001\Services\udfs\Parameters_Default\Unknown|
+UDFCheckRegValue: (3) |\REGISTRY\MACHINE\SYSTEM\ControlSet001\Services\udfs\Parameters_Default\Unknown|
+ Parameter = DirtyVolumeVolumeAction
+UDFCheckRegValue: DirtyVolumeVolumeAction for drive (null) is 1
+
+UDFCheckRegValue: (1) |\REGISTRY\MACHINE\SYSTEM\ControlSet001\Services\udfs\Parameters|
+UDFCheckRegValue: (2) |\REGISTRY\MACHINE\SYSTEM\ControlSet001\Services\udfs\Parameters_Default\Unknown|
+UDFCheckRegValue: (3) |\REGISTRY\MACHINE\SYSTEM\ControlSet001\Services\udfs\Parameters_Default\Unknown|
+ Parameter = WCacheSizeMultiplier
+UDFCheckRegValue: WCacheSizeMultiplier for drive (null) is 1
+
+Verify is disabled
+UDFGetDiskInfoAndVerify
+UDFFindAnchor
+check Anchor 100
+UDFPhRead: Length: 0 Lba: 40
+    Alloc async Irp MDL=89dbab40, ctx=89d1e220
+UDFAsyncCompletionRoutine ctx=89d1e220
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDF: Found AVD at 100 (point 0)
+check Anchor 200
+UDFPhRead: Length: 0 Lba: 80
+    Alloc async Irp MDL=89dbab40, ctx=89d1e220
+UDFAsyncCompletionRoutine ctx=89d1e220
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDF: location mismatch block 200, tag ffffffff != 200
+check Anchor 100
+UDFPhRead: Length: 0 Lba: 40
+    Alloc async Irp MDL=89dbab40, ctx=89d1e220
+UDFAsyncCompletionRoutine ctx=89d1e220
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDF: Found AVD at 100 (point 2)
+check Anchor 200
+UDFPhRead: Length: 0 Lba: 80
+    Alloc async Irp MDL=89dbab40, ctx=89d1e220
+UDFAsyncCompletionRoutine ctx=89d1e220
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDF: location mismatch block 200, tag ffffffff != 200
+check Anchor 2741eff
+UDFPhRead: Length: 0 Lba: 9d07bf
+    Alloc async Irp MDL=89dbab40, ctx=89d1e220
+UDFAsyncCompletionRoutine ctx=89d1e220
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDF: Block=2741eff, Location=2741eff: read failed
+check Anchor 2741f00
+UDFPhRead: Length: 0 Lba: 9d07c0
+    Alloc async Irp MDL=89dbab40, ctx=89d1e220
+UDFAsyncCompletionRoutine ctx=89d1e220
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDF: Block=2741f00, Location=2741f00: read failed
+check Anchor 2741efd
+UDFPhRead: Length: 0 Lba: 9d07bf
+    Alloc async Irp MDL=89dbab40, ctx=89d1e220
+UDFAsyncCompletionRoutine ctx=89d1e220
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDF: Block=2741efd, Location=2741efd: read failed
+check Anchor 2741ffd
+UDFPhRead: Length: 0 Lba: 9d07ff
+    Alloc async Irp MDL=89dbab40, ctx=89d1e220
+UDFAsyncCompletionRoutine ctx=89d1e220
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDF: Block=2741ffd, Location=2741ffd: read failed
+check Anchor 2741fff
+UDFPhRead: Length: 0 Lba: 9d07ff
+    Alloc async Irp MDL=89dbab40, ctx=89d1e220
+UDFAsyncCompletionRoutine ctx=89d1e220
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDF: Block=2741fff, Location=2741fff: read failed
+check Anchor 2741dff
+UDFPhRead: Length: 0 Lba: 9d077f
+    Alloc async Irp MDL=89dbab40, ctx=89d1e220
+UDFAsyncCompletionRoutine ctx=89d1e220
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDF: Block=2741dff, Location=2741dff: read failed
+UDF: -----------------
+UDF: Last block 2741fff
+UDFPhRead: Length: 0 Lba: 40
+    Alloc async Irp MDL=89dbab40, ctx=89d1e220
+UDFAsyncCompletionRoutine ctx=89d1e220
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+-----------------------------------
+UDF: Main sequence:
+UDF: Read VDS (60 - 70)
+UDFPhRead: Length: 0 Lba: 18
+    Alloc async Irp MDL=89dbab40, ctx=89d1e220
+UDFAsyncCompletionRoutine ctx=89d1e220
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+LBA 60, Ident = 1, vdsn = 1
+UDFPhRead: Length: 0 Lba: 18
+    Alloc async Irp MDL=89dbab40, ctx=89d1e220
+UDFAsyncCompletionRoutine ctx=89d1e220
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+LBA 61, Ident = 5, vdsn = 2
+UDFPhRead: Length: 0 Lba: 18
+    Alloc async Irp MDL=89dbab40, ctx=89d1e220
+UDFAsyncCompletionRoutine ctx=89d1e220
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+LBA 62, Ident = 6, vdsn = 3
+UDFPhRead: Length: 0 Lba: 18
+    Alloc async Irp MDL=89dbab40, ctx=89d1e220
+UDFAsyncCompletionRoutine ctx=89d1e220
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+LBA 63, Ident = 7, vdsn = 4
+UDFPhRead: Length: 0 Lba: 19
+    Alloc async Irp MDL=89dbab40, ctx=89d1e220
+UDFAsyncCompletionRoutine ctx=89d1e220
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+LBA 64, Ident = 4, vdsn = 5
+UDFPhRead: Length: 0 Lba: 19
+    Alloc async Irp MDL=89dbab40, ctx=89d1e220
+UDFAsyncCompletionRoutine ctx=89d1e220
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+LBA 65, Ident = 8, vdsn = 0
+UDFPhRead: Length: 0 Lba: 18
+    Alloc async Irp MDL=89dbab40, ctx=89d1e220
+UDFAsyncCompletionRoutine ctx=89d1e220
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDF: PrimaryVolDesc:
+volDescSeqNum     = 1
+primaryVolDescNum = 0
+volIdent[] = '(null)'
+volSeqNum         = 1
+maxVolSeqNum      = 1
+interchangeLvl    = 2
+maxInterchangeLvl = 2
+charSetList       = 1
+maxCharSetList    = 1
+volSetIdent[] = '17191815 UDF Volume Set'
+flags             = 0
+UDFPhRead: Length: 0 Lba: 18
+    Alloc async Irp MDL=89dbab40, ctx=89d1e220
+UDFAsyncCompletionRoutine ctx=89d1e220
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDF: Unallocated Space Desc:
+UDFPhRead: Length: 0 Lba: 18
+    Alloc async Irp MDL=89dbab40, ctx=89d1e220
+UDFAsyncCompletionRoutine ctx=89d1e220
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDF: LogicalVolDesc
+UDF: volDescSeqNum = 3
+UDF: Entity Id:
+flags: 0
+ident[0]: 2a
+ident[1]: 4f
+ident[2]: 53
+ident[3]: 54
+UDF: Entity Id Domain:
+Effective Revision: 201
+Flags: 0
+UDF: logical block size (512)
+UDF: mapTableLength = 6
+UDF: numPartitionMaps = 1
+Partition (0) type 1, len 6
+FileSet found in LogicalVolDesc at block=0, partition=0
+UDF: Reading LVID @80 (2000)
+UDFPhRead: Length: 0 Lba: 20
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 4 Lba: 20
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDF: Last LVID:
+     minR: 201
+     minW: 201
+     maxW: 201
+     Type: Close
+     nFiles: 1
+     nDirs: 2
+     Next FID: 12
+UDFPhRead: Length: 0 Lba: 18
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDF: Pard Descr:
+ volDescSeqNum   = 2
+ partitionFlags  = 1
+ partitionNumber = 2000
+ accessType      = 4
+ partitionStartingLocation = 120
+ partitionLength = 2740dc0
+Searching map: (8192 == 8192)
+Access mode 4
+unallocatedSpaceBitmap (part 0) @ 20
+UDFAddXSpaceBitmap: at block=20, partition=0
+UDFPhRead: Length: 0 Lba: 50
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 50
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 60
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 70
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 80
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 90
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: a0
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: b0
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: c0
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: d0
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: e0
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: f0
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 100
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 110
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 120
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 130
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 140
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 150
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 160
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 170
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 180
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 190
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 1a0
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 1b0
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 1c0
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 1d0
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 1e0
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 1f0
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 200
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 210
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 220
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 230
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 240
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 250
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 260
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 270
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 280
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 290
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 2a0
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 2b0
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 2c0
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 2d0
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 2e0
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 2f0
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 300
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 310
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 320
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 330
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 340
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 350
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 360
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 370
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 380
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 390
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 3a0
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 3b0
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 3c0
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 3d0
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 3e0
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 3f0
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 400
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 410
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 420
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 430
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 440
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 450
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 460
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 470
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 480
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 490
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 4a0
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 4b0
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 4c0
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 4d0
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 4e0
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 4f0
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 500
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 510
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 520
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 530
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 540
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 550
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 560
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 570
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 580
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 590
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 5a0
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 5b0
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 5c0
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 5d0
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 5e0
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 5f0
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 600
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 610
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 620
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 630
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 640
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 650
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 660
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 670
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 680
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 690
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 6a0
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 6b0
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 6c0
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 6d0
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 6e0
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 6f0
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 700
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 710
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 720
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 730
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 740
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 750
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 760
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 770
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 780
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 790
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 7a0
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 7b0
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 7c0
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 7d0
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 7e0
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 7f0
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 800
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 810
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 820
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 830
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 840
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 850
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 860
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 870
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 880
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 890
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 8a0
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 8b0
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 8c0
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 8d0
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 8e0
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 8f0
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 900
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 910
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 920
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 930
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 940
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 950
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 960
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 970
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 980
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 990
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 9a0
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 9b0
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 9c0
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 9d0
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 9e0
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 9f0
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: a00
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: a10
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 0 Lba: a20
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFAddXSpaceBitmap: at block=0, partition=0
+ClrModified
+Partition (8192:0 type 1511) starts at physical 120, length 2740dc0
+UDFPhRead: Length: 0 Lba: 18
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 0 Lba: 18
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 0 Lba: 18
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+ClrModified
+UDFPhRead: Length: 0 Lba: 19
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 0 Lba: 19
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDF: Imp Use Vol Desc:
+ volDescSeqNum = 5
+UDF: Imp Use Vol Desc Imp Use:
+00 4f 53 54 41 20 43 6f 6d 70 72 65 73 73 65 64 
+20 55 6e 69 63 6f 64 65 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 2a 4d 69 
+63 72 6f 73 6f 66 74 20 57 69 6e 64 6f 77 73 00 
+00 00 00 00 06 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 
+UDFPhRead: Length: 0 Lba: 19
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDF: Read VDS (2740fe0 - 2740ff0)
+UDFPhRead: Length: 0 Lba: 9d03f8
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+LBA 2740fe0, Ident = 1, vdsn = 1
+UDFPhRead: Length: 0 Lba: 9d03f8
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+LBA 2740fe1, Ident = 5, vdsn = 2
+UDFPhRead: Length: 0 Lba: 9d03f8
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+LBA 2740fe2, Ident = 6, vdsn = 3
+UDFPhRead: Length: 0 Lba: 9d03f8
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+LBA 2740fe3, Ident = 7, vdsn = 4
+UDFPhRead: Length: 0 Lba: 9d03f9
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+LBA 2740fe4, Ident = 4, vdsn = 5
+UDFPhRead: Length: 0 Lba: 9d03f9
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+LBA 2740fe5, Ident = 8, vdsn = 0
+UDFPhRead: Length: 0 Lba: 9d03f8
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 0 Lba: 9d03f8
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 0 Lba: 9d03f8
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 0 Lba: 9d03f8
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDF: Verify Part Descr:
+ volDescSeqNum   = 2
+ partitionFlags  = 1
+ partitionNumber = 2000
+ accessType      = 4
+ partitionStartingLocation = 120
+ partitionLength = 2740dc0
+Searching map: (8192 == 8192)
+Access mode 4
+Warning: both USpaceBitmaps have same location
+unallocatedSpaceBitmap (part 0) @ 20
+UDFVerifyFreeSpaceBitmap:
+ UDFVerifyXSpaceBitmap: part 0
+UDFPhRead: Length: 0 Lba: 50
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+ BM Lba 140
+UDFPhRead: Length: 10 Lba: 50
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 60
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 70
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 80
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 90
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: a0
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: b0
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: c0
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: d0
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: e0
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: f0
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 100
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 110
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 120
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 130
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 140
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 150
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 160
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 170
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 180
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 190
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 1a0
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 1b0
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 1c0
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 1d0
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 1e0
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 1f0
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 200
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 210
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 220
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 230
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 240
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 250
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 260
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 270
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 280
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 290
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 2a0
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 2b0
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 2c0
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 2d0
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 2e0
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 2f0
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 300
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 310
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 320
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 330
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 340
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 350
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 360
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 370
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 380
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 390
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 3a0
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 3b0
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 3c0
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 3d0
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 3e0
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 3f0
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 400
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 410
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 420
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 430
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 440
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 450
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 460
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 470
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 480
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 490
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 4a0
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 4b0
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 4c0
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 4d0
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 4e0
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 4f0
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 500
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 510
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 520
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 530
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 540
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 550
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 560
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 570
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 580
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 590
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 5a0
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 5b0
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 5c0
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 5d0
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 5e0
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 5f0
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 600
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 610
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 620
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 630
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 640
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 650
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 660
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 670
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 680
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 690
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 6a0
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 6b0
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 6c0
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 6d0
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 6e0
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 6f0
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 700
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 710
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 720
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 730
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 740
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 750
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 760
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 770
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 780
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 790
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 7a0
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 7b0
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 7c0
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 7d0
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 7e0
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 7f0
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 800
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 810
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 820
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 830
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 840
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 850
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 860
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 870
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 880
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 890
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 8a0
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 8b0
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 8c0
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 8d0
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 8e0
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 8f0
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 900
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 910
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 920
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 930
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 940
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 950
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 960
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 970
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 980
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 990
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 9a0
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 9b0
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 9c0
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 9d0
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 9e0
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: 9f0
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: a00
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 10 Lba: a10
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 0 Lba: a20
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+ UDFVerifyXSpaceBitmap: part 0
+Partition (8192:0 type 1511) starts at physical 120, length 2740dc0
+UDFPhRead: Length: 0 Lba: 9d03f8
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 0 Lba: 9d03f8
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFVerifyFreeSpaceBitmap:
+ Lba @2740fe3
+UDFPhRead: Length: 0 Lba: 9d03f8
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 0 Lba: 9d03f9
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 0 Lba: 9d03f9
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+UDFPhRead: Length: 0 Lba: 9d03f9
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+-----------------------------------
+Using anchor in block 100
+UDFPhRead: Length: 0 Lba: 48
+    Alloc async Irp MDL=89dbab40, ctx=89d16768
+UDFAsyncCompletionRoutine ctx=89d16768
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+Rootdir at block=2761, partition=0
+SysStream at block=0, partition=0
+volIdent[] = '(null)'
+UDF: Entity Id:
+flags: 0
+ident[0]: 2a
+ident[1]: 4f
+ident[2]: 53
+ident[3]: 54
+UDF: Entity Id Domain:
+Effective Revision: 201
+Flags: 0
+UDFMountVolume: writable volume
+UDFMountVolume: RAM mode
+UDFCompleteMount:
+UDFCompleteMount: alloc Root FCB
+UDFAllocateFCB: 89d4c9c0
+UDFCompleteMount: alloc Root ObjName
+UDFCompleteMount: open Root Dir
+UDFPhRead: Length: 0 Lba: a20
+    Alloc async Irp MDL=89dbab40, ctx=89a8fd70
+UDFAsyncCompletionRoutine ctx=89a8fd70
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+  UDFLoadExtInfo:
+Extended FileEntry
+UDFReadMappingFromXEntry: mode 3, loc ffffffff, len 5c
+  FExtInfo->Length 5c
+UDF: scaning directory
+Thrd:89d62ae0:Read ExtInfo 89d2e1a0, Mapping 89a8f158
+ExtLen 200
+UDFPhRead: Length: 0 Lba: a20
+    Alloc async Irp MDL=89dbab40, ctx=89a8f110
+UDFAsyncCompletionRoutine ctx=89a8f110
+    Unlock MDL=89dbab40
+    Free MDL=89dbab40
+  ExtInfo->Length 5c
+  Offset 0
+  Offset 28
+  final Offset 5c
+  Count 2
+  FileId: offs 0, filen 0, iulen 0
+  DirNdx: Length 28, Charact a
+  parent
+..
+  FileId: offs 28, filen d, iulen 0
+  DirNdx: Length 34, Charact 3
+$RECYCLE.BIN
+UDFCompleteMount: init FCB
+Thrd:89d62ae0:UDFInitializeFCB
+ClrModified
+UDFMountVolume: RC = 0
+UDFMountVolume: complete req RC 0
+UDFMountVolume: final RC = 0
+  UDFCommonFSControl: finally
+UDFCreate:
+UDFCommonCreate:
+Thrd:89d62ae0:    Dispos: FILE_OPEN
+UDFVerifyVCB: Modified=0
+UDFVerifyVCB: Modified=0
+UDFVerifyVCB: Modified=0
+UDFVerifyVcb: RC = 0
+    Absolute open
+Thrd:89d62ae0:  Opening RootDir
+Thrd:89d62ae0:UDFOpenFile
+Thrd:89d62ae0:    FCB 89d4c9c0, CCB d6b09cd0, FO 89d65b60, Flags 801a
+Thrd:89d62ae0:UDFCreate: 0
+UDFQueryVolInfo: 
+UDFCommonQueryVolInfo: 
+  UDFQueryFsSizeInfo: 
+  Space: Total 2740dc0, Free 273e57b
+UDFCleanup
+UDFCommonCleanup
+Thrd:89d62ae0:   Wt
+Thrd:89d62ae0:Cleaning up file: . 89d65b60
+Thrd:89d62ae0:UDF: OpenHandleCount: 2
+    CcUninitializeCacheMap()
+Thrd:89d62ae0:UDFCloseFileInfoChain
+Thrd:89d62ae0:Acquiring VCB...
+Thrd:89d62ae0:Done
+    FastIoIsPossible
+Thrd:89d62ae0:UDFClose: 
+Thrd:89d62ae0:UDFCommonClose: 
+Thrd:89d62ae0:   post Close Irp
+  *** Thr: 89f963f0  ThCnt: 1  QCnt: 0  Started!
+    Next IRP
+  *** MJ: 2, Thr: 89f963f0
+Thrd:89f963f0:UDFCommonClose: 
+Thrd:89f963f0:Closing file: . 00000000
+Thrd:89f963f0:UDF: ReferenceCount:  2
+Thrd:89f963f0:UDFCleanUpFcbChain
+  *** Thr: 89f963f0  Done!
+  *** Thr: 89f963f0  ThCnt: 0  QCnt: 0  Terminated!
+UDFCreate:
+UDFCommonCreate:
+Thrd:89f94020:    Dispos: FILE_OPEN
+UDFVerifyVCB: Modified=0
+UDFVerifyVCB: Modified=0
+UDFVerifyVCB: Modified=0
+UDFVerifyVcb: RC = 0
+    Absolute open
+Thrd:89f94020:    Opening file \System Volume Information\MountPointManagerRemoteDatabase 89dd00b0
+Thrd:89f94020:    Can't open file
+Thrd:89f94020:    Error opening path component
+Thrd:89f94020:UDFCloseFileInfoChain
+Thrd:89f94020:Acquiring VCB...
+Thrd:89f94020:Done
+Thrd:89f94020:UDFCleanUpFcbChain
+Thrd:89f94020:UDFCreate: c000003a
+UDFCreate:
+UDFCommonCreate:
+Thrd:89f94020:    Dispos: FILE_OPEN
+UDFVerifyVCB: Modified=0
+UDFVerifyVCB: Modified=0
+UDFVerifyVCB: Modified=0
+UDFVerifyVcb: RC = 0
+    Absolute open
+Thrd:89f94020:    Opening file \$Extend\$Reparse:$R:$INDEX_ALLOCATION 89dd00b0
+Thrd:89f94020:    Can't open file
+Thrd:89f94020:    File doesn't exist
+Thrd:89f94020:UDFCloseFileInfoChain
+Thrd:89f94020:Acquiring VCB...
+Thrd:89f94020:Done
+Thrd:89f94020:UDFCleanUpFcbChain
+Thrd:89f94020:UDFCreate: c0000034
+AFD: AfdPprThreshold value queried from transport: 2960
+UDFCreate:
+UDFCommonCreate:
+Thrd:88aa2db0:    Dispos: FILE_OPEN
+UDFVerifyVCB: Modified=0
+UDFVerifyVCB: Modified=0
+UDFVerifyVCB: Modified=0
+UDFVerifyVcb: RC = 0
+    Absolute open
+Thrd:88aa2db0:    Opening file \System Volume Information 88ad5608
+Thrd:88aa2db0:    Can't open file
+Thrd:88aa2db0:    File doesn't exist
+Thrd:88aa2db0:UDFCloseFileInfoChain
+Thrd:88aa2db0:Acquiring VCB...
+Thrd:88aa2db0:Done
+Thrd:88aa2db0:UDFCleanUpFcbChain
+Thrd:88aa2db0:UDFCreate: c0000034
+UDFCreate:
+UDFCommonCreate:
+Thrd:88abe780:    Dispos: FILE_OPEN
+UDFVerifyVCB: Modified=0
+UDFVerifyVCB: Modified=0
+UDFVerifyVCB: Modified=0
+UDFVerifyVcb: RC = 0
+    Absolute open
+Thrd:88abe780:    Opening file \bootex.log 889ecdf8
+Thrd:88abe780:    Can't open file
+Thrd:88abe780:    File doesn't exist
+Thrd:88abe780:UDFCloseFileInfoChain
+Thrd:88abe780:Acquiring VCB...
+Thrd:88abe780:Done
+Thrd:88abe780:UDFCleanUpFcbChain
+Thrd:88abe780:UDFCreate: c0000034
+UDFCreate:
+UDFCommonCreate:
+Thrd:889e7830:    Dispos: FILE_OPEN
+UDFVerifyVCB: Modified=0
+UDFVerifyVCB: Modified=0
+UDFVerifyVCB: Modified=0
+UDFVerifyVcb: RC = 0
+    Absolute open
+Thrd:889e7830:  Opening RootDir
+Thrd:889e7830:UDFOpenFile
+Thrd:889e7830:    FCB 89d4c9c0, CCB d6b09cd0, FO 88a03410, Flags 801a
+Thrd:889e7830:UDFCreate: 0
+UDFQueryInfo: 
+UDFCommonQueryInfo: irp 88a473b0
+Thrd:889e7830:UDFGetFullNameInformation
+UDFQueryVolInfo: 
+UDFCommonQueryVolInfo: 
+  UDFQueryFsAttributeInfo: 
+UDFCleanup
+UDFCommonCleanup
+Thrd:889e7830:   Wt
+Thrd:889e7830:Cleaning up file: . 88a03410
+Thrd:889e7830:UDF: OpenHandleCount: 2
+    CcUninitializeCacheMap()
+Thrd:889e7830:UDFCloseFileInfoChain
+Thrd:889e7830:Acquiring VCB...
+Thrd:889e7830:Done
+    FastIoIsPossible
+Thrd:889e7830:UDFClose: 
+Thrd:889e7830:UDFCommonClose: 
+Thrd:889e7830:   post Close Irp
+  *** Thr: 89f96660  ThCnt: 1  QCnt: 0  Started!
+    Next IRP
+  *** MJ: 2, Thr: 89f96660
+Thrd:89f96660:UDFCommonClose: 
+Thrd:89f96660:Closing file: . 00000000
+Thrd:89f96660:UDF: ReferenceCount:  2
+Thrd:89f96660:UDFCleanUpFcbChain
+  *** Thr: 89f96660  Done!
+  *** Thr: 89f96660  ThCnt: 0  QCnt: 0  Terminated!
+UDFCreate:
+UDFCommonCreate:
+Thrd:889ed020:    Dispos: FILE_OPEN
+UDFVerifyVCB: Modified=0
+UDFVerifyVCB: Modified=0
+UDFVerifyVCB: Modified=0
+UDFVerifyVcb: RC = 0
+    Absolute open
+Thrd:889ed020:  Opening RootDir
+Thrd:889ed020:UDFOpenFile
+Thrd:889ed020:    FCB 89d4c9c0, CCB d6b09cd0, FO 88a9cb18, Flags 801a
+Thrd:889ed020:UDFCreate: 0
+UDFCleanup
+UDFCommonCleanup
+Thrd:889ed020:   Wt
+Thrd:889ed020:Cleaning up file: . 88a9cb18
+Thrd:889ed020:UDF: OpenHandleCount: 2
+    CcUninitializeCacheMap()
+Thrd:889ed020:UDFCloseFileInfoChain
+Thrd:889ed020:Acquiring VCB...
+Thrd:889ed020:Done
+    FastIoIsPossible
+Thrd:889ed020:UDFClose: 
+Thrd:889ed020:UDFCommonClose: 
+Thrd:889ed020:   post Close Irp
+  *** Thr: 89f96660  ThCnt: 1  QCnt: 0  Started!
+    Next IRP
+  *** MJ: 2, Thr: 89f96660
+Thrd:89f96660:UDFCommonClose: 
+Thrd:89f96660:Closing file: . 00000000
+Thrd:89f96660:UDF: ReferenceCount:  2
+Thrd:89f96660:UDFCleanUpFcbChain
+  *** Thr: 89f96660  Done!
+  *** Thr: 89f96660  ThCnt: 0  QCnt: 0  Terminated!
+UDFCreate:
+UDFCommonCreate:
+Thrd:886c18d0:    Dispos: FILE_OPEN
+UDFVerifyVCB: Modified=0
+UDFVerifyVCB: Modified=0
+UDFVerifyVCB: Modified=0
+UDFVerifyVcb: RC = 0
+    Absolute open
+Thrd:886c18d0:    Opening file \autorun.inf ba1decc0
+Thrd:886c18d0:    Can't open file
+Thrd:886c18d0:    File doesn't exist
+Thrd:886c18d0:UDFCloseFileInfoChain
+Thrd:886c18d0:Acquiring VCB...
+Thrd:886c18d0:Done
+Thrd:886c18d0:UDFCleanUpFcbChain
+Thrd:886c18d0:UDFCreate: c0000034
+UDFCreate:
+UDFCommonCreate:
+Thrd:886de368:    Dispos: FILE_OPEN
+UDFVerifyVCB: Modified=0
+UDFVerifyVCB: Modified=0
+UDFVerifyVCB: Modified=0
+UDFVerifyVcb: RC = 0
+    Absolute open
+Thrd:886de368:    Opening file \Program Files\Winamp\uninstwa.exe ba8b9cc0
+Thrd:886de368:    Can't open file
+Thrd:886de368:    Error opening path component
+Thrd:886de368:UDFCloseFileInfoChain
+Thrd:886de368:Acquiring VCB...
+Thrd:886de368:Done
+Thrd:886de368:UDFCleanUpFcbChain
+Thrd:886de368:UDFCreate: c000003a
+UDFCreate:
+UDFCommonCreate:
+Thrd:886de368:    Dispos: FILE_OPEN
+UDFVerifyVCB: Modified=0
+UDFVerifyVCB: Modified=0
+UDFVerifyVCB: Modified=0
+UDFVerifyVcb: RC = 0
+    Absolute open
+Thrd:886de368:    Opening file \Program Files\Winamp\whatsnew.txt ba8b9cc0
+Thrd:886de368:    Can't open file
+Thrd:886de368:    Error opening path component
+Thrd:886de368:UDFCloseFileInfoChain
+Thrd:886de368:Acquiring VCB...
+Thrd:886de368:Done
+Thrd:886de368:UDFCleanUpFcbChain
+Thrd:886de368:UDFCreate: c000003a
+UDFCreate:
+UDFCommonCreate:
+Thrd:886de368:    Dispos: FILE_OPEN
+UDFVerifyVCB: Modified=0
+UDFVerifyVCB: Modified=0
+UDFVerifyVCB: Modified=0
+UDFVerifyVcb: RC = 0
+    Absolute open
+Thrd:886de368:    Opening file \Program Files\Winamp\winamp.exe ba8b9cc0
+Thrd:886de368:    Can't open file
+Thrd:886de368:    Error opening path component
+Thrd:886de368:UDFCloseFileInfoChain
+Thrd:886de368:Acquiring VCB...
+Thrd:886de368:Done
+Thrd:886de368:UDFCleanUpFcbChain
+Thrd:886de368:UDFCreate: c000003a
+UDFCreate:
+UDFCommonCreate:
+Thrd:886de368:    Dispos: FILE_OPEN
+UDFVerifyVCB: Modified=0
+UDFVerifyVCB: Modified=0
+UDFVerifyVCB: Modified=0
+UDFVerifyVcb: RC = 0
+    Absolute open
+Thrd:886de368:    Opening file \Program Files\Winamp\uninstwa.exe ba8b9cc0
+Thrd:886de368:    Can't open file
+Thrd:886de368:    Error opening path component
+Thrd:886de368:UDFCloseFileInfoChain
+Thrd:886de368:Acquiring VCB...
+Thrd:886de368:Done
+Thrd:886de368:UDFCleanUpFcbChain
+Thrd:886de368:UDFCreate: c000003a
+UDFCreate:
+UDFCommonCreate:
+Thrd:886de368:    Dispos: FILE_OPEN
+UDFVerifyVCB: Modified=0
+UDFVerifyVCB: Modified=0
+UDFVerifyVCB: Modified=0
+UDFVerifyVcb: RC = 0
+    Absolute open
+Thrd:886de368:    Opening file \Program Files\Winamp\uninstwa.exe ba8b9cc0
+Thrd:886de368:    Can't open file
+Thrd:886de368:    Error opening path component
+Thrd:886de368:UDFCloseFileInfoChain
+Thrd:886de368:Acquiring VCB...
+Thrd:886de368:Done
+Thrd:886de368:UDFCleanUpFcbChain
+Thrd:886de368:UDFCreate: c000003a
+UDFCreate:
+UDFCommonCreate:
+Thrd:886de368:    Dispos: FILE_OPEN
+UDFVerifyVCB: Modified=0
+UDFVerifyVCB: Modified=0
+UDFVerifyVCB: Modified=0
+UDFVerifyVcb: RC = 0
+    Absolute open
+Thrd:886de368:    Opening file \Program Files\Winamp\uninstwa.exe ba8b9cc0
+Thrd:886de368:    Can't open file
+Thrd:886de368:    Error opening path component
+Thrd:886de368:UDFCloseFileInfoChain
+Thrd:886de368:Acquiring VCB...
+Thrd:886de368:Done
+Thrd:886de368:UDFCleanUpFcbChain
+Thrd:886de368:UDFCreate: c000003a
+UDFCreate:
+UDFCommonCreate:
+Thrd:886de368:    Dispos: FILE_OPEN
+UDFVerifyVCB: Modified=0
+UDFVerifyVCB: Modified=0
+UDFVerifyVCB: Modified=0
+UDFVerifyVcb: RC = 0
+    Absolute open
+Thrd:886de368:    Opening file \Program Files\Winamp\uninstwa.exe ba8b9cc0
+Thrd:886de368:    Can't open file
+Thrd:886de368:    Error opening path component
+Thrd:886de368:UDFCloseFileInfoChain
+Thrd:886de368:Acquiring VCB...
+Thrd:886de368:Done
+Thrd:886de368:UDFCleanUpFcbChain
+Thrd:886de368:UDFCreate: c000003a
+UDFCreate:
+UDFCommonCreate:
+Thrd:886de368:    Dispos: FILE_OPEN
+UDFVerifyVCB: Modified=0
+UDFVerifyVCB: Modified=0
+UDFVerifyVCB: Modified=0
+UDFVerifyVcb: RC = 0
+    Absolute open
+Thrd:886de368:    Opening file \Program Files\Winamp\winamp.exe ba8b9cc0
+Thrd:886de368:    Can't open file
+Thrd:886de368:    Error opening path component
+Thrd:886de368:UDFCloseFileInfoChain
+Thrd:886de368:Acquiring VCB...
+Thrd:886de368:Done
+Thrd:886de368:UDFCleanUpFcbChain
+Thrd:886de368:UDFCreate: c000003a
+UDFCreate:
+UDFCommonCreate:
+Thrd:886de368:    Dispos: FILE_OPEN
+UDFVerifyVCB: Modified=0
+UDFVerifyVCB: Modified=0
+UDFVerifyVCB: Modified=0
+UDFVerifyVcb: RC = 0
+    Absolute open
+Thrd:886de368:    Opening file \Program Files\Winamp\winamp.exe ba8b9cc0
+Thrd:886de368:    Can't open file
+Thrd:886de368:    Error opening path component
+Thrd:886de368:UDFCloseFileInfoChain
+Thrd:886de368:Acquiring VCB...
+Thrd:886de368:Done
+Thrd:886de368:UDFCleanUpFcbChain
+Thrd:886de368:UDFCreate: c000003a
+UDFCreate:
+UDFCommonCreate:
+Thrd:886de368:    Dispos: FILE_OPEN
+UDFVerifyVCB: Modified=0
+UDFVerifyVCB: Modified=0
+UDFVerifyVCB: Modified=0
+UDFVerifyVcb: RC = 0
+    Absolute open
+Thrd:886de368:    Opening file \Program Files\Winamp\winamp.exe ba8b9cc0
+Thrd:886de368:    Can't open file
+Thrd:886de368:    Error opening path component
+Thrd:886de368:UDFCloseFileInfoChain
+Thrd:886de368:Acquiring VCB...
+Thrd:886de368:Done
+Thrd:886de368:UDFCleanUpFcbChain
+Thrd:886de368:UDFCreate: c000003a
+UDFCreate:
+UDFCommonCreate:
+Thrd:886de368:    Dispos: FILE_OPEN
+UDFVerifyVCB: Modified=0
+UDFVerifyVCB: Modified=0
+UDFVerifyVCB: Modified=0
+UDFVerifyVcb: RC = 0
+    Absolute open
+Thrd:886de368:    Opening file \Program Files\Winamp\winamp.exe ba8b9cc0
+Thrd:886de368:    Can't open file
+Thrd:886de368:    Error opening path component
+Thrd:886de368:UDFCloseFileInfoChain
+Thrd:886de368:Acquiring VCB...
+Thrd:886de368:Done
+Thrd:886de368:UDFCleanUpFcbChain
+Thrd:886de368:UDFCreate: c000003a
+UDFCreate:
+UDFCommonCreate:
+Thrd:886de368:    Dispos: FILE_OPEN
+UDFVerifyVCB: Modified=0
+UDFVerifyVCB: Modified=0
+UDFVerifyVCB: Modified=0
+UDFVerifyVcb: RC = 0
+    Absolute open
+Thrd:886de368:    Opening file \Program Files\Winamp\winamp.exe ba8b9cc0
+Thrd:886de368:    Can't open file
+Thrd:886de368:    Error opening path component
+Thrd:886de368:UDFCloseFileInfoChain
+Thrd:886de368:Acquiring VCB...
+Thrd:886de368:Done
+Thrd:886de368:UDFCleanUpFcbChain
+Thrd:886de368:UDFCreate: c000003a
+UDFCreate:
+UDFCommonCreate:
+Thrd:886de368:    Dispos: FILE_OPEN
+UDFVerifyVCB: Modified=0
+UDFVerifyVCB: Modified=0
+UDFVerifyVCB: Modified=0
+UDFVerifyVcb: RC = 0
+    Absolute open
+Thrd:886de368:    Opening file \Program Files\Winamp\winamp.exe ba8b9cc0
+Thrd:886de368:    Can't open file
+Thrd:886de368:    Error opening path component
+Thrd:886de368:UDFCloseFileInfoChain
+Thrd:886de368:Acquiring VCB...
+Thrd:886de368:Done
+Thrd:886de368:UDFCleanUpFcbChain
+Thrd:886de368:UDFCreate: c000003a
+UDFCreate:
+UDFCommonCreate:
+Thrd:886de368:    Dispos: FILE_OPEN
+UDFVerifyVCB: Modified=0
+UDFVerifyVCB: Modified=0
+UDFVerifyVCB: Modified=0
+UDFVerifyVcb: RC = 0
+    Absolute open
+Thrd:886de368:    Opening file \Program Files\Winamp\winamp.exe ba8b9cc0
+Thrd:886de368:    Can't open file
+Thrd:886de368:    Error opening path component
+Thrd:886de368:UDFCloseFileInfoChain
+Thrd:886de368:Acquiring VCB...
+Thrd:886de368:Done
+Thrd:886de368:UDFCleanUpFcbChain
+Thrd:886de368:UDFCreate: c000003a
+UDFCreate:
+UDFCommonCreate:
+Thrd:886de368:    Dispos: FILE_OPEN
+UDFVerifyVCB: Modified=0
+UDFVerifyVCB: Modified=0
+UDFVerifyVCB: Modified=0
+UDFVerifyVcb: RC = 0
+    Absolute open
+Thrd:886de368:    Opening file \Program Files\Winamp\winamp.exe ba8b9cc0
+Thrd:886de368:    Can't open file
+Thrd:886de368:    Error opening path component
+Thrd:886de368:UDFCloseFileInfoChain
+Thrd:886de368:Acquiring VCB...
+Thrd:886de368:Done
+Thrd:886de368:UDFCleanUpFcbChain
+Thrd:886de368:UDFCreate: c000003a
+UDFCreate:
+UDFCommonCreate:
+Thrd:886e6db0:    Dispos: FILE_OPEN
+UDFVerifyVCB: Modified=0
+UDFVerifyVCB: Modified=0
+UDFVerifyVCB: Modified=0
+UDFVerifyVcb: RC = 0
+    Absolute open
+Thrd:886e6db0:  Opening RootDir
+Thrd:886e6db0:UDFOpenFile
+Thrd:886e6db0:    FCB 89d4c9c0, CCB d6b09cd0, FO 886c5390, Flags 801a
+Thrd:886e6db0:UDFCreate: 0
+UDFQueryInfo: 
+UDFCommonQueryInfo: irp 88ab2e70
+Thrd:886e6db0:UDFGetFullNameInformation
+UDFQueryVolInfo: 
+UDFCommonQueryVolInfo: 
+  UDFQueryFsAttributeInfo: 
+UDFCleanup
+UDFCommonCleanup
+Thrd:886e6db0:   Wt
+Thrd:886e6db0:Cleaning up file: . 886c5390
+Thrd:886e6db0:UDF: OpenHandleCount: 2
+    CcUninitializeCacheMap()
+Thrd:886e6db0:UDFCloseFileInfoChain
+Thrd:886e6db0:Acquiring VCB...
+Thrd:886e6db0:Done
+    FastIoIsPossible
+Thrd:886e6db0:UDFClose: 
+Thrd:886e6db0:UDFCommonClose: 
+Thrd:886e6db0:   post Close Irp
+  *** Thr: 89f968d0  ThCnt: 1  QCnt: 0  Started!
+    Next IRP
+  *** MJ: 2, Thr: 89f968d0
+Thrd:89f968d0:UDFCommonClose: 
+Thrd:89f968d0:Closing file: . 00000000
+Thrd:89f968d0:UDF: ReferenceCount:  2
+Thrd:89f968d0:UDFCleanUpFcbChain
+  *** Thr: 89f968d0  Done!
+  *** Thr: 89f968d0  ThCnt: 0  QCnt: 0  Terminated!
+UDFCreate:
+UDFCommonCreate:
+Thrd:886e6db0:    Dispos: FILE_OPEN
+UDFVerifyVCB: Modified=0
+UDFVerifyVCB: Modified=0
+UDFVerifyVCB: Modified=0
+UDFVerifyVcb: RC = 0
+    Absolute open
+Thrd:886e6db0:  Opening RootDir
+Thrd:886e6db0:UDFOpenFile
+Thrd:886e6db0:    FCB 89d4c9c0, CCB d6b09cd0, FO 886c5390, Flags 801a
+Thrd:886e6db0:UDFCreate: 0
+UDFQueryInfo: 
+UDFCommonQueryInfo: irp 88ab2e70
+Thrd:886e6db0:UDFGetFullNameInformation
+UDFQueryVolInfo: 
+UDFCommonQueryVolInfo: 
+  UDFQueryFsAttributeInfo: 
+UDFCleanup
+UDFCommonCleanup
+Thrd:886e6db0:   Wt
+Thrd:886e6db0:Cleaning up file: . 886c5390
+Thrd:886e6db0:UDF: OpenHandleCount: 2
+    CcUninitializeCacheMap()
+Thrd:886e6db0:UDFCloseFileInfoChain
+Thrd:886e6db0:Acquiring VCB...
+Thrd:886e6db0:Done
+    FastIoIsPossible
+Thrd:886e6db0:UDFClose: 
+Thrd:886e6db0:UDFCommonClose: 
+Thrd:886e6db0:   post Close Irp
+  *** Thr: 89f968d0  ThCnt: 1  QCnt: 0  Started!
+    Next IRP
+  *** MJ: 2, Thr: 89f968d0
+Thrd:89f968d0:UDFCommonClose: 
+Thrd:89f968d0:Closing file: . 00000000
+Thrd:89f968d0:UDF: ReferenceCount:  2
+Thrd:89f968d0:UDFCleanUpFcbChain
+  *** Thr: 89f968d0  Done!
+  *** Thr: 89f968d0  ThCnt: 0  QCnt: 0  Terminated!
+UDFCreate:
+UDFCommonCreate:
+Thrd:886e6db0:    Dispos: FILE_OPEN
+UDFVerifyVCB: Modified=0
+UDFVerifyVCB: Modified=0
+UDFVerifyVCB: Modified=0
+UDFVerifyVcb: RC = 0
+    Absolute open
+Thrd:886e6db0:    Opening file \Recycled 89e0d6d0
+Thrd:886e6db0:    Can't open file
+Thrd:886e6db0:    File doesn't exist
+Thrd:886e6db0:UDFCloseFileInfoChain
+Thrd:886e6db0:Acquiring VCB...
+Thrd:886e6db0:Done
+Thrd:886e6db0:UDFCleanUpFcbChain
+Thrd:886e6db0:UDFCreate: c0000034
