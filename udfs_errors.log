@@ -1,0 +1,679 @@
+UDF Conformance Testing Application
+(c) Koninklijke Philips Electronics N.V. 1999-2007
+Application version : 1.5r6 distribution bin
+   UCT Core version : 1.5r6 distribution bin
+           platform : Windows - with scsi/atapi support
+   '-drive' support : yes
+
+Command:
+  udf_test
+Generic options parsing:
+
+Medium info options parsing:
+
+Device options parsing:
+	-drive G:
+
+
+'-drive' device Medium Info:
+  last valid block	: 41160703   Volume Space: 19.6270 Gbytes
+  block size		: 512
+  (ECC) blocking factor : 0
+  nmb of sessions	: 1
+  verify session	: 1
+  session starts	: 0       
+  medium WR type	: rewritable
+  medium SE type	: unknown
+  medium CL type	: unknown finalization state
+
+=> ignore device medium WR type: rewritable
+=> Warning: Undefined (ECC) blocking factor, set to 16.
+-	    Please specify "-ecclength <n>" to enable the verifier to do
+-	    a better job. Media that do not have ECC or fixed size packets
+-	    must specify: -ecclength 1
+
+Inspect 1 block for presence of VAT or AVDP
+starting at block: 41160703
+
+  ==>	read cache: max 32 buffers of 32 sectors, total 512 Kb
+41160703	        1 ok block read
+41160703	AVDP	(MVDS: 96, RVDS: 41160672)
+
+last AVDP at 41160703 (N)
+
+	Single Layer medium
+
+Verification start medium info
+  last valid block	: 41160703   Volume Space: 19.6270 Gbytes
+  block size		: 512
+  (ECC) blocking factor : 16
+  nmb of sessions	: 1
+  verify session	: 1
+  session starts	: 0       
+  medium WR type	: unknown
+  medium SE type	: unknown
+  medium CL type	: unknown finalization state
+
+====>	Start verification
+	Start time   : 2025-05-29 15:42:05 -04:00 (west of UTC)
+	Verbose level: 100
+	Message limit: 20
+	Fake read enabled
+	Read cache enabled
+	Initial UDF Revision range: 1.02 thru 2.60
+	Single Layer medium
+
+====>	Volume Structure verification
+	Read Volume Recognition Sequence
+     64	read 4 blocks
+	BEA01
+	Start of Extended Area
+     68	read 4 blocks
+	NSR03
+  ==>	Changed UDF Revision range from: 1.02 thru 2.60 to: 2.00 thru 2.60
+-	because of "NSR03 descriptor"
+     72	read 4 blocks
+	TEA01
+     76	read 4 blocks
+	End of Extended Area
+	End of Volume Recognition Sequence
+
+
+	Reading Volume Information
+    256	read block
+	AVDP at 256	(MVDS: 96, RVDS: 41160672)
+	First Tag Serial Number: 83
+41160447	read block
+	AVDP at N-256	(MVDS: 96, RVDS: 41160672)
+41160703	read block
+	AVDP at N	(MVDS: 96, RVDS: 41160672)
+
+	Number of AVDPs: 3, AVDPs at  256,  N-256,  N
+
+====>	Read Main VDS extent:      96, length:   8192
+     96	read block
+	PVD   VDS Number: 1
+	PVD   Recording Time: 2025-05-29 15:37:41.800400 -04:00
+	PVD   Volume Identifier    : <undefined>
+	PVD  24  Error: Undefined/empty Dstring, ECMA 3/10.1.4.
+-			Unless otherwise specified, a dstring shall not
+-			be all #00 bytes, ECMA 1/7.2.12, UDF 2.1.3, 2.1.1.
+	PVD   Volume Set Identifier: "0F252950 UDF Volume Set"
+  ==>	PVD  344 New Entity Identifier (regid):
+	Application Entity Identifier
+	  <empty>
+  ==>	PVD  388 New Entity Identifier (regid):
+	Implementation Entity Identifier
+	  Identifier	     : "*Microsoft Windows"
+	  OS Class	     : #06  Windows NT
+	  OS Identifier	     : #00  Windows NT - generic
+  ==>	Add PVD to VDS info
+     97	read block
+	PD    VDS Number: 2, Partition Number: 8192
+  ==>	PD   24  New Entity Identifier (regid):
+	Application Entity Identifier
+	  Identifier	     : "+NSR03"
+	Unallocated Space Bitmap
+  ==>	Add PD to VDS info, partition number: 8192
+     98	read block
+	LVD   VDS Number: 3
+	LVD   Logical Volume Identifier: <undefined>
+	LVD  84  Error: Undefined/empty Dstring, ECMA 3/10.6.4.
+-			Unless otherwise specified, a dstring shall not
+-			be all #00 bytes, ECMA 1/7.2.12, UDF 2.1.3, 2.1.1.
+  ==>	LVD  216 New Entity Identifier (regid):
+	Domain Entity Identifier
+	  Identifier	     : "*OSTA UDF Compliant"
+	  UDF revision	     : 2.01
+  ==>	Changed UDF Revision range from: 2.00 thru 2.60 to: 2.01 only
+-	because of "Domain EntityID UDF revision"
+	  Domain flags	     : #00
+	LVD   FSD at: (0,p0)
+  ==>	Add LVD to VDS info
+     99	read block
+	USD   VDS Number: 4, nmb of ADs: 7
+	 1: location      76 thru        95,       20 blocks
+	 2: location     112 thru       127,       16 blocks
+	 3: location     144 thru       255,      112 blocks
+	 4: location     257 thru       287,       31 blocks
+	 5: location 41160416 thru  41160446,       31 blocks
+	 6: location 41160448 thru  41160671,      224 blocks
+	 7: location 41160688 thru  41160702,       15 blocks
+  ==>	Add USD to VDS info
+    100	read block
+	IUVD  VDS Number: 5
+	IUVD EntityID Identifier: "*UDF LV Info"
+  ==>	IUVD 20  New Entity Identifier (regid):
+	UDF Entity Identifier
+	  Identifier	     : "*UDF LV Info"
+	  UDF revision	     : 2.01
+	  OS Class	     : #06  Windows NT
+	  OS Identifier	     : #00  Windows NT - generic
+	UDF IUVD Logical Volume Identifier : <undefined>
+	IUVD 116 Error: Undefined/empty Dstring, UDF 2.2.7.2.2.
+-			Unless otherwise specified, a dstring shall not
+-			be all #00 bytes, ECMA 1/7.2.12, UDF 2.1.3, 2.1.1.
+	UDF IUVD LVInfo1: <undefined>
+	UDF IUVD LVInfo2: <undefined>
+	UDF IUVD LVInfo3: <undefined>
+  ==>	Add IUVD to VDS info
+    101	read block
+	TD  
+
+====>	Read Reserve VDS extent: 41160672, length:   8192
+41160672	read block
+	PVD   VDS Number: 1
+	PVD   Recording Time: 2025-05-29 15:37:41.800400 -04:00
+	PVD   Volume Identifier    : <undefined>
+	PVD  24  Error: Undefined/empty Dstring, ECMA 3/10.1.4.
+-			Unless otherwise specified, a dstring shall not
+-			be all #00 bytes, ECMA 1/7.2.12, UDF 2.1.3, 2.1.1.
+	PVD   Volume Set Identifier: "0F252950 UDF Volume Set"
+  ==>	Add PVD to VDS info
+41160673	read block
+	PD    VDS Number: 2, Partition Number: 8192
+	Unallocated Space Bitmap
+  ==>	Add PD to VDS info, partition number: 8192
+41160674	read block
+	LVD   VDS Number: 3
+	LVD   Logical Volume Identifier: <undefined>
+	LVD  84  Error: Undefined/empty Dstring, ECMA 3/10.6.4.
+-			Unless otherwise specified, a dstring shall not
+-			be all #00 bytes, ECMA 1/7.2.12, UDF 2.1.3, 2.1.1.
+	LVD   FSD at: (0,p0)
+  ==>	Add LVD to VDS info
+41160675	read block
+	USD   VDS Number: 4, nmb of ADs: 7
+	 1: location      76 thru        95,       20 blocks
+	 2: location     112 thru       127,       16 blocks
+	 3: location     144 thru       255,      112 blocks
+	 4: location     257 thru       287,       31 blocks
+	 5: location 41160416 thru  41160446,       31 blocks
+	 6: location 41160448 thru  41160671,      224 blocks
+	 7: location 41160688 thru  41160702,       15 blocks
+  ==>	Add USD to VDS info
+41160676	read block
+	IUVD  VDS Number: 5
+	IUVD EntityID Identifier: "*UDF LV Info"
+	UDF IUVD Logical Volume Identifier : <undefined>
+	IUVD 116 Error: Undefined/empty Dstring, UDF 2.2.7.2.2.
+-			Unless otherwise specified, a dstring shall not
+-			be all #00 bytes, ECMA 1/7.2.12, UDF 2.1.3, 2.1.1.
+	UDF IUVD LVInfo1: <undefined>
+	UDF IUVD LVInfo2: <undefined>
+	UDF IUVD LVInfo3: <undefined>
+  ==>	Add IUVD to VDS info
+41160677	read block
+	TD  
+
+====>	Check equivalence of Main VDS and Reserve VDS
+
+  ==>	Main and Reserve VDS are equivalent
+
+====>	Check Main VDS. Summary:
+	 PVD VDS Number  1
+	 LVD VDS Number  3
+	 USD VDS Number  4
+	  PD VDS Number  2
+	IUVD VDS Number  5  ID: "*UDF LV Info"
+	   5 prevailing VDS descriptors found
+
+
+  ==>	Using Main VDS
+
+  ==>	Checking VDS 'far apart' allocation for Main and Reserve VDS.
+
+   =>	Volume Descriptor Sequence 'far apart' test summary:
+-	      Main VDS LBA range:         96  thru        111,   1 extent
+-	   Reserve VDS LBA range:   41160672  thru   41160687,   1 extent
+-	  lowest packet distance: 2572536 ECC packets (100.0% of remaining Volume Space)
+-	     test margin level 1:  258000 ECC packets ( 10.0% of remaining Volume Space)
+-	     test margin level 2:  644000 ECC packets ( 25.0% of remaining Volume Space)
+-	       Main VDS    Reserve VDS    ECC packet distance
+-	           111       41160672      2572536                      
+
+
+====>	Checking Logical Volume: <undefined>
+
+	Prevailing Partition Descriptors:
+	  pNmb: 8192, start:   288, length: 41160128, access: overwritable
+
+	LVD Partition Maps:
+	  p0: Physical Partition Map (Type 1), pNmb: 8192
+
+  ==>	Changed medium WR type from unknown to overwritable
+-	        because of partition access type
+  ==>	Changed medium SE type from unknown to nonsequential
+-	        because of no Virtual Partition found
+
+
+	Mounted Partitions:
+-	p0: Physical, pNmb: 8192, blocks:     288 thru 41160415, access: overwritable
+-			  logical blocks:       0 thru 41160127
+
+  ==>	Changed medium CL type from unknown finalization state to finalized
+-	        because of more than one AVDP found
+
+	Read LVID sequence extent: 128, length: 8192
+    128	read block
+	LVID  - Close
+	LVID Recording Time: 2025-05-29 15:37:42.330500 -04:00
+    129	read block
+	TD  
+
+	Next UniqueID: #0000000000000012,
+	from LVID Logical Volume Header Descriptor.
+
+
+  ==>	p0: read Unallocated or Freed Partition Space Sets
+	    Unallocated Space Bitmap extent: 10049 blocks
+    320	read block
+    321	read 10048 blocks
+	SBD 
+	SBD  10     Note: Descriptor CRC Length: 8. This is the recommended value
+-			  according to errata DCN-5108 for UDF 2.50 and lower.
+	p0: Space set found
+	--
+
+	Read FSD sequence extent: (0,p0), length:    512
+
+    288	read block
+	FSD   FSN: 0,  FSDN: 0
+	FSD   Logical Volume Identifier: <undefined>
+	FSD  112 Error: Undefined/empty Dstring, ECMA 3/14.1.10.
+-			Unless otherwise specified, a dstring shall not
+-			be all #00 bytes, ECMA 1/7.2.12, UDF 2.1.3, 2.1.1.
+	FSD         File Set Identifier: "UDF Volume Set"
+	FSD   Copyright File Identifier: <undefined>
+	FSD    Abstract File Identifier: <undefined>
+	FSD           Root Directory at: (10081,p0)
+	FSD  System Stream Directory at: <undefined>
+
+====>	Volume identifiers summary:
+
+	    PVD:         Volume Identifier  [32]: <undefined>
+	    PVD:     Volume Set Identifier [128]: "0F252950 UDF Volume Set"
+	    LVD: Logical Volume Identifier [128]: <undefined>
+	   IUVD: Logical Volume Identifier [128]: <undefined>
+	    FSD: Logical Volume Identifier [128]: <undefined>
+	    FSD:       File Set Identifier  [32]: "UDF Volume Set"
+
+	Error: Logical Volume Identifier undefined or different
+-	       for LVD, IUVD or FSD, UDF 2.2.7.2.2, ECMA 4/14.1.10,
+-	       UDF 2., ECMA 3/8.8, 3/10.6.4, 1/7.2.12.
+
+====>	File Structure verification
+
+	Read Root Directory
+  10369	read block
+	EFE  file type DIR   UniqueID: #0000000000000000   name: <root>
+	EFE  10  Error: Descriptor CRC Length: 200, expected: 292,
+-			UDF 2.2.1.2, 2.3.1.2.
+-		 name: <root>
+	EFE  216 Embedded data, 92 bytes
+
+  ==>	(max) depth:  1  1  Expand directory: <root>
+
+	EFE  216 Verify embedded FIDs, 92 bytes
+	FID  UniqueID: #00000000  cid:       name: /<parent FID>, refers to: <root>
+	FID  UniqueID: #00000011  cid:   8   name: "$RECYCLE.BIN"
+	Add FIDs to directory hierarchy and read FEs
+  10528	read block
+	FE   file type DIR   UniqueID: #0000000000000011   name: "$RECYCLE.BIN"
+	FE   10  Error: Descriptor CRC Length: 160, expected: 252,
+-			UDF 2.2.1.2, 2.3.1.2.
+-		 name: "$RECYCLE.BIN"
+	FE   0   Warning: For UDF 2.00 and higher, an Extended File Entry
+-		   should be used instead of a File Entry. However, a File
+-		   Entry may be used for backward compatibility or if a
+-		   medium was upgraded from a UDF revision lower than 2.00,
+-		   UDF 3.3.5, 3.3.5.1. Clarification in DCN-5160.
+-		 name: "$RECYCLE.BIN"
+	FE   28  icbtag error: parentICBLocation: (10081,0),
+-			recommended: (0,0) for strategy type 4.
+-		 Icbtag Parent ICB Location shall not point to itself
+-		 or to a higher parent in the directory hierarchy.
+-		 ECMA 3rd edition 4/8.10.1, 4/14.6.7, UDF 2.3.5.3.
+-		 icbtag info: ECMA 4/14.6.*, 4/A.5, UDF 2.3.5.*, 6.6.
+-		 name: "$RECYCLE.BIN"
+	FE   48  Error: File Link Count: 0, expected: at least 1,
+-			ECMA 4/14.9.6
+-		 name: "$RECYCLE.BIN"
+	FE   72  Timestamp error: See below, error fields marked with *,
+-	expected timestamp type: 1
+-		 ECMA 1/7.3, UDF 2., 2.1.4.1, 3.1.1.
+-		 name: "$RECYCLE.BIN"
+-	TypeAndTimezone        : * #4000, * Type: 4,   Timezone: 0 (equal to UTC)
+-	Year                   :    2025
+-	Month                  :       5
+-	Day                    :      29
+-	Hour                   :      15
+-	Minute                 :      38
+-	Second                 :      43
+-	Centiseconds           :      47
+-	HundredsofMicroseconds :      50
+-	Microseconds           :      50
+-	==> errors marked with : *
+	FE   84  Timestamp error: See below, error fields marked with *,
+-	expected timestamp type: 1
+-		 ECMA 1/7.3, UDF 2., 2.1.4.1, 3.1.1.
+-		 name: "$RECYCLE.BIN"
+-	TypeAndTimezone        : * #4000, * Type: 4,   Timezone: 0 (equal to UTC)
+-	Year                   :    2025
+-	Month                  :       5
+-	Day                    :      29
+-	Hour                   :      15
+-	Minute                 :      38
+-	Second                 :      43
+-	Centiseconds           :      47
+-	HundredsofMicroseconds :      50
+-	Microseconds           :      50
+-	==> errors marked with : *
+	FE   96  Timestamp error: See below, error fields marked with *,
+-	expected timestamp type: 1
+-		 ECMA 1/7.3, UDF 2., 2.1.4.1, 3.1.1.
+-		 name: "$RECYCLE.BIN"
+-	TypeAndTimezone        : * #4000, * Type: 4,   Timezone: 0 (equal to UTC)
+-	Year                   :    2025
+-	Month                  :       5
+-	Day                    :      29
+-	Hour                   :      15
+-	Minute                 :      38
+-	Second                 :      43
+-	Centiseconds           :      47
+-	HundredsofMicroseconds :      50
+-	Microseconds           :      50
+-	==> errors marked with : *
+  ==>	FE   128 New Entity Identifier (regid):
+	Implementation Entity Identifier
+	  <empty>
+	  Identifier	     : ""
+   =>	Warning: Empty Identifier, missing Developer ID, UDF 2.1.5.2+3.
+	  OS Class	     : #00  Undefined
+	  OS Identifier	     : #00  Undefined
+	FE   176 Embedded data, 92 bytes
+
+Directory: <root>
+
+.d.p.e..........:.arwx:.arwx:.arwx DIR   1 2025-05-29 19:37         92 /<parent FID>, refers to: <root>
+hd...e......S...:darwx:darwx:darwx DIR   0 *2025-05-29 15:38         92 "$RECYCLE.BIN"
+
+
+  ==>	(max) depth:  2  2  Expand directory: "$RECYCLE.BIN"
+
+	FE   176 Verify embedded FIDs, 92 bytes
+	FID  UniqueID: #00000000  cid:       name: "$RECYCLE.BIN"/<parent FID>, refers to: <root>
+	FID  20  Error: Parent FID ICB does not correctly identify the
+-			parent directory, ECMA 4/8.6, UDF 2.3.4
+-		 name: "$RECYCLE.BIN"/<parent FID>, refers to: <root>
+-	=======> parent FID ICB:
+-	long_ad: Extent Length     : #00000200, size 512 bytes, extent type 0
+-	         Extent Location   : Logical Block Number      : 10240
+-	                           : Partition Reference Number: 0
+-	         Implementation Use: ADImpUse Flags : #0000
+-	                           :          ImpUse: #0, UDF UniqueID for FID ICB
+-	=======> parent to be identified:
+-	long_ad: Extent Length     : #00000200, size 512 bytes, extent type 0
+-	         Extent Location   : Logical Block Number      : 10081
+-	                           : Partition Reference Number: 0
+-	         Implementation Use: ADImpUse Flags : #0000
+-	                           :          ImpUse: #0, UDF UniqueID for FID ICB
+	FID  UniqueID: #00000012  cid:   8   name: "desktop.ini"
+	FID  32  Error: UniqueID:         #00000012
+-		   Next UniqueID: #0000000000000012
+-		 FID UniqueID shall be less than Next UniqueID,
+-		 UDF 3.2.1.1, ECMA 4/14.15.1.
+-		 name: "desktop.ini"
+	Add FIDs to directory hierarchy and read FEs
+  10784	read block
+	FE   file type FILE  UniqueID: #0000000000000012   name: "desktop.ini"
+	FE   10  Error: Descriptor CRC Length: 160, expected: 289,
+-			UDF 2.2.1.2, 2.3.1.2.
+-		 name: "desktop.ini"
+	FE   0   Warning: For UDF 2.00 and higher, an Extended File Entry
+-		   should be used instead of a File Entry. However, a File
+-		   Entry may be used for backward compatibility or if a
+-		   medium was upgraded from a UDF revision lower than 2.00,
+-		   UDF 3.3.5, 3.3.5.1. Clarification in DCN-5160.
+-		 name: "desktop.ini"
+- ==>	Message printed 2 times, ignored from now.
+	FE   28  icbtag error: parentICBLocation: (10240,0),
+-			recommended: (0,0) for strategy type 4.
+-		 Icbtag Parent ICB Location shall not point to itself
+-		 or to a higher parent in the directory hierarchy.
+-		 ECMA 3rd edition 4/8.10.1, 4/14.6.7, UDF 2.3.5.3.
+-		 icbtag info: ECMA 4/14.6.*, 4/A.5, UDF 2.3.5.*, 6.6.
+-		 name: "desktop.ini"
+	FE   48  Error: File Link Count: 0, expected: at least 1,
+-			ECMA 4/14.9.6
+-		 name: "desktop.ini"
+	FE   72  Timestamp error: See below, error fields marked with *,
+-	expected timestamp type: 1
+-		 ECMA 1/7.3, UDF 2., 2.1.4.1, 3.1.1.
+-		 name: "desktop.ini"
+-	TypeAndTimezone        : * #4000, * Type: 4,   Timezone: 0 (equal to UTC)
+-	Year                   :    2025
+-	Month                  :       5
+-	Day                    :      29
+-	Hour                   :      15
+-	Minute                 :      38
+-	Second                 :      43
+-	Centiseconds           :      50
+-	HundredsofMicroseconds :       0
+-	Microseconds           :       0
+-	==> errors marked with : *
+	FE   84  Timestamp error: See below, error fields marked with *,
+-	expected timestamp type: 1
+-		 ECMA 1/7.3, UDF 2., 2.1.4.1, 3.1.1.
+-		 name: "desktop.ini"
+-	TypeAndTimezone        : * #4000, * Type: 4,   Timezone: 0 (equal to UTC)
+-	Year                   :    2025
+-	Month                  :       5
+-	Day                    :      29
+-	Hour                   :      15
+-	Minute                 :      38
+-	Second                 :      43
+-	Centiseconds           :      50
+-	HundredsofMicroseconds :       0
+-	Microseconds           :       0
+-	==> errors marked with : *
+	FE   96  Timestamp error: See below, error fields marked with *,
+-	expected timestamp type: 1
+-		 ECMA 1/7.3, UDF 2., 2.1.4.1, 3.1.1.
+-		 name: "desktop.ini"
+-	TypeAndTimezone        : * #4000, * Type: 4,   Timezone: 0 (equal to UTC)
+-	Year                   :    2025
+-	Month                  :       5
+-	Day                    :      29
+-	Hour                   :      15
+-	Minute                 :      38
+-	Second                 :      43
+-	Centiseconds           :      50
+-	HundredsofMicroseconds :       0
+-	Microseconds           :       0
+-	==> errors marked with : *
+	FE   160 Error: UniqueID: #0000000000000012
+-		   Next UniqueID: #0000000000000012
+-		 FE UniqueID shall be less than Next UniqueID,
+-		 UDF 3.2.1.1, ECMA 4/14.15.1.
+-		 name: "desktop.ini"
+	FE   176 Embedded data, 129 bytes
+
+Directory: /"$RECYCLE.BIN"
+
+.d.p.e..........:.arwx:.arwx:.arwx DIR   1 2025-05-29 19:37         92 "$RECYCLE.BIN"/<parent FID>, refers to: <root>
+h....e......S...:darw.:darw.:darw. FILE  0 *2025-05-29 15:38        129 "desktop.ini"
+
+	file body read: "desktop.ini"
+	fake read FE embedded bytes: 129
+	FE   48  Error: Directory File Link Count: 0, expected: 1,
+-			for directory with 0 subdirectories,
+-			ECMA 4/14.9.6, 4/8.8.3
+-		 name: "$RECYCLE.BIN"
+
+	Expand complete, max depth  2 for directory: "$RECYCLE.BIN"
+-			   1 file    0 directories
+	EFE  48  Error: Directory File Link Count: 1, expected: 2,
+-			for directory with 1 subdirectory,
+-			ECMA 4/14.9.6, 4/8.8.3
+-		 name: <root>
+
+	Expand complete, max depth  2 for directory: <root>
+-			   0 files   1 directory  
+-		nested:    1 file    0 directories
+-	 overall total:    1 file    2 directories
+
+	Maximum directory depth: 2
+
+	End of directory tree expansion
+	Excluding deleted FIDs with cleared ICB
+
+====>	Testing File Link Count by cross reference of 5 paths.
+	File Link Count errors will be identified here by the
+	physical address of the File Entry as well as all
+	paths identifying the File Entry.
+	The physical address of the File Entry is also shown in
+	the informational read block messages above.
+	Note that errors found here may have been reported before
+	or may be caused by other previously reported errors.
+
+	Error: File Link Count: 0, expected: 2, ECMA 4/14.9.6,
+-	     2 FIDs identify an ICB translating to physical address 10528 for:
+- FID	/"$RECYCLE.BIN"
+- FID	/"$RECYCLE.BIN"/<parent FID>
+
+	Error: File Link Count: 0, expected: 1, ECMA 4/14.9.6,
+-	     1 FID identifies an ICB translating to physical address 10784 for:
+- FID	/"$RECYCLE.BIN"/"desktop.ini"
+
+====>	Testing free Volume Space in USD Allocation Descriptors
+
+====>	Build Partition Space Bitmaps.
+	Also check structures that overlap with partition space.
+
+====>	Partition Allocation summary :
+
+ ===>	Physical Partition p0:  size 41160128 blocks, overwritable
+				blocks     288 thru 41160415
+
+  ==>	Compare partition p0 calculated bitmap to recorded Space Set
+	  using: Unallocated Space Bitmap
+
+	  All used blocks marked as allocated
+
+	  Warning: 256 unused blocks NOT marked as unallocated.
+-		   This may be due to previous errors,
+-		   or otherwise it is Orphan Space, UDF 5.2.2.
+-	  Usage of following extents not yet identified:
+  10400	  logical block    10112 thru    10239,     128 blocks
+  10656	  logical block    10368 thru    10495,     128 blocks
+
+====>	Final LVID verification
+	Close LVID
+  ==>	overwritable Physical Partition p0 Space summary:
+	                  Partition Length    : 41160128
+	             LVID Partition Size      : 41160128
+	             LVID Partition Free Space: 41149819
+	   Unallocated Space Bitmap free space: 41149819
+	          Verifier expected free space: 41150075
+	    Unused by UDF but allocated blocks:     256
+
+	LVID 80  FreeSpaceTable error: Physical Partition p0 Free Space: 41149819,
+-		 expected: 41150075, see Space summary above and
+-		 maybe use -showalloc output, UDF 2.2.6.2, ECMA 3/10.10.
+-	Note: The verifier may be unable to find the correct values for
+-	      some of these LVID/VAT tests because of previous errors.
+
+  ==>	       LVID status summary:
+	Last modification Time    : 2025-05-29 15:37:42.330500 -04:00 (west of UTC)
+	Last written Developer Id : "*Microsoft Windows"
+	Next UniqueID             : #0000000000000012 => from LVID
+	max used FE  UniqueID     : #0000000000000012
+	max used FID UniqueID     :         #00000012
+	Number of Files           :        1
+	Number of Directories     :        2
+	Min UDF Read   Revision   : UDF 2.01
+	Min UDF Write  Revision   : UDF 2.01
+	Max UDF Write  Revision   : UDF 2.01
+	    Medium UDF Revision   : UDF 2.01
+
+
+====>	Testing uniqueness of relevant UniqueIDs.
+
+
+	Test complete
+	Elapsed time : 00:00
+
+====>	Volume identifiers summary:
+
+	    PVD:         Volume Identifier  [32]: <undefined>
+	    PVD:     Volume Set Identifier [128]: "0F252950 UDF Volume Set"
+	    LVD: Logical Volume Identifier [128]: <undefined>
+	   IUVD: Logical Volume Identifier [128]: <undefined>
+	    FSD: Logical Volume Identifier [128]: <undefined>
+	    FSD:       File Set Identifier  [32]: "UDF Volume Set"
+
+	Error: Logical Volume Identifier undefined or different
+-	       for LVD, IUVD or FSD, UDF 2.2.7.2.2, ECMA 4/14.1.10,
+-	       UDF 2., ECMA 3/8.8, 3/10.6.4, 1/7.2.12.
+
+====>	Encountered EntityID (regid) summary:
+
+ count	EntityID
+
+    3	Domain Entity Identifier
+	  Identifier	     : "*OSTA UDF Compliant"
+	  UDF revision	     : 2.01
+	  Domain flags	     : #00
+    2	UDF Entity Identifier
+	  Identifier	     : "*UDF LV Info"
+	  UDF revision	     : 2.01
+	  OS Class	     : #06  Windows NT
+	  OS Identifier	     : #00  Windows NT - generic
+    2	Implementation Entity Identifier
+	  <empty>
+	  Identifier	     : ""
+   =>	Warning: Empty Identifier, missing Developer ID, UDF 2.1.5.2+3.
+	  OS Class	     : #00  Undefined
+	  OS Identifier	     : #00  Undefined
+   10	Implementation Entity Identifier
+	  Identifier	     : "*Microsoft Windows"
+	  OS Class	     : #06  Windows NT
+	  OS Identifier	     : #00  Windows NT - generic
+    2	Application Entity Identifier
+	  <empty>
+    2	Application Entity Identifier
+	  Identifier	     : "+NSR03"
+
+  These EntityIDs are also shown above when read for the first time
+
+====>	Final verify status report
+
+  Final UDF Revision range: 2.01 only
+
+  File System info
+  last valid block	: 41160703   Volume Space: 19.6270 Gbytes
+  block size		: 512
+  (ECC) blocking factor : 16
+  nmb of sessions	: 1
+  verify session	: 1
+  session starts	: 0       
+  medium WR type	: overwritable
+  medium SE type	: nonsequential
+  medium CL type	: finalized
+
+  Summed file body sizes:    129 bytes
+
+    Error count:  11	total occurrences:    29  -> search for   "error:"
+  Warning count:   4	total occurrences:     6  -> search for "warning:"
+
+  Additional notes may have been printed:	  -> search for    "note:"
+
+  Disclaimer:
+-	The number of errors and warnings is an indication only.
+-	There is no guarantee that the number of errors and
+-	warnings as shown by the UDF verifier is correct.
+
+
+Exit code 2, complete with errors.
+
