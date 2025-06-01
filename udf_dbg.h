@@ -38,10 +38,10 @@
 
 //#define USE_PERF_PRINT
 
-#define USE_KD_PRINT
-#define USE_MM_PRINT
-#define USE_AD_PRINT
-#define UDF_DUMP_EXTENT
+//#define USE_KD_PRINT
+//#define USE_MM_PRINT
+//#define USE_AD_PRINT
+//#define UDF_DUMP_EXTENT
 //#define USE_TH_PRINT
 //#define USE_TIME_PRINT
 //#define CHECK_REF_COUNTS

@@ -556,12 +556,12 @@ UDFMountVolume(
             UDFPrint(("UDFMountVolume: try raw mount\n"));
             if(Vcb->NSRDesc & VRS_ISO9660_FOUND) {
                 UDFPrint(("UDFMountVolume: block raw mount due to ISO9660 presence\n"));
-                Vcb->VCBFlags &= ~UDF_VCB_FLAGS_RAW_DISK;
+                Vcb->VCBFlags &= ~VCB_STATE_RAW_DISK;
                 try_return(RC);
             }
 try_raw_mount:
             UDFPrint(("UDFMountVolume: try raw mount (2)\n"));
-            if(Vcb->VCBFlags & UDF_VCB_FLAGS_RAW_DISK) {
+            if(Vcb->VCBFlags & VCB_STATE_RAW_DISK) {
 
                 UDFPrint(("UDFMountVolume: trying raw mount...\n"));
                 Vcb->VolIdent.Length =
@@ -577,7 +577,7 @@ try_raw_mount:
                 if(!NT_SUCCESS(RC)) try_return(RC);
 
             } else {
-//                Vcb->VCBFlags &= ~UDF_VCB_FLAGS_RAW_DISK;
+//                Vcb->VCBFlags &= ~VCB_STATE_RAW_DISK;
                 try_return(RC);
             }
         } else {
@@ -628,10 +628,10 @@ try_raw_mount:
                 UDFCloseResidual(Vcb);
                 Vcb->VCBOpenCount = 1;
                 if(FsDeviceType == FILE_DEVICE_CD_ROM_FILE_SYSTEM)
-                    Vcb->VCBFlags |= UDF_VCB_FLAGS_RAW_DISK;
+                    Vcb->VCBFlags |= VCB_STATE_RAW_DISK;
                 goto try_raw_mount;
             }
-            Vcb->VCBFlags &= ~UDF_VCB_FLAGS_RAW_DISK;
+            Vcb->VCBFlags &= ~VCB_STATE_RAW_DISK;
         }
 
         if((Vcb->VCBFlags & VCB_STATE_MEDIA_WRITE_PROTECT)) {
@@ -1344,7 +1344,7 @@ UDFIsVolumeMounted(
     PFCB Fcb = Ccb->Fcb;
 
     if(Fcb &&
-       !(Fcb->Vcb->VCBFlags & UDF_VCB_FLAGS_RAW_DISK) &&
+       !(Fcb->Vcb->VCBFlags & VCB_STATE_RAW_DISK) &&
        !(Fcb->Vcb->VCBFlags & VCB_STATE_VOLUME_LOCKED) ) {
 
         // Disable PopUps, we want to return any error.
@@ -1572,7 +1572,7 @@ UDFLockVolume(
 
     _SEH2_TRY {
 
-        if(!(Vcb->VCBFlags & UDF_VCB_FLAGS_RAW_DISK))
+        if(!(Vcb->VCBFlags & VCB_STATE_RAW_DISK))
             UDFCloseAllSystemDelayedInDir(Vcb, Vcb->RootDirFCB->FileInfo);
 #ifdef UDF_DELAYED_CLOSE
         UDFCloseAllDelayed(Vcb);
@@ -1587,7 +1587,7 @@ UDFLockVolume(
 
         //  If the volume is already locked then complete with success if this file
         //  object has the volume locked, fail otherwise.
-/*        if (Vcb->VCBFlags & UDF_VCB_FLAGS_VOLUME_LOCKED) {
+/*        if (Vcb->VCBFlags & VCB_STATE_VOLUME_LOCKED) {
 
             if (Vcb->VolumeLockFileObject == IrpSp->FileObject) {
                 RC = STATUS_SUCCESS;
@@ -1764,7 +1764,7 @@ UDFDismountVolume(
 
     FsRtlNotifyVolumeEvent(IrpSp->FileObject, FSRTL_VOLUME_DISMOUNT);
 
-    if(!(Vcb->VCBFlags & UDF_VCB_FLAGS_RAW_DISK))
+    if(!(Vcb->VCBFlags & VCB_STATE_RAW_DISK))
         UDFCloseAllSystemDelayedInDir(Vcb, Vcb->RootDirFCB->FileInfo);
 #ifdef UDF_DELAYED_CLOSE
     UDFCloseAllDelayed(Vcb);
@@ -1786,7 +1786,7 @@ UDFDismountVolume(
 
             RC = STATUS_VOLUME_DISMOUNTED;
         } else
-        if(/*!(Vcb->VCBFlags & UDF_VCB_FLAGS_VOLUME_MOUNTED) ||*/
+        if(/*!(Vcb->VCBFlags & VCB_STATE_VOLUME_MOUNTED) ||*/
            !(Vcb->VCBFlags & VCB_STATE_VOLUME_LOCKED) ||
             (Vcb->VCBOpenCount > (UDF_RESIDUAL_REFERENCE+1))) {
 
@@ -2339,8 +2339,8 @@ UDFInvalidateVolumes(
             }
 
 #ifdef UDF_DELAYED_CLOSE
-            UDFPrint(("    UDFInvalidateVolumes:     set UDF_VCB_FLAGS_NO_DELAYED_CLOSE\n"));
-            Vcb->VCBFlags |= UDF_VCB_FLAGS_NO_DELAYED_CLOSE;
+            UDFPrint(("    UDFInvalidateVolumes:     set VCB_STATE_NO_DELAYED_CLOSE\n"));
+            Vcb->VCBFlags |= VCB_STATE_NO_DELAYED_CLOSE;
             UDFReleaseResource(&(Vcb->VCBResource));
 #endif //UDF_DELAYED_CLOSE
 

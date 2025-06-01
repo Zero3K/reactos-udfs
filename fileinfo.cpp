@@ -564,7 +564,7 @@ UDFCommonSetInfo(
             MainResourceAcquired = TRUE;
         }
 
-        if((Vcb->VCBFlags & UDF_VCB_FLAGS_RAW_DISK) &&
+        if((Vcb->VCBFlags & VCB_STATE_RAW_DISK) &&
             (FunctionalityRequested != FilePositionInformation)) {
             AdPrint(("    Can't change File Information on blank volume ;)\n"));
             try_return(RC = STATUS_ACCESS_DENIED);

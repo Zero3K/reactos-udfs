@@ -30,4 +30,4 @@ extern BOOLEAN __fastcall UDFIsMatchAllMask(IN PUNICODE_STRING Name,
 
 extern BOOLEAN __fastcall UDFCanNameBeA8dot3(IN PUNICODE_STRING Name);
 
-#endif //__UDF_NAME_SUP__H__
+#endif //__UDF_NAME_SUP__H__

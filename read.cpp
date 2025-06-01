@@ -388,7 +388,7 @@ UDFCommonRead(
                 UDFPrint(("  UDF_IRP_CONTEXT_FLUSH2_REQUIRED\n"));
                 IrpContext->Flags &= ~UDF_IRP_CONTEXT_FLUSH2_REQUIRED;
 
-                if(!(Vcb->VCBFlags & UDF_VCB_FLAGS_RAW_DISK)) {
+                if(!(Vcb->VCBFlags & VCB_STATE_RAW_DISK)) {
                     UDFCloseAllSystemDelayedInDir(Vcb, Vcb->RootDirFCB->FileInfo);
                 }
 #ifdef UDF_DELAYED_CLOSE

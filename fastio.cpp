@@ -1125,8 +1125,8 @@ UDFFastIoDeviceControl (
         Fcb = Ccb->Fcb;
 
         if(Fcb &&
-           !(Fcb->Vcb->VCBFlags & UDF_VCB_FLAGS_RAW_DISK) &&
-           !(Fcb->Vcb->VCBFlags & UDF_VCB_FLAGS_VOLUME_LOCKED) ) {
+           !(Fcb->Vcb->VCBFlags & VCB_STATE_RAW_DISK) &&
+           !(Fcb->Vcb->VCBFlags & VCB_STATE_VOLUME_LOCKED) ) {
             return FALSE;
         }
 

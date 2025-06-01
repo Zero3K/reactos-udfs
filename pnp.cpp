@@ -256,7 +256,7 @@ UDFPnpQueryRemove(
         UDFAcquireResourceExclusive(&(UDFGlobalData.GlobalDataResource), TRUE);
         GlobalHeld = TRUE;
 
-        if(!(Vcb->VCBFlags & UDF_VCB_FLAGS_RAW_DISK))
+        if(!(Vcb->VCBFlags & VCB_STATE_RAW_DISK))
             UDFCloseAllSystemDelayedInDir(Vcb, Vcb->RootDirFCB->FileInfo);
 #ifdef UDF_DELAYED_CLOSE
         UDFCloseAllDelayed(Vcb);
@@ -394,7 +394,7 @@ UDFPnpRemove (
     //  the volume, and the vcb resource itself.
     UDFAcquireResourceExclusive(&(UDFGlobalData.GlobalDataResource), TRUE);
 
-    if(!(Vcb->VCBFlags & UDF_VCB_FLAGS_RAW_DISK))
+    if(!(Vcb->VCBFlags & VCB_STATE_RAW_DISK))
         UDFCloseAllSystemDelayedInDir(Vcb, Vcb->RootDirFCB->FileInfo);
 #ifdef UDF_DELAYED_CLOSE
     UDFCloseAllDelayed(Vcb);
@@ -536,7 +536,7 @@ Return Value:
 
     UDFAcquireResourceExclusive(&(UDFGlobalData.GlobalDataResource), TRUE);
 
-    if(!(Vcb->VCBFlags & UDF_VCB_FLAGS_RAW_DISK))
+    if(!(Vcb->VCBFlags & VCB_STATE_RAW_DISK))
         UDFCloseAllSystemDelayedInDir(Vcb, Vcb->RootDirFCB->FileInfo);
 #ifdef UDF_DELAYED_CLOSE
     UDFCloseAllDelayed(Vcb);
@@ -672,7 +672,7 @@ Return Value:
     //  a QUERY.
     if(Vcb->Vpb->Flags & VPB_LOCKED) {
         Vcb->Vpb->Flags &= ~VPB_LOCKED;
-        Vcb->VCBFlags &= ~UDF_VCB_FLAGS_VOLUME_LOCKED;
+        Vcb->VCBFlags &= ~VCB_STATE_VOLUME_LOCKED;
         Vcb->VolumeLockFileObject = NULL;
         RC = STATUS_SUCCESS;
     } else {

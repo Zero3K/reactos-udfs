@@ -618,7 +618,7 @@ UDFCommonCreate(
                     UDFReleaseResource(&(Vcb->VCBResource));
                     AcquiredVcb = FALSE;
 
-                    if(!(Vcb->VCBFlags & UDF_VCB_FLAGS_RAW_DISK)) {
+                    if(!(Vcb->VCBFlags & VCB_STATE_RAW_DISK)) {
                         UDFCloseAllSystemDelayedInDir(Vcb, Vcb->RootDirFCB->FileInfo);
                     }
 #ifdef UDF_DELAYED_CLOSE
@@ -651,7 +651,7 @@ UDFCommonCreate(
                     UDFReleaseResource(&(Vcb->VCBResource));
                     AcquiredVcb = FALSE;
 
-                    if(!(Vcb->VCBFlags & UDF_VCB_FLAGS_RAW_DISK)) {
+                    if(!(Vcb->VCBFlags & VCB_STATE_RAW_DISK)) {
                         UDFCloseAllSystemDelayedInDir(Vcb, Vcb->RootDirFCB->FileInfo);
                     }
 #ifdef UDF_DELAYED_CLOSE
@@ -721,7 +721,7 @@ op_vol_accs_dnd:
             try_return(RC);
         }
 
-        if((Vcb->VCBFlags & UDF_VCB_FLAGS_RAW_DISK) &&
+        if((Vcb->VCBFlags & VCB_STATE_RAW_DISK) &&
            (!(Vcb->CompatFlags & UDF_VCB_IC_SHOW_BLANK_CD) || UDFGlobalData.AutoFormatCount)) {
             ReturnedInformation = 0;
             AdPrint(("    Can't open anything on blank volume ;)\n"));
@@ -756,7 +756,7 @@ op_vol_accs_dnd:
             LONGLONG Id;
 
             UDFPrint(("    open by File ID\n"));
-            if(Vcb->VCBFlags & UDF_VCB_FLAGS_RAW_DISK) {
+            if(Vcb->VCBFlags & VCB_STATE_RAW_DISK) {
                 ReturnedInformation = 0;
                 AdPrint(("    Can't open by FileID on blank volume ;)\n"));
                 try_return(RC = STATUS_OBJECT_NAME_NOT_FOUND);
@@ -1031,7 +1031,7 @@ op_vol_accs_dnd:
             goto AlreadyOpened;
         }
 
-        if(Vcb->VCBFlags & UDF_VCB_FLAGS_RAW_DISK) {
+        if(Vcb->VCBFlags & VCB_STATE_RAW_DISK) {
             ReturnedInformation = 0;
             AdPrint(("    Can't open File on blank volume ;)\n"));
             ReturnedInformation = FILE_DOES_NOT_EXIST;

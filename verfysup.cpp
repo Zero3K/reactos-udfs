@@ -94,10 +94,10 @@ UDFVerifyVcb(
     //  If the media is removable and the verify volume flag in the
     //  device object is not set then we want to ping the device
     //  to see if it needs to be verified
-    if ( (Vcb->VCBFlags & UDF_VCB_FLAGS_REMOVABLE_MEDIA) &&
+    if ( (Vcb->VCBFlags & VCB_STATE_REMOVABLE_MEDIA) &&
         !(Vcb->Vpb->RealDevice->Flags & DO_VERIFY_VOLUME) &&
-        (!(Vcb->VCBFlags & UDF_VCB_FLAGS_MEDIA_LOCKED)) ) {
-        UDFPrint(("UDFVerifyVCB: locked=%d\n", (Vcb->VCBFlags & UDF_VCB_FLAGS_MEDIA_LOCKED) ? 0 : 1));
+        (!(Vcb->VCBFlags & VCB_STATE_MEDIA_LOCKED)) ) {
+        UDFPrint(("UDFVerifyVCB: locked=%d\n", (Vcb->VCBFlags & VCB_STATE_MEDIA_LOCKED) ? 0 : 1));
 
         RC = UDFTSendIOCTL(IOCTL_STORAGE_CHECK_VERIFY,
                            Vcb,
@@ -158,7 +158,7 @@ UDFVerifyVcb(
 
     UDFPrint(("UDFVerifyVCB: Modified=%d\n", Vcb->Modified));
     if (Vcb->VcbCondition != VcbMounted) {
-        UDFPrint(("  !UDF_VCB_FLAGS_VOLUME_MOUNTED -> IoSetHardErrorOrVerifyDevice()\n"));
+        UDFPrint(("  !VCB_STATE_VOLUME_MOUNTED -> IoSetHardErrorOrVerifyDevice()\n"));
         Vcb->Vpb->RealDevice->Flags |= DO_VERIFY_VOLUME;
         IoSetHardErrorOrVerifyDevice( IrpContext->Irp, Vcb->Vpb->RealDevice );
         RC = STATUS_WRONG_VOLUME;
@@ -168,7 +168,7 @@ UDFVerifyVcb(
         ASSERT(Nop);
     }
     if (Vcb->VcbCondition == VcbDismountInProgress) {
-        UDFPrint(("  UDF_VCB_FLAGS_BEING_DISMOUNTED\n"));
+        UDFPrint(("  VCB_STATE_BEING_DISMOUNTED\n"));
         RC = STATUS_FILE_INVALID;
         UDFRaiseStatus( IrpContext, RC );
         ASSERT(Nop);
@@ -205,7 +205,7 @@ UDFVerifyVolume(
     ULONG MediaChangeCount = 0;
     NTSTATUS RC;
     ULONG Mode;
-    BOOLEAN UnsafeIoctl = (Vcb->VCBFlags & UDF_VCB_FLAGS_UNSAFE_IOCTL) ? TRUE : FALSE;
+    BOOLEAN UnsafeIoctl = (Vcb->VCBFlags & VCB_STATE_UNSAFE_IOCTL) ? TRUE : FALSE;
 
     //  Update the real device in the IrpContext from the Vpb.  There was no available
     //  file object when the IrpContext was created.
@@ -226,11 +226,11 @@ UDFVerifyVolume(
         // so complete the verify irp with success.  Otherwise reenable
         // the real device and get to work.
         if( !(Vpb->RealDevice->Flags & DO_VERIFY_VOLUME) &&
-            ((Vcb->VCBFlags & UDF_VCB_FLAGS_MEDIA_LOCKED) && !UnsafeIoctl) ) {
+            ((Vcb->VCBFlags & VCB_STATE_MEDIA_LOCKED) && !UnsafeIoctl) ) {
             UDFPrint(("UDFVerifyVolume: STATUS_SUCCESS (1)\n"));
             try_return(RC = STATUS_SUCCESS);
         }
-        Vcb->VCBFlags &= ~UDF_VCB_FLAGS_UNSAFE_IOCTL;
+        Vcb->VCBFlags &= ~VCB_STATE_UNSAFE_IOCTL;
         // Verify that there is a disk here.
         RC = UDFPhSendIOCTL( IOCTL_STORAGE_CHECK_VERIFY,
                                  Vcb->TargetDeviceObject,
@@ -280,7 +280,7 @@ UDFVerifyVolume(
             // Set the removable media flag based on the real device's
             // characteristics
             if(Vpb->RealDevice->Characteristics & FILE_REMOVABLE_MEDIA) {
-                SetFlag( NewVcb->VCBFlags, UDF_VCB_FLAGS_REMOVABLE_MEDIA );
+                SetFlag( NewVcb->VCBFlags, VCB_STATE_REMOVABLE_MEDIA );
             }
 
             RC = UDFGetDiskInfo(NewVcb->TargetDeviceObject,NewVcb);
@@ -293,7 +293,7 @@ UDFVerifyVolume(
             RC = UDFCompareVcb(Vcb,NewVcb, TRUE);
             if(!NT_SUCCESS(RC)) try_return(RC);
 
-            if((Vcb->VCBFlags & UDF_VCB_FLAGS_RAW_DISK) &&
+            if((Vcb->VCBFlags & VCB_STATE_RAW_DISK) &&
                 Vcb->MountPhErrorCount > MOUNT_ERR_THRESHOLD ) {
                 UDFPrint(("UDFVerifyVolume: it was very BAD volume. Do not perform Logical check\n"));
                 goto skip_logical_check;
@@ -327,8 +327,8 @@ UDFVerifyVolume(
             RC = UDFGetDiskInfoAndVerify(NewVcb->TargetDeviceObject,NewVcb);
             UDFPrint(("  NewVcb->NSRDesc=%x\n", NewVcb->NSRDesc));
             if(!NT_SUCCESS(RC)) {
-                if((Vcb->VCBFlags & UDF_VCB_FLAGS_RAW_DISK) &&
-                   (NewVcb->VCBFlags & UDF_VCB_FLAGS_RAW_DISK) &&
+                if((Vcb->VCBFlags & VCB_STATE_RAW_DISK) &&
+                   (NewVcb->VCBFlags & VCB_STATE_RAW_DISK) &&
                    !(NewVcb->NSRDesc & VRS_ISO9660_FOUND)) {
                     UDFPrint(("UDFVerifyVolume: both are RAW -> remount\n", Vcb->Modified));
                     RC = STATUS_SUCCESS;
@@ -361,7 +361,7 @@ skip_logical_check:;
         UDFPrint(("UDFVerifyVolume: compared\n"));
         UDFPrint(("UDFVerifyVolume: Modified=%d\n", Vcb->Modified));
         if(!(Vcb->VCBFlags & VCB_STATE_VOLUME_LOCKED)) {
-            UDFPrint(("UDFVerifyVolume: set UDF_VCB_FLAGS_VOLUME_MOUNTED\n"));
+            UDFPrint(("UDFVerifyVolume: set VCB_STATE_VOLUME_MOUNTED\n"));
             Vcb->VcbCondition = VcbMounted;
         }
         ClearFlag( Vpb->RealDevice->Flags, DO_VERIFY_VOLUME );
@@ -376,7 +376,7 @@ try_exit: NOTHING;
 
         // If we got the wrong volume, mark the Vcb as not mounted.
         if(RC == STATUS_WRONG_VOLUME) {
-            UDFPrint(("UDFVerifyVolume: clear UDF_VCB_FLAGS_VOLUME_MOUNTED\n"));
+            UDFPrint(("UDFVerifyVolume: clear VCB_STATE_VOLUME_MOUNTED\n"));
             Vcb->VcbCondition = VcbNotMounted;
             Vcb->WriteSecurity = FALSE;
         } else
@@ -884,8 +884,8 @@ UDFCompareVcb(
 
           /* We cannot compare these flags, because NewVcb is in unconditional ReadOnly */
 
-          /*((OldVcb->VCBFlags & UDF_VCB_FLAGS_VOLUME_READ_ONLY) != (NewVcb->VCBFlags & UDF_VCB_FLAGS_VOLUME_READ_ONLY)) ||
-          ((OldVcb->VCBFlags & UDF_VCB_FLAGS_MEDIA_READ_ONLY)  != (NewVcb->VCBFlags & UDF_VCB_FLAGS_MEDIA_READ_ONLY)) ||*/
+          /*((OldVcb->VCBFlags & VCB_STATE_VOLUME_READ_ONLY) != (NewVcb->VCBFlags & VCB_STATE_VOLUME_READ_ONLY)) ||
+          ((OldVcb->VCBFlags & VCB_STATE_MEDIA_READ_ONLY)  != (NewVcb->VCBFlags & VCB_STATE_MEDIA_READ_ONLY)) ||*/
 
            VCB_NE(TargetDeviceObject) ||
     //       VCB_NE(xxx) ||

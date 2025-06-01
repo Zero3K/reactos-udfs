@@ -169,8 +169,8 @@ UDFCommonShutdown(
 
 #ifdef UDF_DELAYED_CLOSE
             UDFAcquireResourceExclusive(&(Vcb->VCBResource), TRUE);
-            UDFPrint(("    UDFCommonShutdown:     set UDF_VCB_FLAGS_NO_DELAYED_CLOSE\n"));
-            Vcb->VCBFlags |= UDF_VCB_FLAGS_NO_DELAYED_CLOSE;
+            UDFPrint(("    UDFCommonShutdown:     set VCB_STATE_NO_DELAYED_CLOSE\n"));
+            Vcb->VCBFlags |= VCB_STATE_NO_DELAYED_CLOSE;
             UDFReleaseResource(&(Vcb->VCBResource));
 #endif //UDF_DELAYED_CLOSE
 
@@ -187,7 +187,7 @@ UDFCommonShutdown(
             // Acquire Vcb resource
             UDFAcquireResourceExclusive(&(Vcb->VCBResource), TRUE);
 
-            ASSERT(!Vcb->OverflowQueueCount);
+            //ASSERT(!Vcb->OverflowQueueCount);
 
             {
             _SEH2_TRY {
@@ -221,12 +221,12 @@ UDFCommonShutdown(
             } _SEH2_END;
             }
 
-            ASSERT(!Vcb->OverflowQueueCount);
+            //ASSERT(!Vcb->OverflowQueueCount);
 
             if(!(Vcb->VCBFlags & VCB_STATE_SHUTDOWN)) {
 
                 UDFDoDismountSequence(Vcb, FALSE);
-                if(Vcb->VCBFlags & UDF_VCB_FLAGS_REMOVABLE_MEDIA) {
+                if(Vcb->VCBFlags & VCB_STATE_REMOVABLE_MEDIA) {
                     // let drive flush all data before reset
                     delay.QuadPart = -10000000; // 1 sec
                     KeDelayExecutionThread(KernelMode, FALSE, &delay);

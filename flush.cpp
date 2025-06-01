@@ -299,7 +299,7 @@ UDFFlushAFile(
         return 0;
 
     _SEH2_TRY {
-        if(Fcb->Vcb->VCBFlags & UDF_VCB_FLAGS_RAW_DISK)
+        if(Fcb->Vcb->VCBFlags & VCB_STATE_RAW_DISK)
             return 0;
     } _SEH2_EXCEPT(EXCEPTION_EXECUTE_HANDLER) {
         BrutePoint();
@@ -413,7 +413,7 @@ UDFFlushADirectory(
 //    BOOLEAN Referenced = FALSE;
     ULONG ret_val = 0;
 
-    if(Vcb->VCBFlags & UDF_VCB_FLAGS_RAW_DISK)
+    if(Vcb->VCBFlags & VCB_STATE_RAW_DISK)
         return 0;
 
     if(!FI || !FI->Dloc || !FI->Dloc->DirIndex) goto SkipFlushDir;
@@ -498,8 +498,8 @@ UDFFlushLogicalVolume(
     UDFPrint(("UDFFlushLogicalVolume: \n"));
 
     _SEH2_TRY {
-        if(Vcb->VCBFlags & (UDF_VCB_FLAGS_RAW_DISK/* |
-                            UDF_VCB_FLAGS_MEDIA_READ_ONLY*/))
+        if(Vcb->VCBFlags & (VCB_STATE_RAW_DISK/* |
+                            VCB_STATE_MEDIA_READ_ONLY*/))
             return 0;
         if(Vcb->VCBFlags & VCB_STATE_VOLUME_READ_ONLY)
             return 0;
@@ -591,8 +591,8 @@ UDFFlushIsBreaking(
 //    if(!(FlushFlags & UDF_FLUSH_FLAGS_BREAKABLE))
         return FALSE;
     UDFAcquireResourceExclusive(&(Vcb->FlushResource),TRUE);
-    ret_val = (Vcb->VCBFlags & UDF_VCB_FLAGS_FLUSH_BREAK_REQ) ? TRUE : FALSE;
-    Vcb->VCBFlags &= ~UDF_VCB_FLAGS_FLUSH_BREAK_REQ;
+    ret_val = (Vcb->VCBFlags & VCB_STATE_FLUSH_BREAK_REQ) ? TRUE : FALSE;
+    Vcb->VCBFlags &= ~VCB_STATE_FLUSH_BREAK_REQ;
     UDFReleaseResource(&(Vcb->FlushResource));
     return ret_val;
 } // end UDFFlushIsBreaking()
@@ -607,6 +607,6 @@ UDFFlushTryBreak(
     )
 {
     UDFAcquireResourceExclusive(&(Vcb->FlushResource),TRUE);
-    Vcb->VCBFlags |= UDF_VCB_FLAGS_FLUSH_BREAK_REQ;
+    Vcb->VCBFlags |= VCB_STATE_FLUSH_BREAK_REQ;
     UDFReleaseResource(&(Vcb->FlushResource));
 } // end UDFFlushTryBreak()

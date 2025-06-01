@@ -350,7 +350,7 @@ unsafe_direct_scsi_cmd:
                 UDFInterlockedIncrement((PLONG)&(Vcb->VCBOpenCount));
                 UDFReleaseResource(&(Vcb->VCBResource));
 
-                if(!(Vcb->VCBFlags & UDF_VCB_FLAGS_RAW_DISK)) {
+                if(!(Vcb->VCBFlags & VCB_STATE_RAW_DISK)) {
                     UDFCloseAllSystemDelayedInDir(Vcb, Vcb->RootDirFCB->FileInfo);
                 }
 #ifdef UDF_DELAYED_CLOSE
@@ -392,7 +392,7 @@ unsafe_direct_scsi_cmd:
             goto ioctl_do_default;
 
 notify_media_change:
-/*            Vcb->VCBFlags |= UDF_VCB_FLAGS_UNSAFE_IOCTL;
+/*            Vcb->VCBFlags |= VCB_STATE_UNSAFE_IOCTL;
             // Make sure, that volume will never be quick-remounted
             // It is very important for ChkUdf utility and
             // some CD-recording libraries
@@ -505,7 +505,7 @@ ignore_lock:
             if(buffer->PreventMediaRemoval) {
                 UDFPrint(("lock req\n"));
                 Vcb->MediaLockCount++;
-                Vcb->VCBFlags |= UDF_VCB_FLAGS_MEDIA_LOCKED;
+                Vcb->VCBFlags |= VCB_STATE_MEDIA_LOCKED;
                 UnsafeIoctl = FALSE;
             } else {
                 UDFPrint(("unlock req\n"));
@@ -564,7 +564,7 @@ ioctl_do_default:
 
         if(Vcb && UnsafeIoctl) {
             UDFPrint(("  set UnsafeIoctl\n"));
-            Vcb->VCBFlags |= UDF_VCB_FLAGS_UNSAFE_IOCTL;
+            Vcb->VCBFlags |= VCB_STATE_UNSAFE_IOCTL;
         }
 
 try_exit: NOTHING;

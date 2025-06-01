@@ -632,7 +632,7 @@ UDFCommonSetVolInfo(
         Vcb->VCBFlags |= UDF_VCB_SKIP_EJECT_CHECK;
         //  Reference our input parameters to make things easier
 
-        if(Vcb->VCBFlags & UDF_VCB_FLAGS_RAW_DISK) {
+        if(Vcb->VCBFlags & VCB_STATE_RAW_DISK) {
             UDFPrint(("    Can't change Label on blank volume ;)\n"));
             try_return(RC = STATUS_ACCESS_DENIED);
         }

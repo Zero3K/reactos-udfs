@@ -388,23 +388,14 @@ struct VCB : FCB {
     PFILE_OBJECT                        VolumeLockFileObject;
     DEVICE_TYPE                         FsDeviceType;
 
-    //  The following field tells how many requests for this volume have
-    //  either been enqueued to ExWorker threads or are currently being
-    //  serviced by ExWorker threads.  If the number goes above
-    //  a certain threshold, put the request on the overflow queue to be
-    //  executed later.
-    ULONG PostedRequestCount;
+    // Work queue logic, FastFAT-style: always post to work queue, no overflow queue.
     ULONG ThreadsPerCpu;
-    //  The following field indicates the number of IRP's waiting
-    //  to be serviced in the overflow queue.
-    ULONG OverflowQueueCount;
-    //  The following field contains the queue header of the overflow queue.
-    //  The Overflow queue is a list of IRP's linked via the IRP's ListEntry
-    //  field.
-    LIST_ENTRY OverflowQueue;
-    //  The following spinlock protects access to all the above fields.
-    KSPIN_LOCK OverflowQueueSpinLock;
-    ULONG StopOverflowQueue;
+    // The following fields are now unused with FastFAT-style posting:
+    // ULONG PostedRequestCount;
+    // ULONG OverflowQueueCount;
+    // LIST_ENTRY OverflowQueue;
+    // KSPIN_LOCK OverflowQueueSpinLock;
+    // ULONG StopOverflowQueue;
     ULONG SystemCacheGran;
 
     //---------------
@@ -757,7 +748,7 @@ using PTHREAD_CONTEXT = THREAD_CONTEXT*;
     the context of the original requestor, or indirectly in the context
     of a system worker thread.
 **************************************************************************/
-struct IRP_CONTEXT {
+typedef struct IRP_CONTEXT {
     UDFIdentifier                   NodeIdentifier;
     ULONG                           Flags;
     // copied from the IRP
@@ -790,8 +781,8 @@ struct IRP_CONTEXT {
     THREAD_CONTEXT* ThreadContext;
 
     VCB*      Vcb;
-};
-using PIRP_CONTEXT = IRP_CONTEXT*;
+} IRP_CONTEXT;
+typedef IRP_CONTEXT *PIRP_CONTEXT;
 
 #define IRP_CONTEXT_FLAG_ON_STACK               (0x00000001)
 #define IRP_CONTEXT_FLAG_MORE_PROCESSING        (0x00000002)
@@ -947,26 +938,26 @@ typedef struct _UDFData {
 #define         VCB_STATE_VOLUME_READ_ONLY          (0x00000010)
 #define         VCB_STATE_MEDIA_WRITE_PROTECT       (0x00000080)
 
-#define         UDF_VCB_FLAGS_VCB_INITIALIZED       (0x00000020)
-#define         UDF_VCB_FLAGS_NO_SYNC_CACHE         (0x00000030)
-#define         UDF_VCB_FLAGS_REMOVABLE_MEDIA       (0x00000100)
-#define         UDF_VCB_FLAGS_MEDIA_LOCKED          (0x00000200)
+#define         VCB_STATE_VCB_INITIALIZED       (0x00000020)
+#define         VCB_STATE_NO_SYNC_CACHE         (0x00000030)
+#define         VCB_STATE_REMOVABLE_MEDIA       (0x00000100)
+#define         VCB_STATE_MEDIA_LOCKED          (0x00000200)
 #define         UDF_VCB_SKIP_EJECT_CHECK            (0x00000400)
 #define         UDF_VCB_LAST_WRITE                  (0x00001000)
-#define         UDF_VCB_FLAGS_TRACKMAP              (0x00002000)
+#define         VCB_STATE_TRACKMAP              (0x00002000)
 #define         UDF_VCB_ASSUME_ALL_USED             (0x00004000)
 
-#define         UDF_VCB_FLAGS_RAW_DISK              (0x00040000)
-#define         UDF_VCB_FLAGS_USE_STD               (0x00080000)
+#define         VCB_STATE_RAW_DISK              (0x00040000)
+#define         VCB_STATE_USE_STD               (0x00080000)
 
-#define         UDF_VCB_FLAGS_NO_DELAYED_CLOSE      (0x00200000)
+#define         VCB_STATE_NO_DELAYED_CLOSE      (0x00200000)
 
-#define         UDF_VCB_FLAGS_FLUSH_BREAK_REQ       (0x01000000)
-#define         UDF_VCB_FLAGS_EJECT_REQ             (0x02000000)
-#define         UDF_VCB_FLAGS_FORCE_SYNC_CACHE      (0x04000000)
+#define         VCB_STATE_FLUSH_BREAK_REQ       (0x01000000)
+#define         VCB_STATE_EJECT_REQ             (0x02000000)
+#define         VCB_STATE_FORCE_SYNC_CACHE      (0x04000000)
 
-#define         UDF_VCB_FLAGS_UNSAFE_IOCTL          (0x10000000)
-#define         UDF_VCB_FLAGS_DEAD                  (0x20000000)  // device unexpectedly disappeared
+#define         VCB_STATE_UNSAFE_IOCTL          (0x10000000)
+#define         VCB_STATE_DEAD                  (0x20000000)  // device unexpectedly disappeared
 
 
 // flags for FS Interface Compatibility

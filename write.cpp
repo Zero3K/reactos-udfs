@@ -279,7 +279,7 @@ UDFCommonWrite(
                 UDFPrint(("  UDF_IRP_CONTEXT_FLUSH2_REQUIRED\n"));
                 IrpContext->Flags &= ~UDF_IRP_CONTEXT_FLUSH2_REQUIRED;
 
-                if(!(Vcb->VCBFlags & UDF_VCB_FLAGS_RAW_DISK)) {
+                if(!(Vcb->VCBFlags & VCB_STATE_RAW_DISK)) {
                     UDFCloseAllSystemDelayedInDir(Vcb, Vcb->RootDirFCB->FileInfo);
                 }
 #ifdef UDF_DELAYED_CLOSE
@@ -315,7 +315,7 @@ UDFCommonWrite(
             // Indicate, that volume contents can change after this operation
             // This flag will force VerifyVolume in future
             UDFPrint(("  set UnsafeIoctl\n"));
-            Vcb->VCBFlags |= UDF_VCB_FLAGS_UNSAFE_IOCTL;
+            Vcb->VCBFlags |= VCB_STATE_UNSAFE_IOCTL;
             // Make sure, that volume will never be quick-remounted
             // It is very important for ChkUdf utility.
             Vcb->SerialNumber--;

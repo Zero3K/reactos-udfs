@@ -238,7 +238,7 @@ UDFCommonClose(
         // and try to Delay it....
         if((Fcb->FCBFlags & UDF_FCB_DELAY_CLOSE) &&
            Vcb->VcbCondition == VcbMounted &&
-          !(Vcb->VCBFlags & UDF_VCB_FLAGS_NO_DELAYED_CLOSE) &&
+          !(Vcb->VCBFlags & VCB_STATE_NO_DELAYED_CLOSE) &&
           !(Fcb->OpenHandleCount)) {
             UDFReleaseResource(&(Vcb->VCBResource));
             AcquiredVcb = FALSE;
@@ -339,7 +339,7 @@ UDFCommonClose(
         AdPrint(("UDF: ReferenceCount:  %x\n",Fcb->ReferenceCount));
 #endif // UDF_DBG
         // try to clean up as long chain as it is possible
-        UDFCleanUpFcbChain(Vcb, fi, i, TRUE);
+        //UDFCleanUpFcbChain(Vcb, fi, i, TRUE);
 
 try_exit: NOTHING;
 
@@ -498,7 +498,7 @@ UDFCleanUpFcbChain(
         if (!RefCount && !CurrentFcb->OpenHandleCount) {
 
             // no more references... current file/dir MUST DIE!!!
-            if (Vcb->VCBFlags & UDF_VCB_FLAGS_RAW_DISK) {
+            if (Vcb->VCBFlags & VCB_STATE_RAW_DISK) {
                 // do nothing
             } else if (Delete) {
 /*                if(!(Fcb->FCBFlags & UDF_FCB_DIRECTORY)) {
@@ -982,10 +982,10 @@ UDFCloseAllXXXDelayedInDir(
             // Remove from system queue
             PFCB Fcb;
             IO_STATUS_BLOCK IoStatus;
-            BOOLEAN NoDelayed = (Vcb->VCBFlags & UDF_VCB_FLAGS_NO_DELAYED_CLOSE) ?
+            BOOLEAN NoDelayed = (Vcb->VCBFlags & VCB_STATE_NO_DELAYED_CLOSE) ?
                                      TRUE : FALSE;
 
-            Vcb->VCBFlags |= UDF_VCB_FLAGS_NO_DELAYED_CLOSE;
+            Vcb->VCBFlags |= VCB_STATE_NO_DELAYED_CLOSE;
             for(i=FoundListSize;i>0;i--) {
                 UDFAcquireResourceExclusive(&(Vcb->VCBResource), TRUE);
                 AcquiredVcb = TRUE;
@@ -1026,7 +1026,7 @@ UDFCloseAllXXXDelayedInDir(
                 AcquiredVcb = FALSE;
             }
             if(!NoDelayed)
-                Vcb->VCBFlags &= ~UDF_VCB_FLAGS_NO_DELAYED_CLOSE;
+                Vcb->VCBFlags &= ~VCB_STATE_NO_DELAYED_CLOSE;
         } else {
             // Remove from internal queue
             PIRP_CONTEXT_LITE NextIrpContextLite;
