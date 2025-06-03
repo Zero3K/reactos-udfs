@@ -1,4 +1,4 @@
-////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////
 // Copyright (C) Alexander Telyatnikov, Ivan Keliukh, Yegor Anchishkin, SKIF Software, 1999-2013. Kiev, Ukraine
 // All rights reserved
 // This file was released under the GPLv2 on June 2015.
@@ -112,7 +112,7 @@ UDFQueryVolInfo(
             RC = STATUS_INSUFFICIENT_RESOURCES;
             Irp->IoStatus.Status = RC;
             Irp->IoStatus.Information = 0;
-            // complete the IRP
+            // complete the IRP (IrpContext is NULL)
             IoCompleteRequest(Irp, IO_DISK_INCREMENT);
         }
 
@@ -255,14 +255,19 @@ try_exit:   NOTHING;
             // and will return STATUS_PENDING back to us
             RC = UDFPostRequest(IrpContext, Irp);
 
-        } else
-        if(!_SEH2_AbnormalTermination()) {
-
-            Irp->IoStatus.Status = RC;
-            // Free up the Irp Context
-            UDFCleanupIrpContext(IrpContext);
-            // complete the IRP
-            IoCompleteRequest(Irp, IO_DISK_INCREMENT);
+        } else {
+            if (!_SEH2_AbnormalTermination()) {
+                if (IrpContext && !IrpContext->IrpCompleted) {
+                    Irp->IoStatus.Status = RC;
+                    Irp->IoStatus.Information = 0;
+                    IrpContext->IrpCompleted = TRUE;
+                    IoCompleteRequest(Irp, IO_DISK_INCREMENT);
+                } else if (!IrpContext) {
+                    Irp->IoStatus.Status = RC;
+                    Irp->IoStatus.Information = 0;
+                    IoCompleteRequest(Irp, IO_DISK_INCREMENT);
+                }
+            }
         } // can we complete the IRP ?
 
     } _SEH2_END;
@@ -685,18 +690,19 @@ try_exit:   NOTHING;
             RC = UDFPostRequest(IrpContext, Irp);
 
         } else {
-
-            // Can complete the IRP here if no exception was encountered
             if (!_SEH2_AbnormalTermination()) {
-                Irp->IoStatus.Status = RC;
-
-                // Free up the Irp Context
-                UDFCleanupIrpContext(IrpContext);
-                // complete the IRP
-                IoCompleteRequest(Irp, IO_DISK_INCREMENT);
+                if (IrpContext && !IrpContext->IrpCompleted) {
+                    Irp->IoStatus.Status = RC;
+                    Irp->IoStatus.Information = 0;
+                    IrpContext->IrpCompleted = TRUE;
+                    IoCompleteRequest(Irp, IO_DISK_INCREMENT);
+                } else if (!IrpContext) {
+                    Irp->IoStatus.Status = RC;
+                    Irp->IoStatus.Information = 0;
+                    IoCompleteRequest(Irp, IO_DISK_INCREMENT);
+                }
             }
-        } // can we complete the IRP ?
-
+        }
     } _SEH2_END;
 
     return RC;

@@ -59,16 +59,14 @@ UDFWrite(
     _SEH2_TRY {
 
         // get an IRP context structure and issue the request
-        IrpContext = UDFCreateIrpContext(Irp, DeviceObject);
+            IrpContext = UDFCreateIrpContext(Irp, DeviceObject);
         if(IrpContext) {
-
             RC = UDFCommonWrite(IrpContext, Irp);
-
         } else {
             RC = STATUS_INSUFFICIENT_RESOURCES;
             Irp->IoStatus.Status = RC;
             Irp->IoStatus.Information = 0;
-            // complete the IRP
+            // complete the IRP (no IrpContext to reference!)
             IoCompleteRequest(Irp, IO_DISK_INCREMENT);
         }
 
@@ -923,19 +921,22 @@ try_exit:   NOTHING;
             // it at this time.
 
             // Can complete the IRP here if no exception was encountered
-            if(!_SEH2_AbnormalTermination() &&
-               Irp) {
-                Irp->IoStatus.Status = RC;
-                Irp->IoStatus.Information = NumberBytesWritten;
-                // complete the IRP
-                MmPrint(("    Complete Irp, MDL=%x\n", Irp->MdlAddress));
-                if(Irp->MdlAddress) {
-                    UDFTouch(Irp->MdlAddress);
-                }
-                IoCompleteRequest(Irp, IO_DISK_INCREMENT);
-            }
-            // Free up the Irp Context
-            UDFCleanupIrpContext(IrpContext);
+if (!_SEH2_AbnormalTermination() && Irp) {
+    Irp->IoStatus.Status = RC;
+    Irp->IoStatus.Information = NumberBytesWritten;
+    MmPrint(("    Complete Irp, MDL=%x\n", Irp->MdlAddress));
+    if (Irp->MdlAddress) {
+        UDFTouch(Irp->MdlAddress);
+    }
+    if (IrpContext) {
+        if (!IrpContext->IrpCompleted) {
+            IrpContext->IrpCompleted = TRUE;
+            IoCompleteRequest(Irp, IO_DISK_INCREMENT);
+        }
+    } else {
+        IoCompleteRequest(Irp, IO_DISK_INCREMENT);
+    }
+}
 
         } // can we complete the IRP ?
     } _SEH2_END; // end of "__finally" processing
@@ -969,14 +970,15 @@ UDFDeferredWriteCallBack(
     )
 {
     UDFPrint(("UDFDeferredWriteCallBack\n"));
-    // We should typically simply post the request to our internal
-    // queue of posted requests (just as we would if the original write
-    // could not be completed because the caller could not block).
-    // Once we post the request, return from this routine. The write
-    // will then be retried in the context of a system worker thread
+#ifdef UDF_DBG
+    PIRP_CONTEXT IrpContext = (PIRP_CONTEXT)Context1;
+    if (IrpContext->OverflowQueueMagic == UDF_OVERFLOWQ_MAGIC) {
+        UDFPrint(("UDFDeferredWriteCallBack: IRP_CONTEXT %p is already in overflow queue, skipping UDFPostRequest\n", IrpContext));
+        return;
+    }
+#endif
     UDFPostRequest((PIRP_CONTEXT)Context1, (PIRP)Context2);
-
-} // end UDFDeferredWriteCallBack()
+}
 
 /*************************************************************************
 *

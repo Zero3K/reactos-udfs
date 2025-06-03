@@ -152,7 +152,6 @@ UDFCommonFSControl(
         if (!_SEH2_AbnormalTermination()) {
             // Free up the Irp Context
             UDFPrint(("  UDFCommonFSControl: finally\n"));
-            UDFCleanupIrpContext(IrpContext);
         } else {
             UDFPrint(("  UDFCommonFSControl: finally after exception ***\n"));
         }

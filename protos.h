@@ -642,6 +642,11 @@ extern NTSTATUS UDFPostRequest(
 PIRP_CONTEXT IrpContext,
 PIRP                        Irp);
 
+VOID NTAPI
+UDFOverflowQueueWorker(
+    IN PVOID Context
+    );
+
 VOID
 NTAPI
 UDFFspDispatch(

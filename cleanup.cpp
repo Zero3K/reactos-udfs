@@ -61,6 +61,7 @@ UDFCleanup(
 
     //  If we were called with our file system device object instead of a
     //  volume device object, just complete this request with STATUS_SUCCESS
+
     if (UDFIsFSDevObj(DeviceObject)) {
         // this is a cleanup of the FSD itself
         Irp->IoStatus.Status = RC;
@@ -70,11 +71,11 @@ UDFCleanup(
             UDFPrint(("Deregister Autoformat\n"));
             UDFGlobalData.AutoFormatCount = NULL;
         }
-
+        // IrpContext is always NULL here!
         IoCompleteRequest(Irp, IO_NO_INCREMENT);
         FsRtlExitFileSystem();
         return(RC);
-    }
+	}
 
     // set the top level context
     AreWeTopLevel = UDFIsIrpTopLevel(Irp);
@@ -82,16 +83,17 @@ UDFCleanup(
     _SEH2_TRY {
 
         // get an IRP context structure and issue the request
-        IrpContext = UDFCreateIrpContext(Irp, DeviceObject);
+         IrpContext = UDFCreateIrpContext(Irp, DeviceObject);
         if(IrpContext) {
             RC = UDFCommonCleanup(IrpContext, Irp);
         } else {
             RC = STATUS_INSUFFICIENT_RESOURCES;
             Irp->IoStatus.Status = RC;
             Irp->IoStatus.Information = 0;
-            // complete the IRP
+            // complete the IRP (IrpContext is NULL)
             IoCompleteRequest(Irp, IO_DISK_INCREMENT);
         }
+		
 
     } _SEH2_EXCEPT(UDFExceptionFilter(IrpContext, _SEH2_GetExceptionInformation())) {
 
@@ -678,14 +680,17 @@ try_exit: NOTHING;
             FsRtlNotifyVolumeEvent(FileObject, FSRTL_VOLUME_UNLOCK);
         }
 
-        if (!_SEH2_AbnormalTermination()) {
-            // complete the IRP
-            Irp->IoStatus.Status = RC;
-            Irp->IoStatus.Information = 0;
-            IoCompleteRequest(Irp, IO_DISK_INCREMENT);
-            // Free up the Irp Context
-            UDFCleanupIrpContext(IrpContext);
-        }
+if (!_SEH2_AbnormalTermination() && IrpContext && !IrpContext->IrpCompleted) {
+    Irp->IoStatus.Status = RC;
+    Irp->IoStatus.Information = 0;
+    IrpContext->IrpCompleted = TRUE;
+    IoCompleteRequest(Irp, IO_DISK_INCREMENT);
+} else if (!_SEH2_AbnormalTermination() && !IrpContext) {
+    // In case IrpContext is NULL, just complete the IRP
+    Irp->IoStatus.Status = RC;
+    Irp->IoStatus.Information = 0;
+    IoCompleteRequest(Irp, IO_DISK_INCREMENT);
+}
 
     } _SEH2_END; // end of "__finally" processing
     return(RC);

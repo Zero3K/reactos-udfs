@@ -1,4 +1,4 @@
-////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////
 // Copyright (C) Alexander Telyatnikov, Ivan Keliukh, Yegor Anchishkin, SKIF Software, 1999-2013. Kiev, Ukraine
 // All rights reserved
 // This file was released under the GPLv2 on June 2015.
@@ -83,7 +83,7 @@ UDFDirControl(
             RC = STATUS_INSUFFICIENT_RESOURCES;
             Irp->IoStatus.Status = RC;
             Irp->IoStatus.Information = 0;
-            // complete the IRP
+            // complete the IRP (IrpContext is NULL)
             IoCompleteRequest(Irp, IO_DISK_INCREMENT);
         }
 
@@ -176,15 +176,15 @@ UDFCommonDirControl(
             Irp->IoStatus.Status = RC;
             Irp->IoStatus.Information = 0;
 
-            // Free up the Irp Context
-            UDFCleanupIrpContext(IrpContext);
-
             // complete the IRP
-            IoCompleteRequest(Irp, IO_NO_INCREMENT);
+            if (IrpContext && !IrpContext->IrpCompleted) {
+                IrpContext->IrpCompleted = TRUE;
+                IoCompleteRequest(Irp, IO_NO_INCREMENT);
+            } else if (!IrpContext) {
+                IoCompleteRequest(Irp, IO_NO_INCREMENT);
+            }
             break;
         }
-
-//try_exit: NOTHING;
 
     } _SEH2_FINALLY {
 
@@ -558,7 +558,7 @@ UDFQueryDirectory(
 
             default:
                 break;
-            }
+			}
 
             if (FileNameBytes) {
                 //  This is a Unicode name, we can copy the bytes directly.
@@ -611,15 +611,19 @@ try_exit:   NOTHING;
                 UDFReleaseResource(&Fcb->MainResource);
             }
             if (!_SEH2_AbnormalTermination()) {
-                // complete the IRP
-                Irp->IoStatus.Status = RC;
-                Irp->IoStatus.Information = Information;
-                IoCompleteRequest(Irp, IO_DISK_INCREMENT);
-                // Free up the Irp Context
-                UDFCleanupIrpContext(IrpContext);
+                if (IrpContext && !IrpContext->IrpCompleted) {
+                    Irp->IoStatus.Status = RC;
+                    Irp->IoStatus.Information = 0;
+                    IrpContext->IrpCompleted = TRUE;
+                    IoCompleteRequest(Irp, IO_DISK_INCREMENT);
+                } else if (!IrpContext) {
+                    Irp->IoStatus.Status = RC;
+                    Irp->IoStatus.Information = 0;
+                    IoCompleteRequest(Irp, IO_DISK_INCREMENT);
+                }
             }
-        }
 
+        }
         if(SearchPattern.Buffer) RtlFreeUnicodeString(&SearchPattern);
         if(DirInformation) MyFreePool__(DirInformation);
     } _SEH2_END;
@@ -744,20 +748,11 @@ UDFNotifyChangeDirectory(
         CompletionFilter = pStackLocation ->Parameters.NotifyDirectory.CompletionFilter;
         WatchTree = (IrpSp->Flags & SL_WATCH_TREE) ? TRUE : FALSE;
 
-        // If we wish to capture the subject context, we can do so as
-        // follows:
-        // {
-        //      PSECURITY_SUBJECT_CONTEXT SubjectContext;
-        //  SubjectContext = MyAllocatePool__(PagedPool,
-        //                                  sizeof(SECURITY_SUBJECT_CONTEXT));
-        //      SeCaptureSubjectContext(SubjectContext);
-        //  }
-
         FsRtlNotifyFullChangeDirectory(Vcb->NotifyIRPMutex, &(Vcb->NextNotifyIRP), (PVOID)Ccb,
                             (Fcb->FileInfo->ParentFile) ? (PSTRING)&(Fcb->FCBName->ObjectName) : (PSTRING)&(UDFGlobalData.UnicodeStrRoot),
                             WatchTree, FALSE, CompletionFilter, Irp,
-                            NULL,   // UDFTraverseAccessCheck(...) ?
-                            NULL);  // SubjectContext ?
+                            NULL,
+                            NULL);
 
         RC = STATUS_PENDING;
 
@@ -774,20 +769,18 @@ UDFNotifyChangeDirectory(
             }
             RC = UDFPostRequest(IrpContext, Irp);
         } else if (CompleteRequest) {
-
             if (!_SEH2_AbnormalTermination()) {
-                Irp->IoStatus.Status = RC;
-                Irp->IoStatus.Information = 0;
-                // Free up the Irp Context
-                UDFCleanupIrpContext(IrpContext);
-                // complete the IRP
-                IoCompleteRequest(Irp, IO_DISK_INCREMENT);
+                if (IrpContext && !IrpContext->IrpCompleted) {
+                    Irp->IoStatus.Status = RC;
+                    Irp->IoStatus.Information = 0;
+                    IrpContext->IrpCompleted = TRUE;
+                    IoCompleteRequest(Irp, IO_DISK_INCREMENT);
+                } else if (!IrpContext) {
+                    Irp->IoStatus.Status = RC;
+                    Irp->IoStatus.Information = 0;
+                    IoCompleteRequest(Irp, IO_DISK_INCREMENT);
+                }
             }
-
-        } else {
-            // Simply free up the IrpContext since the IRP has been queued
-            if (!_SEH2_AbnormalTermination())
-                UDFCleanupIrpContext(IrpContext);
         }
 
         // Release the FCB resources if acquired.

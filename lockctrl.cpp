@@ -175,11 +175,6 @@ try_exit: NOTHING;
         if (PostRequest) {
             // Perform appropriate post related processing here
             RC = UDFPostRequest(IrpContext, Irp);
-        } else
-        if(!_SEH2_AbnormalTermination()) {
-            // Simply free up the IrpContext since the IRP has been queued or
-            // Completed by FsRtlProcessFileLock
-            UDFCleanupIrpContext(IrpContext);
         }
     } _SEH2_END; // end of "__finally" processing
 

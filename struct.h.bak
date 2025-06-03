@@ -402,6 +402,8 @@ struct VCB : FCB {
     //  The Overflow queue is a list of IRP's linked via the IRP's ListEntry
     //  field.
     LIST_ENTRY OverflowQueue;
+ 
+ 
     //  The following spinlock protects access to all the above fields.
     KSPIN_LOCK OverflowQueueSpinLock;
     ULONG StopOverflowQueue;
@@ -698,11 +700,6 @@ struct VOLUME_DEVICE_OBJECT {
 
     __volatile ULONG PostedRequestCount;
 
-    // The following field indicates the number of IRP's waiting
-    // to be serviced in the overflow queue.
-
-    ULONG OverflowQueueCount;
-
     // The following field contains the queue header of the overflow queue.
     // The Overflow queue is a list of IRP's linked via the IRP's ListEntry
     // field.
@@ -775,10 +772,6 @@ typedef struct IRP_CONTEXT {
     // For queued close operation we save Fcb
     FCB*                            Fcb;
     ULONG                           TreeLength;
-#ifdef UDF_DBG
-    ULONG                           OverflowQueueMagic;
-#endif
-    BOOLEAN                         IrpCompleted;
 
     // Io context for a read request.
     // Address of Fcb for teardown oplock in create case.

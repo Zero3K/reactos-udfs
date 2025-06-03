@@ -76,11 +76,23 @@ UDFCreate(
         // this is an open of the FSD itself
         Irp->IoStatus.Status = RC;
         Irp->IoStatus.Information = FILE_OPENED;
-
+        // IrpContext is always NULL here, do not reference it!
         IoCompleteRequest(Irp, IO_NO_INCREMENT);
         FsRtlExitFileSystem();
         return(RC);
     }
+	
+    // ... _SEH2_TRY ...
+        IrpContext = UDFCreateIrpContext(Irp, DeviceObject);
+        if(IrpContext) {
+            RC = UDFCommonCreate(IrpContext, Irp);
+        } else {
+            RC = STATUS_INSUFFICIENT_RESOURCES;
+            Irp->IoStatus.Status = RC;
+            Irp->IoStatus.Information = 0;
+            // complete the IRP (no IrpContext to reference!)
+            IoCompleteRequest(Irp, IO_DISK_INCREMENT);
+        }
 
     // set the top level context
     AreWeTopLevel = UDFIsIrpTopLevel(Irp);
@@ -96,7 +108,9 @@ UDFCreate(
             Irp->IoStatus.Status = RC;
             Irp->IoStatus.Information = 0;
             // complete the IRP
-            IoCompleteRequest(Irp, IO_DISK_INCREMENT);
+			if (!IrpContext->IrpCompleted) {
+			IrpContext->IrpCompleted = TRUE;
+            IoCompleteRequest(Irp, IO_DISK_INCREMENT);}
         }
 
     } _SEH2_EXCEPT(UDFExceptionFilter(IrpContext, _SEH2_GetExceptionInformation())) {
@@ -2231,9 +2245,9 @@ try_exit:   NOTHING;
                 Irp->IoStatus.Information = ReturnedInformation;
 
                 // complete the IRP
-                IoCompleteRequest(Irp, IO_DISK_INCREMENT);
-                // Free up the Irp Context
-                UDFCleanupIrpContext(IrpContext);
+				if (!IrpContext->IrpCompleted) {
+				IrpContext->IrpCompleted = TRUE;
+                IoCompleteRequest(Irp, IO_DISK_INCREMENT);}
             }
         } else {
             UDFReleaseResFromCreate(&PagingIoRes, &Res1, &Res2);

@@ -775,10 +775,6 @@ typedef struct IRP_CONTEXT {
     // For queued close operation we save Fcb
     FCB*                            Fcb;
     ULONG                           TreeLength;
-#ifdef UDF_DBG
-    ULONG                           OverflowQueueMagic;
-#endif
-    BOOLEAN                         IrpCompleted;
 
     // Io context for a read request.
     // Address of Fcb for teardown oplock in create case.

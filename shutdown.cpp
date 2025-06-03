@@ -187,7 +187,7 @@ UDFCommonShutdown(
             // Acquire Vcb resource
             UDFAcquireResourceExclusive(&(Vcb->VCBResource), TRUE);
 
-            //ASSERT(!Vcb->OverflowQueueCount);
+            ASSERT(!Vcb->OverflowQueueCount);
 
             {
             _SEH2_TRY {
@@ -221,7 +221,7 @@ UDFCommonShutdown(
             } _SEH2_END;
             }
 
-            //ASSERT(!Vcb->OverflowQueueCount);
+            ASSERT(!Vcb->OverflowQueueCount);
 
             if(!(Vcb->VCBFlags & VCB_STATE_SHUTDOWN)) {
 

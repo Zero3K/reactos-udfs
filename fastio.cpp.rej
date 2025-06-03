@@ -1,0 +1,17 @@
+***************
+*** 1,6 ****
+  //////////////////////////////////////////////////////////////////////
+  // Copyright (C) Alexander Telyatnikov, Ivan Keliukh, Yegor Anchishkin, SKIF Software, 1999-2013. Kiev, Ukraine
+  // All rights reserved
+  // This file was released under the GPLv2 on June 2015.
+  //////////////////////////////////////////////////////////////////////
+  /*************************************************************************
+--- 1,8 ----
++ /* FastIO support can be optionally disabled at compile time. */
++ #ifndef UDF_DISABLE_FASTIO
+  //////////////////////////////////////////////////////////////////////
+  // Copyright (C) Alexander Telyatnikov, Ivan Keliukh, Yegor Anchishkin, SKIF Software, 1999-2013. Kiev, Ukraine
+  // All rights reserved
+  // This file was released under the GPLv2 on June 2015.
+  //////////////////////////////////////////////////////////////////////
+  /*************************************************************************

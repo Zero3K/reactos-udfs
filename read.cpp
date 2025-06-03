@@ -85,7 +85,7 @@ UDFRead(
             RC = STATUS_INSUFFICIENT_RESOURCES;
             Irp->IoStatus.Status = RC;
             Irp->IoStatus.Information = 0;
-            // complete the IRP
+            // complete the IRP (no IrpContext to reference!)
             IoCompleteRequest(Irp, IO_DISK_INCREMENT);
         }
 
@@ -821,14 +821,14 @@ try_exit:   NOTHING;
                 Irp->IoStatus.Status = RC;
                 Irp->IoStatus.Information = NumberBytesRead;
                 UDFPrint(("    NumberBytesRead = %x\n", NumberBytesRead));
-                // Free up the Irp Context
-                UDFCleanupIrpContext(IrpContext);
                 // complete the IRP
                 MmPrint(("    Complete Irp, MDL=%x\n", Irp->MdlAddress));
                 if(Irp->MdlAddress) {
                     UDFTouch(Irp->MdlAddress);
                 }
-                IoCompleteRequest(Irp, IO_DISK_INCREMENT);
+				if (!IrpContext->IrpCompleted) {
+			    IrpContext->IrpCompleted = TRUE;
+                IoCompleteRequest(Irp, IO_DISK_INCREMENT);}
             }
         } // can we complete the IRP ?
     } _SEH2_END; // end of "__finally" processing
@@ -1018,13 +1018,12 @@ BOOLEAN                     ReadCompletion)
     // does not __try to play around with the MDL.
     Irp->MdlAddress = NULL;
 
-    // Free up the Irp Context.
-    UDFCleanupIrpContext(IrpContext);
-
     // Complete the IRP.
     Irp->IoStatus.Status = RC;
     Irp->IoStatus.Information = 0;
-    IoCompleteRequest(Irp, IO_NO_INCREMENT);
+	if (!IrpContext->IrpCompleted) {
+	IrpContext->IrpCompleted = TRUE;
+    IoCompleteRequest(Irp, IO_NO_INCREMENT);}
 
     return;
 }

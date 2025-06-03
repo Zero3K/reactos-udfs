@@ -378,8 +378,6 @@ try_exit:   NOTHING;
                 }
                 // complete the IRP
                 IoCompleteRequest(Irp, IO_DISK_INCREMENT);
-                // Free up the Irp Context
-                UDFCleanupIrpContext(IrpContext);
             } // can we complete the IRP ?
 
         }
@@ -682,8 +680,6 @@ try_exit:   NOTHING;
                 }
                 // complete the IRP
                 IoCompleteRequest(Irp, IO_DISK_INCREMENT);
-                // Free up the Irp Context
-                UDFCleanupIrpContext(IrpContext);
             } // can we complete the IRP ?
 
         }

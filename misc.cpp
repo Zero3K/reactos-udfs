@@ -306,7 +306,6 @@ UDFProcessException(
     PIRP             Irp
     )
 {
-//    NTSTATUS                        RC;
     NTSTATUS            ExceptionCode = STATUS_INSUFFICIENT_RESOURCES;
     PDEVICE_OBJECT      Device;
     PVPB Vpb;
@@ -314,44 +313,27 @@ UDFProcessException(
 
     UDFPrint(("UDFExceptionHandler \n"));
 
-//    ASSERT(Irp);
-
     if (!Irp) {
         UDFPrint(("  !Irp, return\n"));
         ASSERT(!IrpContext);
         return ExceptionCode;
     }
-    // If it was a queued close (or something like this) then we need not
-    // completing it because of MUST_SUCCEED requirement.
 
     if (IrpContext) {
         ExceptionCode = IrpContext->ExceptionCode;
         // Free irp context here
-//        UDFReleaseIrpContext(IrpContext);
+        // UDFReleaseIrpContext(IrpContext);
     } else {
         UDFPrint(("  complete Irp and return\n"));
-        // must be insufficient resources ...?
         ExceptionCode = STATUS_INSUFFICIENT_RESOURCES;
         Irp->IoStatus.Status = ExceptionCode;
         Irp->IoStatus.Information = 0;
-        // complete the IRP
+        // PATCH: No IrpContext here, so just complete IRP
         IoCompleteRequest(Irp, IO_NO_INCREMENT);
 
         return ExceptionCode;
     }
-
-    //  Check if we are posting this request.  One of the following must be true
-    //  if we are to post a request.
-    //
-    //      - Status code is STATUS_CANT_WAIT and the request is asynchronous
-    //          or we are forcing this to be posted.
-    //
-    //      - Status code is STATUS_VERIFY_REQUIRED and we are at APC level
-    //          or higher.  Can't wait for IO in the verify path in this case.
-    //
-    //  Set the MORE_PROCESSING flag in the IrpContext to keep if from being
-    //  deleted if this is a retryable condition.
-
+	
     if (ExceptionCode == STATUS_VERIFY_REQUIRED) {
         if (KeGetCurrentIrql() >= APC_LEVEL) {
             UDFPrint(("  use UDFPostRequest()\n"));
@@ -359,7 +341,6 @@ UDFProcessException(
         }
     }
 
-    //  If we posted the request or our caller will retry then just return here.
     if ((ExceptionCode == STATUS_PENDING) ||
         (ExceptionCode == STATUS_CANT_WAIT)) {
 
@@ -367,41 +348,26 @@ UDFProcessException(
         return ExceptionCode;
     }
 
-    //  Store this error into the Irp for posting back to the Io system.
     Irp->IoStatus.Status = ExceptionCode;
     if (IoIsErrorUserInduced( ExceptionCode )) {
 
-        //  Check for the various error conditions that can be caused by,
-        //  and possibly resolved my the user.
         if (ExceptionCode == STATUS_VERIFY_REQUIRED) {
 
-            //  Now we are at the top level file system entry point.
-            //
-            //  If we have already posted this request then the device to
-            //  verify is in the original thread.  Find this via the Irp.
             Device = IoGetDeviceToVerify( Irp->Tail.Overlay.Thread );
             IoSetDeviceToVerify( Irp->Tail.Overlay.Thread, NULL );
 
-            //  If there is no device in that location then check in the
-            //  current thread.
             if (Device == NULL) {
-
                 Device = IoGetDeviceToVerify( PsGetCurrentThread() );
                 IoSetDeviceToVerify( PsGetCurrentThread(), NULL );
-
                 ASSERT( Device != NULL );
-
-                //  Let's not BugCheck just because the driver screwed up.
                 if (Device == NULL) {
-
                     UDFPrint(("  Device == NULL, return\n"));
                     ExceptionCode = STATUS_DRIVER_INTERNAL_ERROR;
                     Irp->IoStatus.Status = ExceptionCode;
                     Irp->IoStatus.Information = 0;
-                    // complete the IRP
+                    // PATCH: Set IrpCompleted before completing
+                    if (IrpContext) IrpContext->IrpCompleted = TRUE;
                     IoCompleteRequest(Irp, IO_NO_INCREMENT);
-
-                    UDFCleanupIrpContext(IrpContext);
 
                     return ExceptionCode;
                 }
@@ -409,77 +375,50 @@ UDFProcessException(
 
             UDFPrint(("  use UDFPerformVerify()\n"));
             //  UDFPerformVerify() will do the right thing with the Irp.
-            //  If we return STATUS_CANT_WAIT then the current thread
-            //  can retry the request.
             return UDFPerformVerify( IrpContext, Irp, Device );
         }
-
-        //
-        //  The other user induced conditions generate an error unless
-        //  they have been disabled for this request.
-        //
 
         if (FlagOn(IrpContext->Flags, IRP_CONTEXT_FLAG_DISABLE_POPUPS)) {
 
             UDFPrint(("  DISABLE_POPUPS, complete Irp and return\n"));
             Irp->IoStatus.Status = ExceptionCode;
             Irp->IoStatus.Information = 0;
-            // complete the IRP
-            IoCompleteRequest(Irp, IO_NO_INCREMENT);
+            // PATCH: Set IrpCompleted before completing
+			if (!IrpContext->IrpCompleted) {
+            IrpContext->IrpCompleted = TRUE;
+            IoCompleteRequest(Irp, IO_NO_INCREMENT);}
 
-            UDFCleanupIrpContext(IrpContext);
             return ExceptionCode;
         } else {
 
-            //  Generate a pop-up
-            if (IoGetCurrentIrpStackLocation( Irp )->FileObject != NULL) {
-
+            if (IoGetCurrentIrpStackLocation( Irp )->FileObject != NULL)
                 Vpb = IoGetCurrentIrpStackLocation( Irp )->FileObject->Vpb;
-            } else {
-
+            else
                 Vpb = NULL;
-            }
-            //  The device to verify is either in my thread local storage
-            //  or that of the thread that owns the Irp.
+
             Thread = Irp->Tail.Overlay.Thread;
             Device = IoGetDeviceToVerify( Thread );
-
             if (Device == NULL) {
-
                 Thread = PsGetCurrentThread();
                 Device = IoGetDeviceToVerify( Thread );
                 ASSERT( Device != NULL );
-
-                //  Let's not BugCheck just because the driver screwed up.
                 if (Device == NULL) {
                     UDFPrint(("  Device == NULL, return(2)\n"));
                     Irp->IoStatus.Status = ExceptionCode;
                     Irp->IoStatus.Information = 0;
-                    // complete the IRP
+                    // PATCH: Set IrpCompleted before completing
+					if (!IrpContext->IrpCompleted) {
+                    IrpContext->IrpCompleted = TRUE;
                     IoCompleteRequest(Irp, IO_NO_INCREMENT);
 
-                    UDFCleanupIrpContext(IrpContext);
-
-                    return ExceptionCode;
+                    return ExceptionCode;}
                 }
             }
 
-            //  This routine actually causes the pop-up.  It usually
-            //  does this by queuing an APC to the callers thread,
-            //  but in some cases it will complete the request immediately,
-            //  so it is very important to IoMarkIrpPending() first.
             IoMarkIrpPending( Irp );
             IoRaiseHardError( Irp, Vpb, Device );
-
-            //  We will be handing control back to the caller here, so
-            //  reset the saved device object.
-
             UDFPrint(("  use IoSetDeviceToVerify()\n"));
             IoSetDeviceToVerify( Thread, NULL );
-            //  The Irp will be completed by Io or resubmitted.  In either
-            //  case we must clean up the IrpContext here.
-
-            UDFCleanupIrpContext(IrpContext);
             return STATUS_PENDING;
         }
     }
@@ -487,14 +426,12 @@ UDFProcessException(
     // If it was a normal request from IOManager then complete it
     if (Irp) {
         UDFPrint(("  complete Irp\n"));
-        // set the error code in the IRP
         Irp->IoStatus.Status = ExceptionCode;
         Irp->IoStatus.Information = 0;
-
-        // complete the IRP
-        IoCompleteRequest(Irp, IO_NO_INCREMENT);
-
-        UDFCleanupIrpContext(IrpContext);
+        // PATCH: Set IrpCompleted before completing
+		if (!IrpContext->IrpCompleted) {
+        IrpContext->IrpCompleted = TRUE;
+        IoCompleteRequest(Irp, IO_NO_INCREMENT);}
     }
 
     UDFPrint(("  return from exception handler with code %x\n", ExceptionCode));
@@ -903,8 +840,14 @@ UDFCreateIrpContext(
 
     // Set the originating Irp field
     NewIrpContext->Irp = Irp;
+#ifdef UDF_DBG
+    NewIrpContext->OverflowQueueMagic = 0;
+#endif
 
     NewIrpContext->TargetDeviceObject = PtrTargetDeviceObject;
+
+    // --- PATCH: Ensure IRP_COMPLETED is initialized to FALSE ---
+    NewIrpContext->IrpCompleted = FALSE;
 
     // TODO: fix
     if (false && IrpSp->FileObject != NULL) {
@@ -964,7 +907,8 @@ UDFCreateIrpContext(
     }
 
     return NewIrpContext;
-} // end UDFCreateIrpContext()
+}
+ // end UDFCreateIrpContext()
 
 
 /*************************************************************************
@@ -988,7 +932,9 @@ UDFCleanupIrpContext(
     ASSERT(IrpContext);
 
     if (!FlagOn(IrpContext->Flags, IRP_CONTEXT_FLAG_ON_STACK)) {
-
+#ifdef UDF_DBG
+    IrpContext->OverflowQueueMagic = 0;
+#endif
         ExFreeToNPagedLookasideList(&UDFGlobalData.IrpContextLookasideList, IrpContext);
     }
 } // end UDFCleanupIrpContext()
@@ -1087,13 +1033,69 @@ UDFPostRequest(
     IN PIRP             Irp
     )
 {
-    // Always post to the system work queue, FastFAT-style.
-    if (Irp)
+    KIRQL SavedIrql;
+//    PIO_STACK_LOCATION IrpSp;
+    PVCB Vcb;
+
+//    IrpSp = IoGetCurrentIrpStackLocation(Irp);
+
+/*
+    if(Vcb->StopOverflowQueue) {
+        if(Irp) {
+            Irp->IoStatus.Status = STATUS_WRONG_VOLUME;
+            Irp->IoStatus.Information = 0;
+            IoCompleteRequest(Irp, IO_DISK_INCREMENT);
+        }
+        UDFReleaseIrpContext(IrpContext);
+        return STATUS_WRONG_VOLUME;
+    }
+*/
+    // mark the IRP pending if this is not double post
+    if(Irp)
         IoMarkIrpPending(Irp);
 
-    ExInitializeWorkItem(&(IrpContext->WorkQueueItem), UDFFspDispatch, IrpContext);
-    ExQueueWorkItem(&(IrpContext->WorkQueueItem), CriticalWorkQueue);
+    Vcb = (PVCB)(IrpContext->TargetDeviceObject->DeviceExtension);
+    KeAcquireSpinLock(&(Vcb->OverflowQueueSpinLock), &SavedIrql);
 
+    if ( Vcb->PostedRequestCount > FSP_PER_DEVICE_THRESHOLD) {
+
+        //  We cannot currently respond to this IRP so we'll just enqueue it
+        //  to the overflow queue on the volume.
+        //  Note: we just reuse LIST_ITEM field inside WorkQueueItem, this
+        //  doesn't matter to regular processing of WorkItems.
+        #ifdef UDF_DBG
+        // Check that this IRP_CONTEXT isn't already queued
+        ASSERT(IrpContext->OverflowQueueMagic != UDF_OVERFLOWQ_MAGIC);
+        #endif
+
+        InsertTailList( &(Vcb->OverflowQueue),
+                        &(IrpContext->WorkQueueItem.List) );
+         Vcb->OverflowQueueCount++;
+         #ifdef UDF_DBG
+         IrpContext->OverflowQueueMagic = UDF_OVERFLOWQ_MAGIC;
+         #endif
+         KeReleaseSpinLock( &(Vcb->OverflowQueueSpinLock), SavedIrql );
+
+    } else {
+
+        //  We are going to send this Irp to an ex worker thread so up
+        //  the count.
+        Vcb->PostedRequestCount++;
+
+        KeReleaseSpinLock( &(Vcb->OverflowQueueSpinLock), SavedIrql );
+
+        // queue up the request
+        ExInitializeWorkItem(&(IrpContext->WorkQueueItem), UDFFspDispatch, IrpContext);
+
+        ExQueueWorkItem(&(IrpContext->WorkQueueItem), CriticalWorkQueue);
+    //    ExQueueWorkItem(&(IrpContext->WorkQueueItem), DelayedWorkQueue);
+        #ifdef UDF_DBG
+        IrpContext->OverflowQueueMagic = 0;
+        #endif
+
+    }
+
+    // return status pending
     return STATUS_PENDING;
 } // end UDFPostRequest()
 
@@ -1122,97 +1124,154 @@ UDFFspDispatch(
     )
 {
     NTSTATUS         RC = STATUS_SUCCESS;
-    PIRP_CONTEXT IrpContext = NULL;
+    PIRP_CONTEXT     IrpContext = (PIRP_CONTEXT)Context;
+    PIRP_CONTEXT     PrevIrpContext = NULL;
     PIRP             Irp = NULL;
     PVCB             Vcb;
-	
-    // The context must be a pointer to an IrpContext structure
-    IrpContext = (PIRP_CONTEXT)Context;
+    KIRQL            SavedIrql;
+    PLIST_ENTRY      Entry;
+    BOOLEAN          SpinLock = FALSE;
 
-    // Assert that the Context is legitimate
-    if ( !IrpContext ||
-         (IrpContext->NodeIdentifier.NodeTypeCode != UDF_NODE_TYPE_IRP_CONTEXT) ||
-         (IrpContext->NodeIdentifier.NodeByteSize != sizeof(IRP_CONTEXT)) /*||
-        !(IrpContext->Irp)*/) {
-        UDFPrint(("    Invalid Context\n"));
-        BrutePoint();
-        return;
-    }
+    // ... (assertions etc)
 
     Vcb = (PVCB)(IrpContext->TargetDeviceObject->DeviceExtension);
     ASSERT(Vcb);
 
-    UDFPrint(("  *** Thr: %x  Started!\n", PsGetCurrentThread()));
+    UDFPrint(("  *** Thr: %x  ThCnt: %x  QCnt: %x  Started!\n", PsGetCurrentThread(), Vcb->PostedRequestCount, Vcb->OverflowQueueCount));
 
-    UDFPrint(("    Next IRP\n"));
-    FsRtlEnterFileSystem();
+    // ** Set to FALSE before the loop (for the first IRP_CONTEXT) **
+    IrpContext->IrpCompleted = FALSE;
 
-    //  Get a pointer to the IRP structure
-    Irp = IrpContext->Irp;
-    // Now, check if the FSD was top level when the IRP was originally invoked
-    // and set the thread context (for the worker thread) appropriately
-    if (IrpContext->Flags & UDF_IRP_CONTEXT_NOT_TOP_LEVEL) {
-        IoSetTopLevelIrp((PIRP)FSRTL_FSP_TOP_LEVEL_IRP);
-    } else {
-        IoSetTopLevelIrp(Irp);
+    while (TRUE) {
+        UDFPrint(("    Next IRP\n"));
+        FsRtlEnterFileSystem();
+
+        //  Get a pointer to the IRP structure
+        Irp = IrpContext->Irp;
+
+        // ... (top-level IRP logic)
+
+        IrpContext->Flags |= IRP_CONTEXT_FLAG_WAIT;
+
+        _SEH2_TRY {
+            UDFPrint(("  *** MJ: %x, Thr: %x\n", IrpContext->MajorFunction, PsGetCurrentThread()));
+            switch (IrpContext->MajorFunction) {
+            case IRP_MJ_CREATE:
+                RC = UDFCommonCreate(IrpContext, Irp);
+                break;
+            case IRP_MJ_READ:
+                RC = UDFCommonRead(IrpContext, Irp);
+                break;
+            case IRP_MJ_WRITE:
+                RC = UDFCommonWrite(IrpContext, Irp);
+                break;
+            case IRP_MJ_CLEANUP:
+                RC = UDFCommonCleanup(IrpContext, Irp);
+                break;
+            case IRP_MJ_CLOSE:
+                RC = UDFCommonClose(IrpContext, Irp, TRUE);
+                break;
+            case IRP_MJ_DIRECTORY_CONTROL:
+                RC = UDFCommonDirControl(IrpContext, Irp);
+                break;
+            case IRP_MJ_QUERY_INFORMATION:
+                RC = UDFCommonQueryInfo(IrpContext, Irp);
+                break;
+            case IRP_MJ_SET_INFORMATION:
+                RC = UDFCommonSetInfo(IrpContext, Irp);
+                break;
+            case IRP_MJ_QUERY_VOLUME_INFORMATION:
+                RC = UDFCommonQueryVolInfo(IrpContext, Irp);
+                break;
+            case IRP_MJ_SET_VOLUME_INFORMATION:
+                RC = UDFCommonSetVolInfo(IrpContext, Irp);
+                break;
+            default:
+                UDFPrint(("  unhandled *** MJ: %x, Thr: %x\n", IrpContext->MajorFunction, PsGetCurrentThread()));
+				if (!IrpContext->IrpCompleted) {
+                Irp->IoStatus.Status = STATUS_INVALID_DEVICE_REQUEST;
+                Irp->IoStatus.Information = 0;
+			    IrpContext->IrpCompleted = TRUE;
+                IoCompleteRequest(Irp, IO_NO_INCREMENT);
+                UDFCleanupIrpContext(IrpContext);
+                break;}
+            }
+
+            UDFPrint(("  *** Thr: %x  Done!\n", PsGetCurrentThread()));
+
+        } _SEH2_EXCEPT(UDFExceptionFilter(IrpContext, _SEH2_GetExceptionInformation())) {
+            RC = UDFProcessException(IrpContext, Irp);
+            UDFLogEvent(UDF_ERROR_INTERNAL_ERROR, RC);
+            // Only complete if not already completed
+            if (!IrpContext->IrpCompleted && Irp) {
+				IrpContext->IrpCompleted = TRUE;
+                IoCompleteRequest(Irp, IO_NO_INCREMENT);
+            }
+        }  _SEH2_END;
+
+        FsRtlExitFileSystem();
+        IoSetTopLevelIrp(NULL);
+
+        // Overflow queue handling
+        if (!Vcb) {
+            BrutePoint();
+            break;
+        }
+
+        KeAcquireSpinLock(&(Vcb->OverflowQueueSpinLock), &SavedIrql);
+        SpinLock = TRUE;
+        if (!Vcb->OverflowQueueCount) {
+            KeReleaseSpinLock(&(Vcb->OverflowQueueSpinLock), SavedIrql);
+            SpinLock = FALSE;
+            break;
+        }
+
+        Vcb->OverflowQueueCount--;
+        Entry = RemoveHeadList(&Vcb->OverflowQueue);
+
+#ifdef UDF_DBG
+        PIRP_CONTEXT qctx = CONTAINING_RECORD(Entry, IRP_CONTEXT, WorkQueueItem.List);
+        UDFPrint(("UDFFspDispatch: Dequeued Entry=%p NodeTypeCode=0x%x NodeByteSize=0x%x OverflowQueueMagic=0x%x\n",
+            qctx,
+            qctx->NodeIdentifier.NodeTypeCode,
+            qctx->NodeIdentifier.NodeByteSize,
+            qctx->OverflowQueueMagic));
+        ASSERT(qctx->NodeIdentifier.NodeTypeCode == UDF_NODE_TYPE_IRP_CONTEXT);
+        ASSERT(qctx->NodeIdentifier.NodeByteSize == sizeof(IRP_CONTEXT));
+        ASSERT(qctx->OverflowQueueMagic == UDF_OVERFLOWQ_MAGIC);
+        qctx->OverflowQueueMagic = 0;
+        // Optionally walk the queue...
+#endif
+
+        KeReleaseSpinLock(&(Vcb->OverflowQueueSpinLock), SavedIrql);
+        SpinLock = FALSE;
+
+        // Only now is it safe to clean up the previous context
+        if (PrevIrpContext) {
+            UDFCleanupIrpContext(PrevIrpContext);
+            PrevIrpContext = NULL;
+        }
+        PrevIrpContext = IrpContext;
+        IrpContext = CONTAINING_RECORD(Entry, IRP_CONTEXT, WorkQueueItem.List);
+        // **Set to FALSE for the new IRP_CONTEXT before next loop**
+        IrpContext->IrpCompleted = FALSE;
     }
 
-    IrpContext->Flags |= IRP_CONTEXT_FLAG_WAIT;
+    // Clean up the final context after loop exit
+    if (PrevIrpContext) {
+        UDFCleanupIrpContext(PrevIrpContext);
+    } else if (IrpContext) {
+        UDFCleanupIrpContext(IrpContext);
+    }
 
-    _SEH2_TRY {
-        UDFPrint(("  *** MJ: %x, Thr: %x\n", IrpContext->MajorFunction, PsGetCurrentThread()));
-        switch (IrpContext->MajorFunction) {
-        case IRP_MJ_CREATE:
-             RC = UDFCommonCreate(IrpContext, Irp);
-             break;
-        case IRP_MJ_READ:
-             RC = UDFCommonRead(IrpContext, Irp);
-             break;
-         case IRP_MJ_WRITE:
-              RC = UDFCommonWrite(IrpContext, Irp);
-             break;
-         case IRP_MJ_CLEANUP:
-             RC = UDFCommonCleanup(IrpContext, Irp);
-             break;
-         case IRP_MJ_CLOSE:
-             RC = UDFCommonClose(IrpContext, Irp, TRUE);
-             break;
-         case IRP_MJ_DIRECTORY_CONTROL:
-             RC = UDFCommonDirControl(IrpContext, Irp);
-             break;
-         case IRP_MJ_QUERY_INFORMATION:
-             RC = UDFCommonQueryInfo(IrpContext, Irp);
-             break;
-         case IRP_MJ_SET_INFORMATION:
-             RC = UDFCommonSetInfo(IrpContext, Irp);
-             break;
-         case IRP_MJ_QUERY_VOLUME_INFORMATION:
-             RC = UDFCommonQueryVolInfo(IrpContext, Irp);
-             break;
-         case IRP_MJ_SET_VOLUME_INFORMATION:
-             RC = UDFCommonSetVolInfo(IrpContext, Irp);
-             break;
-         default:
-             UDFPrint(("  unhandled *** MJ: %x, Thr: %x\n", IrpContext->MajorFunction, PsGetCurrentThread()));
-             Irp->IoStatus.Status = STATUS_INVALID_DEVICE_REQUEST;
-             Irp->IoStatus.Information = 0;
-             IoCompleteRequest(Irp, IO_NO_INCREMENT);
-             UDFCleanupIrpContext(IrpContext);
-             break;
-        }
-        UDFPrint(("  *** Thr: %x  Done!\n", PsGetCurrentThread()));
-     } _SEH2_EXCEPT(UDFExceptionFilter(IrpContext, _SEH2_GetExceptionInformation())) {
-         RC = UDFProcessException(IrpContext, Irp);
-         UDFLogEvent(UDF_ERROR_INTERNAL_ERROR, RC);
-     }  _SEH2_END;
+    if (!SpinLock)
+        KeAcquireSpinLock(&(Vcb->OverflowQueueSpinLock), &SavedIrql);
+    Vcb->PostedRequestCount--;
+    KeReleaseSpinLock(&(Vcb->OverflowQueueSpinLock), SavedIrql);
 
-    FsRtlExitFileSystem();
-    IoSetTopLevelIrp(NULL);
-
-     UDFPrint(("  *** Thr: %x  Terminated!\n", PsGetCurrentThread()));
-     return;
+    UDFPrint(("  *** Thr: %x  ThCnt: %x  QCnt: %x  Terminated!\n", PsGetCurrentThread(), Vcb->PostedRequestCount, Vcb->OverflowQueueCount));
+    return;
 } // end UDFFspDispatch()
-
 
 
 /*************************************************************************
@@ -1368,11 +1427,11 @@ UDFInitializeVCB(
     InitializeListHead(&(Vcb->NextCCB));
 
     //  Initialize the overflow queue for the volume
-//    Vcb->OverflowQueueCount = 0;
-//    InitializeListHead(&(Vcb->OverflowQueue));
+    Vcb->OverflowQueueCount = 0;
+    InitializeListHead(&(Vcb->OverflowQueue));
 
-//    Vcb->PostedRequestCount = 0;
-//    KeInitializeSpinLock(&(Vcb->OverflowQueueSpinLock));
+    Vcb->PostedRequestCount = 0;
+    KeInitializeSpinLock(&(Vcb->OverflowQueueSpinLock));
 
     // Initialize the notify IRP list mutex
     FsRtlNotifyInitializeSync(&(Vcb->NotifyIRPMutex));
@@ -1837,12 +1896,12 @@ UDFDeleteVCB(
     UDFPrint(("UDFDeleteVCB\n"));
 
     delay.QuadPart = -500000; // 0.05 sec
-//    while(Vcb->PostedRequestCount) {
-//        UDFPrint(("UDFDeleteVCB: PostedRequestCount = %d\n", Vcb->PostedRequestCount));
+    while(Vcb->PostedRequestCount) {
+        UDFPrint(("UDFDeleteVCB: PostedRequestCount = %d\n", Vcb->PostedRequestCount));
         // spin until all queues IRPs are processed
-//        KeDelayExecutionThread(KernelMode, FALSE, &delay);
-//        delay.QuadPart -= 500000; // grow delay 0.05 sec
-//    }
+        KeDelayExecutionThread(KernelMode, FALSE, &delay);
+        delay.QuadPart -= 500000; // grow delay 0.05 sec
+    }
 
     _SEH2_TRY {
         UDFPrint(("UDF: Flushing buffers\n"));
@@ -2119,6 +2178,9 @@ UDFInitializeStackIrpContextFromLite(
 
     // Zero and then initialize the structure.
     RtlZeroMemory(IrpContext, sizeof(IRP_CONTEXT));
+#ifdef UDF_DBG
+    IrpContext->OverflowQueueMagic = 0;
+#endif
 
     // Set the proper node type code and node byte size
     IrpContext->NodeIdentifier.NodeTypeCode = UDF_NODE_TYPE_IRP_CONTEXT;

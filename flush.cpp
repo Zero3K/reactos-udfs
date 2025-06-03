@@ -67,7 +67,7 @@ UDFFlushBuffers(
             RC = STATUS_INSUFFICIENT_RESOURCES;
             Irp->IoStatus.Status = RC;
             Irp->IoStatus.Information = 0;
-            // complete the IRP
+            // complete the IRP (no IrpContext to reference!)
             IoCompleteRequest(Irp, IO_DISK_INCREMENT);
         }
 
@@ -250,13 +250,9 @@ try_exit:   NOTHING;
 
                     RC = ((RC1 == STATUS_INVALID_DEVICE_REQUEST) ? RC : RC1);
 
-                    // Release the IRP context at this time.
-                    UDFCleanupIrpContext(IrpContext);
                 } else {
                     Irp->IoStatus.Status = RC;
                     Irp->IoStatus.Information = 0;
-                    // Free up the Irp Context
-                    UDFCleanupIrpContext(IrpContext);
                     // complete the IRP
                     IoCompleteRequest(Irp, IO_DISK_INCREMENT);
                 }

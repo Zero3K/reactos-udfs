@@ -209,12 +209,11 @@ UDFCommonPnp (
 try_exit:   NOTHING;
 
     } _SEH2_FINALLY {
-        UDFCleanupIrpContext(IrpContext);
+        
     } _SEH2_END;
 
     return RC;
 }
-
 
 /*
 Routine Description:
@@ -343,8 +342,6 @@ UDFPnpQueryRemove(
 
         if (!_SEH2_AbnormalTermination()) {
             Irp->IoStatus.Status = RC;
-            // Free up the Irp Context
-            UDFCleanupIrpContext(IrpContext);
             // complete the IRP
             IoCompleteRequest(Irp, IO_DISK_INCREMENT);
         }
@@ -480,8 +477,6 @@ UDFPnpRemove (
 
         if (!_SEH2_AbnormalTermination()) {
             Irp->IoStatus.Status = RC;
-            // Free up the Irp Context
-            UDFCleanupIrpContext(IrpContext);
             // complete the IRP
             IoCompleteRequest(Irp, IO_DISK_INCREMENT);
         }
@@ -609,8 +604,6 @@ Return Value:
 
         if (!_SEH2_AbnormalTermination()) {
             Irp->IoStatus.Status = RC;
-            // Free up the Irp Context
-            UDFCleanupIrpContext(IrpContext);
             // complete the IRP
             IoCompleteRequest(Irp, IO_DISK_INCREMENT);
         }

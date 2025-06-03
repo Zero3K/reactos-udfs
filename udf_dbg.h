@@ -32,6 +32,10 @@
 
 #endif //UDF_DBG
 
+#ifdef UDF_DBG
+#define UDF_OVERFLOWQ_MAGIC 0xDEAD0EEF
+#endif
+
 #define PROTECTED_MEM_RTL
 
 //#define UDF_SIMULATE_WRITES

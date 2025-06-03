@@ -76,11 +76,12 @@ UDFClose(
 
     //  If we were called with our file system device object instead of a
     //  volume device object, just complete this request with STATUS_SUCCESS
-    if (UDFIsFSDevObj(DeviceObject)) {
+        if (UDFIsFSDevObj(DeviceObject)) {
         // this is a close of the FSD itself
         Irp->IoStatus.Status = RC;
         Irp->IoStatus.Information = 0;
 
+        // IrpContext is always NULL here, do not reference it!
         IoCompleteRequest(Irp, IO_NO_INCREMENT);
         FsRtlExitFileSystem();
         return(RC);
@@ -339,7 +340,7 @@ UDFCommonClose(
         AdPrint(("UDF: ReferenceCount:  %x\n",Fcb->ReferenceCount));
 #endif // UDF_DBG
         // try to clean up as long chain as it is possible
-        //UDFCleanUpFcbChain(Vcb, fi, i, TRUE);
+        UDFCleanUpFcbChain(Vcb, fi, i, TRUE);
 
 try_exit: NOTHING;
 
@@ -379,14 +380,13 @@ try_exit: NOTHING;
 #endif //DBG
                     }
                 }*/
+				if (!IrpContext->IrpCompleted) {
                 Irp->IoStatus.Status = STATUS_SUCCESS;
-                Irp->IoStatus.Information = 0;
-                IoCompleteRequest(Irp, IO_DISK_INCREMENT);
+                Irp->IoStatus.Information = 0;				
+				IrpContext->IrpCompleted = TRUE;
+                IoCompleteRequest(Irp, IO_DISK_INCREMENT);}
             }
-            // Free up the Irp Context
-            if(!PostRequest)
-                UDFCleanupIrpContext(IrpContext);
-        }
+		}
 
     } _SEH2_END; // end of "__finally" processing
 
@@ -406,12 +406,8 @@ UDFCleanUpFcbChain(
     IN BOOLEAN VcbAcquired
     )
 {
-    PFCB CurrentFcb = NULL;
-    PFCB ParentFcb = NULL;
-    PUDF_FILE_INFO ParentFI;
-    LONG RefCount, ComRefCount;
-    BOOLEAN Delete = FALSE;
     ULONG ret_val = 0;
+    BOOLEAN Delete = FALSE;
 
     ValidateFileInfo(fi);
     AdPrint(("UDFCleanUpFcbChain\n"));
@@ -420,240 +416,132 @@ UDFCleanUpFcbChain(
 
     // we can't process Tree until we can acquire Vcb
     if(!VcbAcquired)
-        UDFAcquireResourceShared(&(Vcb->VCBResource),TRUE);
+        UDFAcquireResourceShared(&(Vcb->VCBResource), TRUE);
 
-    // cleanup parent chain (if any & unused)
-    while(fi) {
+    while (fi) {
+        BOOLEAN AcquiredParent = FALSE;
+        PUDF_FILE_INFO NextFI = NULL;
+        PFCB ThisFcb = fi->Fcb;
+        PFCB ThisParentFcb = NULL;
+        PUDF_FILE_INFO ThisParentFI = fi->ParentFile;
+        LONG RefCount = 0, ComRefCount = 0;
 
-        // acquire parent
-        if((ParentFI = fi->ParentFile)) {
-
-            ASSERT(fi->Fcb);
-            ParentFcb = fi->Fcb->ParentFcb;
-            ASSERT(ParentFcb);
-
-            UDF_CHECK_PAGING_IO_RESOURCE(ParentFcb);
-            UDFAcquireResourceExclusive(&ParentFcb->MainResource,TRUE);
-
-        } else {
-
-            // we get to RootDir, it has no parent
-            if(!VcbAcquired)
-                UDFAcquireResourceShared(&Vcb->VCBResource,TRUE);
+        if (ThisParentFI) {
+            ThisParentFcb = ThisFcb->ParentFcb;
+            UDF_CHECK_PAGING_IO_RESOURCE(ThisParentFcb);
+            UDFAcquireResourceExclusive(&ThisParentFcb->MainResource, TRUE);
+            AcquiredParent = TRUE;
+        } else if (!VcbAcquired) {
+            UDFAcquireResourceShared(&Vcb->VCBResource, TRUE);
         }
 
-        CurrentFcb = fi->Fcb;
-        ASSERT(CurrentFcb);
-        ASSERT(CurrentFcb->NodeIdentifier.NodeTypeCode == UDF_NODE_TYPE_FCB);
+        UDF_CHECK_PAGING_IO_RESOURCE(ThisFcb);
+        UDFAcquireResourceExclusive(&ThisFcb->MainResource, TRUE);
 
-        // acquire current file/dir
-        // we must assure that no more threads try to re-use this object
-#ifdef UDF_DBG
-        _SEH2_TRY {
-#endif // UDF_DBG
-            UDF_CHECK_PAGING_IO_RESOURCE(CurrentFcb);
-            UDFAcquireResourceExclusive(&CurrentFcb->MainResource,TRUE);
-#ifdef UDF_DBG
-        } _SEH2_EXCEPT(EXCEPTION_EXECUTE_HANDLER) {
-            BrutePoint();
-            if(ParentFI) {
-                UDF_CHECK_PAGING_IO_RESOURCE(ParentFcb);
-                UDFReleaseResource(&ParentFcb->MainResource);
-            } else {
-                if(!VcbAcquired)
-                    UDFReleaseResource(&Vcb->VCBResource);
-            }
-            break;
-        } _SEH2_END;
-#endif // UDF_DBG
-        ASSERT_REF((Fcb->ReferenceCount > fi->RefCount) || !TreeLength);
-        // If we haven't pass through all files opened
-        // in UDFCommonCreate before target file (TreeLength specfies
-        // the number of such files) dereference them.
-        // Otherwise we'll just check if the file has no references.
-#ifdef UDF_DBG
-        if(CurrentFcb) {
-            if(TreeLength) {
-                ASSERT(CurrentFcb->ReferenceCount);
-                ASSERT(CurrentFcb->CommonRefCount);
-                RefCount = UDFInterlockedDecrement((PLONG)&CurrentFcb->ReferenceCount);
-                ComRefCount = UDFInterlockedDecrement((PLONG)&CurrentFcb->CommonRefCount);
-            }
-        } else {
-            BrutePoint();
-        }
-        if(TreeLength)
+        // Only decrement counts if TreeLength > 0
+        if (TreeLength) {
+            ASSERT(ThisFcb->ReferenceCount);
+            ASSERT(ThisFcb->CommonRefCount);
+            RefCount = UDFInterlockedDecrement((PLONG)&ThisFcb->ReferenceCount);
+            ComRefCount = UDFInterlockedDecrement((PLONG)&ThisFcb->CommonRefCount);
             TreeLength--;
-        ASSERT(CurrentFcb->OpenHandleCount <= CurrentFcb->ReferenceCount);
-#else
-        if(TreeLength) {
-            RefCount = UDFInterlockedDecrement((PLONG)&Fcb->ReferenceCount);
-            ComRefCount = UDFInterlockedDecrement((PLONG)&Fcb->CommonRefCount);
-            TreeLength--;
+        } else {
+            RefCount = ThisFcb->ReferenceCount;
+            ComRefCount = ThisFcb->CommonRefCount;
         }
-#endif
 
-        // ...and delete if it has gone
-
-        if (!RefCount && !CurrentFcb->OpenHandleCount) {
-
-            // no more references... current file/dir MUST DIE!!!
+        if (!RefCount && !ThisFcb->OpenHandleCount) {
             if (Vcb->VCBFlags & VCB_STATE_RAW_DISK) {
                 // do nothing
             } else if (Delete) {
-/*                if(!(Fcb->FCBFlags & UDF_FCB_DIRECTORY)) {
-                    // set file size to zero (for UdfInfo package)
-                    // we should not do this for directories
-                    UDFResizeFile__(Vcb, fi, 0);
-                }*/
                 UDFReferenceFile__(fi);
-                ASSERT(CurrentFcb->ReferenceCount < fi->RefCount);
+                ASSERT(ThisFcb->ReferenceCount < fi->RefCount);
                 UDFFlushFile__(Vcb, fi);
                 UDFUnlinkFile__(Vcb, fi, TRUE);
                 UDFCloseFile__(Vcb, fi);
-                ASSERT(CurrentFcb->ReferenceCount == fi->RefCount);
-                CurrentFcb->FCBFlags |= UDF_FCB_DELETED;
+                ASSERT(ThisFcb->ReferenceCount == fi->RefCount);
+                ThisFcb->FCBFlags |= UDF_FCB_DELETED;
                 Delete = FALSE;
-            }
-            else if(!(CurrentFcb->FCBFlags & UDF_FCB_DELETED)) {
+            } else if (!(ThisFcb->FCBFlags & UDF_FCB_DELETED)) {
                 UDFFlushFile__(Vcb, fi);
-            } else {
-//                BrutePoint();
             }
 
-            // check if we should try to delete Parent for the next time
-            if(CurrentFcb->FCBFlags & UDF_FCB_DELETE_PARENT)
+            if (ThisFcb->FCBFlags & UDF_FCB_DELETE_PARENT)
                 Delete = TRUE;
 
-            // remove references to OS-specific structures
-            // to let UDF_INFO release FI & Co
             fi->Fcb = NULL;
-            if(!ComRefCount) {
-                // CommonFcb is also completly dereferenced
-                // Kill it!
+            if (!ComRefCount) {
                 fi->Dloc->CommonFcb = NULL;
             }
 
-            if(UDFCleanUpFile__(Vcb, fi) == (UDF_FREE_FILEINFO | UDF_FREE_DLOC)) {
-                // Check, if we can uninitialize & deallocate CommonFcb part
-                // kill some cross links
-                CurrentFcb->FileInfo = NULL;
-                // release allocated resources
-                // Obviously, it is a good time & place to release
-                // CommonFcb structure
-
-//                NtReqFcb->NtReqFCBFlags &= ~UDF_NTREQ_FCB_VALID;
-                // Unitialize byte-range locks support structure
-                if (CurrentFcb->FileLock != NULL) {
-
-                    FsRtlFreeFileLock(CurrentFcb->FileLock);
+            if (UDFCleanUpFile__(Vcb, fi) == (UDF_FREE_FILEINFO | UDF_FREE_DLOC)) {
+                ThisFcb->FileInfo = NULL;
+                if (ThisFcb->FileLock != NULL) {
+                    FsRtlFreeFileLock(ThisFcb->FileLock);
                 }
-
-                FsRtlTeardownPerStreamContexts(&CurrentFcb->Header);
-                // Remove resources
-                UDF_CHECK_PAGING_IO_RESOURCE(CurrentFcb);
-                UDFReleaseResource(&CurrentFcb->MainResource);
-                if(CurrentFcb->Header.Resource) {
-                    UDFDeleteResource(&CurrentFcb->MainResource);
-                    UDFDeleteResource(&CurrentFcb->PagingIoResource);
+                FsRtlTeardownPerStreamContexts(&ThisFcb->Header);
+                UDF_CHECK_PAGING_IO_RESOURCE(ThisFcb);
+                UDFReleaseResource(&ThisFcb->MainResource);
+                if (ThisFcb->Header.Resource) {
+                    UDFDeleteResource(&ThisFcb->MainResource);
+                    UDFDeleteResource(&ThisFcb->PagingIoResource);
                 }
-
-                CurrentFcb->Header.Resource =
-                CurrentFcb->Header.PagingIoResource = NULL;
-
-                UDFPrint(("UDFRelease Fcb: %x\n", CurrentFcb));
-#ifdef DBG
-//                NtReqFcb->FileObject->FsContext2 = NULL;
-//                ASSERT(NtReqFcb->FileObject);
-/*                if(NtReqFcb->FileObject) {
-                    ASSERT(!NtReqFcb->FileObject->FsContext2);
-                    NtReqFcb->FileObject->FsContext = NULL;
-                    NtReqFcb->FileObject->SectionObjectPointer = NULL;
-                }*/
-#endif //DBG
+                ThisFcb->Header.Resource = ThisFcb->Header.PagingIoResource = NULL;
+                UDFPrint(("UDFRelease Fcb: %x\n", ThisFcb));
                 ret_val |= UDF_CLOSE_NTREQFCB_DELETED;
 
-                // remove some references & free Fcb structure
-                CurrentFcb->ParentFcb = NULL;
-                UDFCleanUpFCB(CurrentFcb);
+                ThisFcb->ParentFcb = NULL;
+                UDFCleanUpFCB(ThisFcb);
+
+                NextFI = ThisParentFI;
+                PFCB OldParentFcb = ThisParentFcb;
                 MyFreePool__(fi);
                 ret_val |= UDF_CLOSE_FCB_DELETED;
-                // get pointer to parent FCB
-                fi = ParentFI;
-                // free old parent's resource...
-                if(fi) {
-                    UDF_CHECK_PAGING_IO_RESOURCE(ParentFcb);
-                    UDFReleaseResource(&ParentFcb->MainResource);
-                } else {
-                    if(!VcbAcquired)
-                        UDFReleaseResource(&Vcb->VCBResource);
+                fi = NULL;
+                // Release in the correct order
+                if (AcquiredParent && OldParentFcb) {
+                    UDF_CHECK_PAGING_IO_RESOURCE(OldParentFcb);
+                    UDFReleaseResource(&OldParentFcb->MainResource);
+                } else if (!AcquiredParent && !NextFI && !VcbAcquired) {
+                    UDFReleaseResource(&Vcb->VCBResource);
                 }
+                fi = NextFI;
             } else {
-                // Stop cleaning up
-
                 // Restore pointers
-                fi->Fcb = CurrentFcb;
-                fi->Dloc->CommonFcb = CurrentFcb;
-                // free all acquired resources
-                UDF_CHECK_PAGING_IO_RESOURCE(CurrentFcb);
-                UDFReleaseResource(&CurrentFcb->MainResource);
-                fi = ParentFI;
-                if(fi) {
-                    UDF_CHECK_PAGING_IO_RESOURCE(ParentFcb);
-                    UDFReleaseResource(&ParentFcb->MainResource);
-                } else {
-                    if(!VcbAcquired)
-                        UDFReleaseResource(&Vcb->VCBResource);
+                fi->Fcb = ThisFcb;
+                fi->Dloc->CommonFcb = ThisFcb;
+                UDF_CHECK_PAGING_IO_RESOURCE(ThisFcb);
+                UDFReleaseResource(&ThisFcb->MainResource);
+                if (AcquiredParent && ThisParentFcb) {
+                    UDF_CHECK_PAGING_IO_RESOURCE(ThisParentFcb);
+                    UDFReleaseResource(&ThisParentFcb->MainResource);
+                } else if (!AcquiredParent && !ThisParentFI && !VcbAcquired) {
+                    UDFReleaseResource(&Vcb->VCBResource);
                 }
-                // If we have dereferenced all parents 'associated'
-                // with input file & current file is still in use
-                // then it isn't worth walking down the tree
-                // 'cause in this case all the rest files are also used
-                if(!TreeLength)
+                if (!TreeLength)
                     break;
-//                AdPrint(("Stop on referenced File/Dir\n"));
+                fi = ThisParentFI;
             }
         } else {
-            // we get to referenced file/dir. Stop search & release resource
-            UDF_CHECK_PAGING_IO_RESOURCE(CurrentFcb);
-            UDFReleaseResource(&CurrentFcb->MainResource);
-            if(ParentFI) {
-                UDF_CHECK_PAGING_IO_RESOURCE(ParentFcb);
-                UDFReleaseResource(&ParentFcb->MainResource);
-            } else {
-                if(!VcbAcquired)
-                    UDFReleaseResource(&Vcb->VCBResource);
+            // Just release and walk up
+            UDF_CHECK_PAGING_IO_RESOURCE(ThisFcb);
+            UDFReleaseResource(&ThisFcb->MainResource);
+            if (AcquiredParent && ThisParentFcb) {
+                UDF_CHECK_PAGING_IO_RESOURCE(ThisParentFcb);
+                UDFReleaseResource(&ThisParentFcb->MainResource);
+            } else if (!AcquiredParent && !ThisParentFI && !VcbAcquired) {
+                UDFReleaseResource(&Vcb->VCBResource);
             }
             Delete = FALSE;
-            if(!TreeLength)
+            if (!TreeLength)
                 break;
-            fi = ParentFI;
+            fi = ThisParentFI;
         }
     }
 
-    if(fi) {
-        CurrentFcb = fi->Fcb;
-        for(;TreeLength && fi;TreeLength--) {
-            if(CurrentFcb) {
-                ParentFcb = CurrentFcb->ParentFcb;
-                ASSERT(CurrentFcb->ReferenceCount);
-                ASSERT(CurrentFcb->CommonRefCount);
-                ASSERT_REF(Fcb->ReferenceCount > fi->RefCount);
-                UDFInterlockedDecrement((PLONG)&CurrentFcb->ReferenceCount);
-                UDFInterlockedDecrement((PLONG)&CurrentFcb->CommonRefCount);
-#ifdef UDF_DBG
-            } else {
-                BrutePoint();
-#endif
-            }
-            CurrentFcb = ParentFcb;
-        }
-    }
-
-    if(!VcbAcquired)
+    if (!VcbAcquired)
         UDFReleaseResource(&Vcb->VCBResource);
     return ret_val;
-
 } // end UDFCleanUpFcbChain()
 
 VOID

@@ -581,8 +581,6 @@ UDFPerformVerify(
                 Irp->IoStatus.Status = STATUS_REPARSE;
                 IoCompleteRequest(Irp,IO_DISK_INCREMENT);
 
-                UDFCleanupIrpContext(IrpContext);
-
                 RC = STATUS_REPARSE;
                 Irp = NULL;
                 IrpContext = NULL;

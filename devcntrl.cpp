@@ -1,4 +1,4 @@
-////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////
 // Copyright (C) Alexander Telyatnikov, Ivan Keliukh, Yegor Anchishkin, SKIF Software, 1999-2013. Kiev, Ukraine
 // All rights reserved
 // This file was released under the GPLv2 on June 2015.
@@ -33,22 +33,6 @@ UDFProcessLicenseKey(
     PIRP_CONTEXT IrpContext,
     PIRP             Irp
     );
-
-/*#if(_WIN32_WINNT < 0x0400)
-#define IOCTL_REDIR_QUERY_PATH   CTL_CODE(FILE_DEVICE_NETWORK_FILE_SYSTEM, 99, METHOD_NEITHER, FILE_ANY_ACCESS)
-
-typedef struct _QUERY_PATH_REQUEST {
-    ULONG PathNameLength;
-    PIO_SECURITY_CONTEXT SecurityContext;
-    WCHAR FilePathName[1];
-} QUERY_PATH_REQUEST, *PQUERY_PATH_REQUEST;
-
-typedef struct _QUERY_PATH_RESPONSE {
-    ULONG LengthAccepted;
-} QUERY_PATH_RESPONSE, *PQUERY_PATH_RESPONSE;
-
-#endif*/
-
 
 /*************************************************************************
 *
@@ -309,7 +293,6 @@ UDFCommonDeviceControl(
 
             switch(ScsiCommand) {
             case SCSIOP_MODE_SELECT: {
-//                PMODE_PARAMETER_HEADER ParamHdr = (PMODE_PARAMETER_HEADER)CdbData;
                 ModeSelectData = CdbData+4;
                 switch(ModeSelectData[0]) {
                 case MODE_PAGE_WRITE_PARAMETERS:
@@ -320,7 +303,6 @@ UDFCommonDeviceControl(
                 break; }
 
             case SCSIOP_MODE_SELECT10: {
-//                PMODE_PARAMETER_HEADER10 ParamHdr = (PMODE_PARAMETER_HEADER10)CdbData;
                 ModeSelectData = CdbData+8;
                 switch(ModeSelectData[0]) {
                 case MODE_PAGE_WRITE_PARAMETERS:
@@ -392,20 +374,12 @@ unsafe_direct_scsi_cmd:
             goto ioctl_do_default;
 
 notify_media_change:
-/*            Vcb->VCBFlags |= VCB_STATE_UNSAFE_IOCTL;
-            // Make sure, that volume will never be quick-remounted
-            // It is very important for ChkUdf utility and
-            // some CD-recording libraries
-            Vcb->SerialNumber--;
-*/          goto ioctl_do_default;
+            goto ioctl_do_default;
 
         case FSCTL_ALLOW_EXTENDED_DASD_IO:
 
             UDFPrint(("UDFUserFsCtrlRequest: FSCTL_ALLOW_EXTENDED_DASD_IO\n"));
-            // DASD i/o is always permitted
-            // So, no-op this call
             RC = STATUS_SUCCESS;
-
             Irp->IoStatus.Information = 0;
             Irp->IoStatus.Status = STATUS_SUCCESS;
             CompleteIrp = TRUE;
@@ -414,8 +388,6 @@ notify_media_change:
         case FSCTL_IS_VOLUME_DIRTY:
 
             UDFPrint(("UDFUserFsCtrlRequest: FSCTL_IS_VOLUME_DIRTY\n"));
-            // DASD i/o is always permitted
-            // So, no-op this call
             RC = UDFIsVolumeDirty(IrpContext, Irp);
             CompleteIrp = TRUE;
             break;
@@ -431,17 +403,14 @@ notify_media_change:
 
             UDFPrint(("UDF Cdrom Disk Type\n"));
             CompleteIrp = TRUE;
-            //  Verify the Vcb in this case to detect if the volume has changed.
             Irp->IoStatus.Information = 0;
             RC = UDFVerifyVcb(IrpContext,Vcb);
             if(!NT_SUCCESS(RC))
                 try_return(RC);
 
-            //  Check the size of the output buffer.
             if (IrpSp->Parameters.DeviceIoControl.OutputBufferLength < sizeof(CDROM_DISK_DATA))
                 try_return(RC = STATUS_BUFFER_TOO_SMALL);
 
-            //  Copy the data from the Vcb.
             ((CDROM_DISK_DATA*)Irp->AssociatedIrp.SystemBuffer)->DiskData = CDROM_DISK_DATA_TRACK;
 
             Irp->IoStatus.Information = sizeof(CDROM_DISK_DATA);
@@ -474,27 +443,6 @@ notify_media_change:
                     UDFPrint(("!mounted\n"));
                     goto ioctl_do_default;
                 }
-#if 0
-                // Acquire Vcb resource (Shared -> Exclusive)
-                UDFInterlockedIncrement((PLONG)&(Vcb->VCBOpenCount));
-                UDFReleaseResource(&(Vcb->VCBResource));
-
-#ifdef UDF_DELAYED_CLOSE
-                //  Acquire exclusive access to the Vcb.
-                UDFCloseAllDelayed(Vcb);
-#endif //UDF_DELAYED_CLOSE
-
-                UDFAcquireResourceExclusive(&(Vcb->VCBResource), TRUE);
-                UDFInterlockedDecrement((PLONG)&(Vcb->VCBOpenCount));
-
-                UDFDoDismountSequence(Vcb, FALSE);
-                Vcb->MediaLockCount = 0;
-                // Release the Vcb resource.
-                UDFReleaseResource(&(Vcb->VCBResource));
-                AcquiredVcb = FALSE;
-#else
-                // just ignore
-#endif
 ignore_lock:
                 UDFPrint(("ignore lock/unlock\n"));
                 CompleteIrp = TRUE;
@@ -526,7 +474,6 @@ ignore_lock:
             UDFPrint(("default processing Irp %x, ctx %x, DevIoCtl %x\n", Irp, IrpContext, IoControlCode));
 ioctl_do_default:
 
-            // make sure volume is Sync'ed BEFORE sending unsafe IOCTL
             if(Vcb && UnsafeIoctl) {
                 if(AcquiredVcb) {
                     UDFReleaseResource(&(Vcb->VCBResource));
@@ -545,20 +492,8 @@ ioctl_do_default:
                 AcquiredVcb = FALSE;
             }
 
-            // Invoke the lower level driver in the chain.
-            //PtrNextIoStackLocation = IoGetNextIrpStackLocation(Irp);
-            //*PtrNextIoStackLocation = *IrpSp;
             IoSkipCurrentIrpStackLocation(Irp);
-/*
-            // Set a completion routine.
-            IoSetCompletionRoutine(Irp, UDFDevIoctlCompletion, IrpContext, TRUE, TRUE, TRUE);
-            // Send the request.
-*/
             RC = IoCallDriver(Vcb->TargetDeviceObject, Irp);
-            if(!CompleteIrp) {
-                // since now we do not use IoSetCompletionRoutine()
-                UDFCleanupIrpContext(IrpContext);
-            }
             break;
         }
 
@@ -576,15 +511,14 @@ try_exit: NOTHING;
             AcquiredVcb = FALSE;
         }
 
-        if (!_SEH2_AbnormalTermination() &&
-            CompleteIrp) {
+        if (!_SEH2_AbnormalTermination() && CompleteIrp) {
             UDFPrint(("  complete Irp %x, ctx %x, status %x, iolen %x\n",
                 Irp, IrpContext, RC, Irp->IoStatus.Information));
             Irp->IoStatus.Status = RC;
-            // complete the IRP
-            IoCompleteRequest(Irp, IO_DISK_INCREMENT);
-            // Release the IRP context
-            UDFCleanupIrpContext(IrpContext);
+            if (!IrpContext || !IrpContext->IrpCompleted) {
+                if (IrpContext) IrpContext->IrpCompleted = TRUE;
+                IoCompleteRequest(Irp, IO_DISK_INCREMENT);
+            }
         }
     } _SEH2_END;
 
@@ -613,8 +547,6 @@ UDFDevIoctlCompletion(
    PIRP                    Irp,
    VOID                    *Context)
 {
-/*    PIO_STACK_LOCATION      IrpSp = NULL;
-    ULONG                   IoControlCode = 0;*/
     PIRP_CONTEXT IrpContext = (PIRP_CONTEXT)Context;
 
     UDFPrint(("UDFDevIoctlCompletion Irp %x, ctx %x\n", Irp, Context));
@@ -622,60 +554,5 @@ UDFDevIoctlCompletion(
         UDFPrint(("  IoMarkIrpPending\n"));
         IoMarkIrpPending(Irp);
     }
-
-    UDFCleanupIrpContext(IrpContext);
-/*    if(Irp->IoStatus.Status == STATUS_SUCCESS) {
-        IrpSp = IoGetCurrentIrpStackLocation(Irp);
-        IoControlCode = IrpSp->Parameters.DeviceIoControl.IoControlCode;
-
-        switch(IoControlCode) {
-        case IOCTL_CDRW_RESET_DRIVER: {
-            Vcb->MediaLockCount = 0;
-        }
-        }
-    }*/
-
     return STATUS_SUCCESS;
 } // end UDFDevIoctlCompletion()
-
-
-/*************************************************************************
-*
-* Function: UDFHandleQueryPath()
-*
-* Description:
-*   Handle the MUP request.
-*
-* Expected Interrupt Level (for execution) :
-*
-*  IRQL_PASSIVE_LEVEL
-*
-* Return Value: STATUS_SUCCESS
-*
-*************************************************************************/
-/*NTSTATUS UDFHandleQueryPath(
-VOID           *BufferPointer)
-{
-    NTSTATUS                    RC = STATUS_SUCCESS;
-    PQUERY_PATH_REQUEST RequestBuffer = (PQUERY_PATH_REQUEST)BufferPointer;
-    PQUERY_PATH_RESPONSE    ReplyBuffer = (PQUERY_PATH_RESPONSE)BufferPointer;
-    ULONG                       LengthOfNameToBeMatched = RequestBuffer->PathNameLength;
-    ULONG                       LengthOfMatchedName = 0;
-    WCHAR                *NameToBeMatched = RequestBuffer->FilePathName;
-
-    UDFPrint(("UDFHandleQueryPath\n"));
-    // So here we are. Simply check the name supplied.
-    // We can use whatever algorithm we like to determine whether the
-    // sent in name is acceptable.
-    // The first character in the name is always a "\"
-    // If we like the name sent in (probably, we will like a subset
-    // of the name), set the matching length value in LengthOfMatchedName.
-
-    // if (FoundMatch) {
-    //      ReplyBuffer->LengthAccepted = LengthOfMatchedName;
-    // } else {
-    //      RC = STATUS_OBJECT_NAME_NOT_FOUND;
-    // }
-
-    return(RC);
-}*/
